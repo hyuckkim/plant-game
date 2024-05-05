@@ -1,5 +1,6 @@
 import { get, writable } from "svelte/store";
 import { state } from "../gamevalues";
+import { generatePlant } from "./plant";
 
 export type Prop = {
   img: CanvasImageSource;
@@ -17,7 +18,7 @@ export function newProp(data: Partial<Prop>): Prop {
     source: [0, 0, 0, 0],
     pos: [0, 0, 0, 0],
     flipped: { x: false, y: false },
-    display: "always",
+    display: "day",
     layer: "normal",
     onClick: () => true,
   };
@@ -37,6 +38,14 @@ export function initializeProps() {
 
 export function moveDays() {
   yesterdayProps.set(get(props));
+  
+  addProps(generatePlant());
+  addProps(generatePlant());
+  addProps(generatePlant());
+  addProps(generatePlant());
+  addProps(generatePlant());
+  addProps(generatePlant());
+  addProps(generatePlant());
 }
 
 export function addProps(p: Prop) {

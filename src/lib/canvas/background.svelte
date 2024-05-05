@@ -33,15 +33,11 @@
 
   const drawTodayProps: Render = ({ context, width, height, time }) => {
     if ($state === "none") return;
-    if ($state === "sleep" && isFullyChanged(time)) return;
+    if ($state === "sleep") return;
 
     context.save();
     if (!isFullyChanged(time)) {
-      if ($state === "awake") {
-        clipDayCircle({ context, width, height, time });
-      } else if ($state === "sleep") {
-        clipDayCircle({ context, width, height, time }, true);
-      }
+      clipDayCircle({ context, width, height, time });
     }
 
     drawLayeredProps($props, $characterPos, context);
@@ -53,19 +49,15 @@
     if ($state === "awake" && isFullyChanged(time)) return;
 
     context.save();
-    if (!isFullyChanged(time)) {
-      if ($state === "awake") {
-        clipDayCircle({ context, width, height, time }, true);
-      } else if ($state === "sleep") {
-        clipDayCircle({ context, width, height, time });
-      }
+    if ($state === "awake") {
+      clipDayCircle({ context, width, height, time }, true);
     }
     drawLayeredProps($yesterdayProps, $lastCharacterPos, context);
     context.restore();
   };
   const drawNightProps: Render = ({ context, width, height, time }) => {
     if ($state === "none") return;
-    if ($state === "awake" && isFullyChanged(time)) return;
+    if (($state === "awake") && isFullyChanged(time)) return;
     context.save();
     if (!isFullyChanged(time)) {
       if ($state === "awake") {

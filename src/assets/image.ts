@@ -6,8 +6,19 @@ import UIPieces from "./ui_big_pieces.png";
 import PixelArtHouse from "./pixel-art-house-export-2.png";
 import RPGVXBed from "./RPG Maker VX - Beds.png";
 import RPGTiles from "./RPG Maker Tiles.png";
+import FlowerTile from "./flower.png";
+import FlowerItem from "./flower & hurb.png";
 
-export { GirlSheetImage, TXTileset, UIPieces, PixelArtHouse, RPGVXBed, RPGTiles };
+export {
+  GirlSheetImage,
+  TXTileset,
+  UIPieces,
+  PixelArtHouse,
+  RPGVXBed,
+  RPGTiles,
+  FlowerTile,
+  FlowerItem,
+};
 export type Resources = Awaited<ReturnType<typeof loadGameImages>>;
 export const resources = writable<Resources>();
 
@@ -31,6 +42,8 @@ export async function loadGameImages() {
       PixelArtHouse,
       RPGVXBed,
       RPGTiles,
+      FlowerTile,
+      FlowerItem,
       /////////////  Images  ///////////////
     ]
       .map((v) => {
@@ -59,6 +72,8 @@ export async function loadGameImages() {
     prop_house: imageSources[3],
     prop_bed: imageSources[4],
     prop_tile: imageSources[5],
+    prop_flower_tile: imageSources[6],
+    prop_flower_item: imageSources[7],
   };
   resources.set(imageData);
   return imageData;

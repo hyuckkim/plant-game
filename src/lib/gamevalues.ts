@@ -32,7 +32,6 @@ export function reset() {
     img: getRes("prop_house"),
     source: [89, 49, 205, 289],
     pos: [110, 110, 180, 260],
-    display: "day",
     layer: "roof",
   }));
   addFloor();
@@ -58,7 +57,6 @@ function addFloor() {
       img: getRes("prop_tile"),
       source: [192, 0, 32, 32],
       pos: p,
-      display: "day",
       layer: "floor",
     }));
   })

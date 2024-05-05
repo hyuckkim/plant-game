@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { GirlSheetImage, TXTileset, UIPieces, RPGVXBed, RPGTiles, PixelArtHouse } from "../../assets/image";
+  import { GirlSheetImage, TXTileset, UIPieces, RPGVXBed, RPGTiles, PixelArtHouse, FlowerTile, FlowerItem } from "../../assets/image";
   import SourceText from "./sourceText.svelte";
 </script>
 
@@ -21,3 +21,9 @@ img={RPGVXBed}>RPG Maker VX - Beds</SourceText>
 <SourceText
 href="https://diogo-vernier.itch.io/rpg-house"
 img={PixelArtHouse}>RPG House</SourceText>
+<SourceText
+href="https://btl-games.itch.io/pixel-art-fauna-asset-pack"
+img={FlowerTile}>100 hand picked pixel flowers</SourceText>
+<SourceText
+href="https://gimichi.itch.io/flower-and-herb"
+img={FlowerItem}>Flower And Herb</SourceText>
