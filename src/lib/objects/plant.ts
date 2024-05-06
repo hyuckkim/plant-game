@@ -1,4 +1,5 @@
 import { getRes } from "../../assets/image";
+import { makeGrabbableProp, setEquip } from "./equip";
 import { newProp, type Prop } from "./prop";
 
 export function generatePlant(): Prop {
@@ -7,19 +8,21 @@ export function generatePlant(): Prop {
   const x = Math.cos(angle) * length;
   const y = Math.sin(angle) * length;
 
-  return newProp({
-    img: getRes("prop_flower_tile"),
-    source: [96, 16, 16, 16],
-    pos: [x, y, 40, 40],
-    state: {amountTime: 3},
-    onClick: () => false,
-    onDayEnd: (state) => {
-      if (typeof state.amountTime !== "number") return false;
-      state.amountTime -= 1;
-      if (state.amountTime === 0) return false;
-      return true;
+  return makeGrabbableProp(
+    getRes("prop_flower_tile"),
+    [96, 16, 16, 16],
+    [x, y, 40, 40],
+    [0, 0, 40, 40],
+    {amountTime: 3},
+    {
+      onDayEnd: (state) => {
+        if (typeof state.amountTime !== "number") return false;
+        state.amountTime -= 1;
+        if (state.amountTime === 0) return false;
+        return true;
+      }
     }
-  });
+  );
 }
 
 const randn_bm = (min: number, max: number, skew: number) => {

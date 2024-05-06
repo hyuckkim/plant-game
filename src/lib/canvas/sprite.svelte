@@ -1,12 +1,13 @@
 <script lang="ts">
   import { Layer, type Render } from "svelte-canvas";
   import { drawSprite } from "./sprite";
+  import type { Coord } from "../values";
 
   export let callback: Render = () => {};
 
   export let image: CanvasImageSource;
-  export let render: [x: number, y: number, w: number, h: number];
-  export let source: [x: number, y: number, w: number, h: number];
+  export let render: Coord;
+  export let source: Coord;
   export let flipped: {
     x: boolean;
     y: boolean;

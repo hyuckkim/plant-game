@@ -1,9 +1,10 @@
+import type { Coord } from "../values";
 
 export const drawSprite = (
   context: CanvasRenderingContext2D, 
   image: CanvasImageSource,
-  render: [x: number, y: number, w: number, h: number],
-  source: [x: number, y: number, w: number, h: number],
+  render: Coord,
+  source: Coord,
   flipped: { x: boolean, y: boolean } = { x: false, y: false },
   pos: { x: number, y: number } = { x: 0.5, y: 0.5 },
 ) => {

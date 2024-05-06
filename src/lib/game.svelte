@@ -8,6 +8,7 @@
   import Healthbar from "./canvas/healthbar.svelte";
   import { onMount } from "svelte";
   import { click } from "./objects/prop";
+  import { equips } from "./objects/equip";
 
   onMount(() => {
     reset();

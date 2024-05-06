@@ -1,10 +1,12 @@
 import { get, writable } from "svelte/store";
 import { state } from "../gamevalues";
+import type { Coord } from "../values";
+import { equips, setEquip } from "./equip";
 
 export type Prop = {
   img: CanvasImageSource;
-  source: [x: number, y: number, w: number, h: number];
-  pos: [x: number, y: number, w: number, h: number];
+  source: Coord;
+  pos: Coord;
   flipped: { x: boolean; y: boolean };
 
   display: "always" | "day" | "night";
@@ -14,7 +16,7 @@ export type Prop = {
   onClick: (state: PropState) => boolean;
   onDayEnd: (state: PropState) => boolean;
 };
-type PropState = {[key: string]: string | number};
+export type PropState = {[key: string]: string | number};
 
 export function newProp(data: Partial<Prop>): Prop {
   const defaultProp: Prop = {
@@ -69,6 +71,17 @@ export function removeProps(p: Prop) {
 }
 
 export function click(x: number, y: number) {
+  const equip = get(equips);
+  if (equip !== undefined) {
+    const equipResult = equip.onClick(equip.state);
+    if (equipResult === undefined) {
+      equips.set(undefined);
+    } else if (equipResult !== true) {
+      setEquip(equipResult);
+    }
+    return;
+  }
+
   let currentProps =
     get(state) === "awake"
       ? get(props)
@@ -80,6 +93,7 @@ export function click(x: number, y: number) {
     .filter((p) => p.layer === "normal")
     .sort((a, b) => getDistance(a, x, y) - getDistance(b, x, y))[0];
 
+  console.log(clickedProp);
   if (!!clickedProp) {
     const result = clickedProp.onClick(clickedProp.state);
     if (!result) removeProps(clickedProp);

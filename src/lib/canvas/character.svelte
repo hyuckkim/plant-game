@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { latestT, mouseX, mouseY } from "../values";
+  import { addCoord, latestT, mouseX, mouseY, type Coord } from "../values";
   import { characterPos, health, maxHealth, state } from "../gamevalues";
   import { getRes } from "../../assets/image";
 
   import Sprite from "./sprite.svelte";
+  import { equips } from "../objects/equip";
 
   const size = 60;
 
@@ -32,6 +33,11 @@
     ddt = 0;
   $: position = getDirectionFrame(dx, dy, dir, $latestT);
   $: diedPosition = frames.die[Math.min(3, Math.floor(($latestT - ddt) / 160))];
+
+  $: equipPos = dir === 0 ? -7
+    : dir === 1 ? 0
+    : dir === 2 ? 0
+    : 7;
   
   function getDirectionFrame(
     dx: number,
@@ -53,6 +59,13 @@
 </script>
 
 {#if $health > 0}
+  {#if dir === 2 && $equips}
+    <Sprite
+      image={$equips.img}
+      source={$equips.source}
+      render={addCoord($equips.pos, [$characterPos.x, $characterPos.y, 0, 0])}
+    />
+  {/if}
   <Sprite
     callback={({ time }) => {
       characterPos.set({ x: $mouseX, y: $mouseY });
@@ -68,6 +81,13 @@
     source={[position * 24, 0, 24, 24]}
     render={[$characterPos.x, $characterPos.y, size, size]}
   />
+  {#if dir !== 2 && $equips}
+    <Sprite
+      image={$equips.img}
+      source={$equips.source}
+      render={addCoord($equips.pos, [$characterPos.x + equipPos, $characterPos.y, 0, 0])}
+    />
+  {/if}
 {:else}
   <Sprite
     callback={({ time }) => {

@@ -2,7 +2,7 @@ import { get } from "svelte/store";
 import { getRes } from "../../assets/image";
 import { addProps, dayEnd, dayStarted, newProp } from "./prop";
 import { characterPos, lastCharacterPos, state, statesEnteredTime } from "../gamevalues";
-import { latestT } from "../values";
+import { latestT, type Coord } from "../values";
 import { generatePlant } from "./plant";
 
 export function settingHouseProps() {
@@ -48,7 +48,7 @@ function makeRoof() {
   }));
 }
 function makeFloor() {
-  const posDatas: [x: number, y: number, w: number, h: number][] = [
+  const posDatas: Coord[] = [
     [60, 50, 48, 48],
     [108, 50, 48, 48],
     [156, 50, 48, 48],
