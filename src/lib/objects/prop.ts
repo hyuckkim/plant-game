@@ -1,6 +1,5 @@
 import { get, writable } from "svelte/store";
 import { state } from "../gamevalues";
-import { generatePlant } from "./plant";
 
 export type Prop = {
   img: CanvasImageSource;
@@ -10,8 +9,13 @@ export type Prop = {
 
   display: "always" | "day" | "night";
   layer: "normal" | "roof" | "floor";
-  onClick: () => boolean;
+
+  state: PropState;
+  onClick: (state: PropState) => boolean;
+  onDayEnd: (state: PropState) => boolean;
 };
+type PropState = {[key: string]: string | number};
+
 export function newProp(data: Partial<Prop>): Prop {
   const defaultProp: Prop = {
     img: new Image(),
@@ -20,7 +24,9 @@ export function newProp(data: Partial<Prop>): Prop {
     flipped: { x: false, y: false },
     display: "day",
     layer: "normal",
+    state: {},
     onClick: () => true,
+    onDayEnd: () => true,
   };
 
   return { ...defaultProp, ...data };
@@ -34,18 +40,6 @@ export function initializeProps() {
   props.set([]);
   yesterdayProps.set([]);
   nightProps.set([]);
-}
-
-export function moveDays() {
-  yesterdayProps.set(get(props));
-  
-  addProps(generatePlant());
-  addProps(generatePlant());
-  addProps(generatePlant());
-  addProps(generatePlant());
-  addProps(generatePlant());
-  addProps(generatePlant());
-  addProps(generatePlant());
 }
 
 export function addProps(p: Prop) {
@@ -81,13 +75,29 @@ export function click(x: number, y: number) {
       : get(state) === "sleep"
       ? get(nightProps)
       : [];
-  currentProps
+  const clickedProp = currentProps
     .filter((p) => isAttached(p, x, y))
     .filter((p) => p.layer === "normal")
-    .sort((a, b) => getDistance(a, x, y) - getDistance(b, x, y))[0]
-    ?.onClick();
-}
+    .sort((a, b) => getDistance(a, x, y) - getDistance(b, x, y))[0];
 
+  if (!!clickedProp) {
+    const result = clickedProp.onClick(clickedProp.state);
+    if (!result) removeProps(clickedProp);
+  }
+}
+export function dayEnd() {
+  yesterdayProps.set(get(props));
+  get(props).forEach(p => {
+    const result = p.onDayEnd(p.state);
+    if (!result) removeProps(p);
+  });
+}
+export function dayStarted() {
+  get(nightProps).forEach(p => {
+    const result = p.onDayEnd(p.state);
+    if (!result) removeProps(p);
+  });
+}
 export function isAttached(p: Prop, x: number, y: number) {
   return (
     p.pos[0] - p.pos[2] * 0.5 < x &&

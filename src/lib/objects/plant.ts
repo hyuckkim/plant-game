@@ -10,8 +10,15 @@ export function generatePlant(): Prop {
   return newProp({
     img: getRes("prop_flower_tile"),
     source: [96, 16, 16, 16],
-    pos: [x, y,40, 40],
+    pos: [x, y, 40, 40],
+    state: {amountTime: 3},
     onClick: () => false,
+    onDayEnd: (state) => {
+      if (typeof state.amountTime !== "number") return false;
+      state.amountTime -= 1;
+      if (state.amountTime === 0) return false;
+      return true;
+    }
   });
 }
 
