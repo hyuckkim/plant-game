@@ -24,8 +24,3 @@ export function reset() {
   
   settingHouseProps();
 }
-
-
-export function resetCharacterPos(x: number, y: number) {
-  characterPos.set({x, y});
-} 

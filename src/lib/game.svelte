@@ -1,14 +1,15 @@
 <script lang="ts">
   import { Canvas } from "svelte-canvas";
-  import { health, state, reset, resetCharacterPos } from "./gamevalues";
+  import { health, state, reset } from "./gamevalues";
   import { mouseX, mouseY } from "./values";
 
   import Background from "./canvas/background.svelte";
   import Character from "./canvas/character.svelte";
   import UI from "./canvas/UI.svelte";
   import { onMount } from "svelte";
-  import { click } from "./objects/prop";
+  import { click, wheelMove } from "./objects/prop";
   import Particle from "./canvas/particle.svelte";
+  import { equips, setEquip } from "./objects/equip";
 
   onMount(() => {
     reset();
@@ -25,12 +26,14 @@
     $mouseX = e.x;
     $mouseY = e.y;
     if ($state === "none") {
-      resetCharacterPos($mouseX, $mouseY);
       $state = "sleep";
     }
     else if ($health > 0) {
       click($mouseX, $mouseY);
     }
+  }}
+  on:wheel={(e) => {
+    wheelMove(e.deltaY);
   }}
 >
   <Background />

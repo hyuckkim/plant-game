@@ -11,6 +11,7 @@ import FlowerItem from "./flower & hurb.png";
 import Potions from "./potions.png";
 import EmptyPotions from "./rpg_potions_16x16_overlay.png";
 import Pond from "./WaterAndFire.png";
+import Furniture from "./100 furniture sprites.png";
 
 export {
   GirlSheetImage,
@@ -24,6 +25,7 @@ export {
   Potions,
   EmptyPotions,
   Pond,
+  Furniture,
 };
 export type Resources = Awaited<ReturnType<typeof loadGameImages>>;
 export const resources = writable<Resources>();
@@ -53,6 +55,7 @@ export async function loadGameImages() {
       Potions,
       EmptyPotions,
       Pond,
+      Furniture,
       /////////////  Images  ///////////////
     ]
       .map((v) => {
@@ -86,6 +89,7 @@ export async function loadGameImages() {
     prop_potion: imageSources[8],
     prop_potion_empty: imageSources[9],
     prop_pond: imageSources[10],
+    prop_furniture: imageSources[11],
   };
   resources.set(imageData);
   return imageData;

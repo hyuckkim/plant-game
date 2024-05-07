@@ -4,12 +4,16 @@ import { addProps, dayEnd, dayStarted, newProp } from "./prop";
 import { characterPos, lastCharacterPos, state, statesEnteredTime } from "../gamevalues";
 import { latestT, type Coord } from "../values";
 import { generatePlant } from "./plant";
+import { makePot } from "./pot";
+import { makeBucket } from "./bucket";
 
 export function settingHouseProps() {
   makeHouse();
   makeRoof();
   makeFloor();
   makePond();
+  makePot();
+  makeBucket();
 }
 function makeHouse() {
   addProps(newProp({

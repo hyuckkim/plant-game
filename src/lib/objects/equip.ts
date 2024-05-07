@@ -56,15 +56,15 @@ export function makeGrabbableProp(
     source,
     pos,
     state,
-    onDayEnd,
+    onDayEnd: onDayEnd ?? (() => true),
   });
   const equipSomeProp = (state: PropState) => setEquip({
     img,
     source,
     pos: equipPos,
     state,
-    onWheelUp,
-    onWheelDown,
+    onWheelUp: onWheelUp ?? (() => true),
+    onWheelDown: onWheelDown ?? (() => true),
     onClick: (state) => {
       const propNow = makeSomeProp(
         [get(characterPos).x, get(characterPos).y, equipPos[2], equipPos[3]],
@@ -100,33 +100,33 @@ export function makeGrabbableEquip(
     onWheelDown: (state: PropState) => true | Partial<Equip> | undefined,
     onDayEnd: (state: PropState) => boolean,
   }>
-) {
+): Partial<Equip> {
   const makeSomeProp = (pos: Coord, state: PropState) => newProp({
     img,
     source,
     pos,
     state,
-    onDayEnd,
+    onDayEnd: onDayEnd ?? (() => true),
   });
-  const equipSomeProp = (state: PropState) => setEquip({
+  const equipSomeProp = (state: PropState): Partial<Equip> => ({
     img,
     source,
     pos: equipPos,
     state,
-    onWheelUp,
-    onWheelDown,
+    onWheelUp: onWheelUp ?? (() => true),
+    onWheelDown: onWheelDown ?? (() => true),
     onClick: (state) => {
       const propNow = makeSomeProp(
         [get(characterPos).x, get(characterPos).y, equipPos[2], equipPos[3]],
         state
       );
       propNow.onClick = (state) => {
-        equipSomeProp(state);
+        setEquip(equipSomeProp(state));
         return false;
       };
       addProps(propNow);
       return undefined;
     }
   });
-  equipSomeProp(state);
+  return equipSomeProp(state);
 }

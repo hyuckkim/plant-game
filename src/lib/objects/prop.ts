@@ -101,9 +101,31 @@ export function click(x: number, y: number) {
     if (!result) removeProps(clickedProp);
   }
 }
+export function wheelMove(dy: number) {
+  const equip = get(equips);
+  if (equip) {
+    if (dy < 0) {
+      const equipResult = equip.onWheelUp(equip.state);
+      if (equipResult === undefined) {
+        equips.set(undefined);
+      } else if (equipResult !== true) {
+        setEquip(equipResult);
+      }
+    }
+    if (dy > 0) {
+      const equipResult = equip.onWheelDown(equip.state);
+      if (equipResult === undefined) {
+        equips.set(undefined);
+      } else if (equipResult !== true) {
+        setEquip(equipResult);
+      }
+    }
+  }
+}
 export function dayEnd() {
   yesterdayProps.set(get(props));
   get(props).forEach(p => {
+    console.log(p, p.onDayEnd);
     const result = p.onDayEnd(p.state);
     if (!result) removeProps(p);
   });
