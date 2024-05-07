@@ -3,6 +3,8 @@
   import { getRes } from "../../assets/image";
   import {
     characterPos,
+    characterReady,
+    health,
     lastCharacterPos,
     state,
     statesEnteredTime,
@@ -15,6 +17,7 @@
     yesterdayProps,
     type Prop,
   } from "../objects/prop";
+  import { mouseX, mouseY } from "../values";
 
   const roundPos = { x: 80, y: 80 };
   const leapRadius = (start: number, now: number) => {
@@ -150,5 +153,12 @@
     fillShadow(canvas);
     drawNightProps(canvas);
     canvas.context.restore();
+    
+    if ($health > 0) {
+      $characterPos = { x: $mouseX, y: $mouseY };
+      if ($characterPos.x === $mouseX && $characterPos.y === $mouseY) {
+        $characterReady = true;
+      }
+    }
   }}
 />

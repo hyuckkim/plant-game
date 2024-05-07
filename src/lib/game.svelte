@@ -8,7 +8,7 @@
   import Healthbar from "./canvas/healthbar.svelte";
   import { onMount } from "svelte";
   import { click } from "./objects/prop";
-  import { equips } from "./objects/equip";
+  import Particle from "./canvas/particle.svelte";
 
   onMount(() => {
     reset();
@@ -16,7 +16,6 @@
 </script>
 <Canvas
   style={$state !== "none" && $health > 0 ? "cursor:none" : ""}
-  layerEvents
   autoplay
   on:mousemove={(e) => {
     $mouseX = e.x;
@@ -36,6 +35,7 @@
 >
   <Background />
   {#if $state !== "none"}
+    <Particle />
     <Character />
     <Healthbar />
   {/if}

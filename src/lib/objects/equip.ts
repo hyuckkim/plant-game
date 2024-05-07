@@ -86,3 +86,47 @@ export function makeGrabbableProp(
 
   return propNow;
 }
+export function makeGrabbableEquip(
+  img: HTMLImageElement,
+  source: Coord,
+  equipPos: Coord,
+  state: PropState,
+  {
+    onWheelUp,
+    onWheelDown,
+    onDayEnd
+  }: Partial<{
+    onWheelUp: (state: PropState) => true | Partial<Equip> | undefined,
+    onWheelDown: (state: PropState) => true | Partial<Equip> | undefined,
+    onDayEnd: (state: PropState) => boolean,
+  }>
+) {
+  const makeSomeProp = (pos: Coord, state: PropState) => newProp({
+    img,
+    source,
+    pos,
+    state,
+    onDayEnd,
+  });
+  const equipSomeProp = (state: PropState) => setEquip({
+    img,
+    source,
+    pos: equipPos,
+    state,
+    onWheelUp,
+    onWheelDown,
+    onClick: (state) => {
+      const propNow = makeSomeProp(
+        [get(characterPos).x, get(characterPos).y, equipPos[2], equipPos[3]],
+        state
+      );
+      propNow.onClick = (state) => {
+        equipSomeProp(state);
+        return false;
+      };
+      addProps(propNow);
+      return undefined;
+    }
+  });
+  equipSomeProp(state);
+}

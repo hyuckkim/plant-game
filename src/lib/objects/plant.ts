@@ -1,6 +1,6 @@
 import { getRes } from "../../assets/image";
-import { makeGrabbableProp, setEquip } from "./equip";
-import { newProp, type Prop } from "./prop";
+import { makeGrabbableProp } from "./equip";
+import { type Prop } from "./prop";
 
 export function generatePlant(): Prop {
   const length = randn_bm(0, 1200, 1);

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { addCoord, latestT, mouseX, mouseY, type Coord } from "../values";
+  import { addCoord, latestT, mouseX, mouseY } from "../values";
   import { characterPos, health, maxHealth, state } from "../gamevalues";
   import { getRes } from "../../assets/image";
 
@@ -68,7 +68,6 @@
   {/if}
   <Sprite
     callback={({ time }) => {
-      characterPos.set({ x: $mouseX, y: $mouseY });
       if ($state === "awake") $health -= Math.abs(dx) + Math.abs(dy);
       else $health = Math.min(maxHealth, $health + (time - $latestT) * 0.5);
 

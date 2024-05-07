@@ -9,11 +9,12 @@ export function settingHouseProps() {
   makeHouse();
   makeRoof();
   makeFloor();
+  makePond();
 }
 function makeHouse() {
   addProps(newProp({
-    img: getRes("prop_bed"),
-    source: [64, 0, 32, 64],
+    img: getRes("prop_houseprop"),
+    source: [0, 0, 32, 64],
     pos: [80, 80, 48, 96],
     display: "always",
     onClick: () => {
@@ -70,4 +71,13 @@ function makeFloor() {
       layer: "floor",
     }));
   })
+}
+
+function makePond() {
+  addProps(newProp({
+    img: getRes("prop_pond"),
+    source: [9, 70, 81, 78],
+    pos: [900, 720, 162, 156],
+    layer: "floor",
+  }))
 }
