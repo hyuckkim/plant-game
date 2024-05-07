@@ -61,6 +61,5 @@ export function makeBucket() {
       }
     }
   );
-  console.log(bucketProp);
   addProps(bucketProp);
 }

@@ -9,7 +9,6 @@
   import { onMount } from "svelte";
   import { click, wheelMove } from "./objects/prop";
   import Particle from "./canvas/particle.svelte";
-  import { equips, setEquip } from "./objects/equip";
 
   onMount(() => {
     reset();

@@ -36,7 +36,6 @@
         y: $characterPos.y,
         t: time
       })];
-      console.log("!!");
       movements -= 100;
     }
   }

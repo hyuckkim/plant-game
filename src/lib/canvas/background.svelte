@@ -90,8 +90,10 @@
     if (reversed) {
       context.rect(0, 0, width, height);
     }
-    context.arc(roundPos.x, roundPos.y, radius * (width + height), 0, 360);
-    context.clip("evenodd");
+    if (radius > 0) {
+      context.arc(roundPos.x, roundPos.y, radius * (width + height), 0, 360);
+      context.clip("evenodd");
+    }
   }
 
   function drawLayeredProps(
@@ -127,7 +129,7 @@
       context.beginPath();
       if (isFullyChanged(time)) {
         context.rect(0, 0, width, height);
-      } else {
+      } else if (radius > 0) {
         context.arc(roundPos.x, roundPos.y, radius * (width + height), 0, 360);
       }
       context.fill();

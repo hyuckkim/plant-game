@@ -95,7 +95,6 @@ export function click(x: number, y: number) {
     .filter((p) => p.layer === "normal")
     .sort((a, b) => getDistance(a, x, y) - getDistance(b, x, y))[0];
 
-  console.log(clickedProp);
   if (!!clickedProp) {
     const result = clickedProp.onClick(clickedProp.state);
     if (!result) removeProps(clickedProp);
@@ -125,7 +124,6 @@ export function wheelMove(dy: number) {
 export function dayEnd() {
   yesterdayProps.set(get(props));
   get(props).forEach(p => {
-    console.log(p, p.onDayEnd);
     const result = p.onDayEnd(p.state);
     if (!result) removeProps(p);
   });
