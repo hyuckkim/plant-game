@@ -17,7 +17,7 @@
     yesterdayProps,
     type Prop,
   } from "../objects/prop";
-  import { mouseX, mouseY } from "../values";
+  import { mouseX, mouseY, type CanvasInfo } from "../values";
 
   const roundPos = { x: 80, y: 80 };
   const leapRadius = (start: number, now: number) => {
@@ -80,12 +80,7 @@
     );
   }
 
-  type CanvasInfo = {
-    context: CanvasRenderingContext2D;
-    width: number;
-    height: number;
-    time: number;
-  };
+  
   function clipDayCircle(
     { context, width, height, time }: CanvasInfo,
     reversed: boolean = false

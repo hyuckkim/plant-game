@@ -1,6 +1,6 @@
 import { get, writable } from "svelte/store";
 import { state } from "../gamevalues";
-import type { Coord } from "../values";
+import type { CanvasInfo, Coord } from "../values";
 import { equips, setEquip } from "./equip";
 
 export type Prop = {
@@ -15,6 +15,7 @@ export type Prop = {
   state: PropState;
   onClick: (state: PropState) => boolean;
   onDayEnd: (state: PropState) => boolean;
+  ui: (canvas: CanvasInfo, state: PropState) => void;
 };
 export type PropState = {[key: string]: string | number};
 
@@ -29,6 +30,7 @@ export function newProp(data: Partial<Prop>): Prop {
     state: {},
     onClick: () => true,
     onDayEnd: () => true,
+    ui: () => {},
   };
 
   return { ...defaultProp, ...data };

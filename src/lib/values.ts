@@ -8,3 +8,9 @@ export type Coord = [x: number, y: number, w: number, h: number];
 export function addCoord(a: Coord, b: Coord): Coord {
   return [a[0] + b[0], a[1] + b[1], a[2] + b[2], a[3] + b[3]];
 }
+export type CanvasInfo = {
+  context: CanvasRenderingContext2D;
+  width: number;
+  height: number;
+  time: number;
+};

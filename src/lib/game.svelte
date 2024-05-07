@@ -5,7 +5,7 @@
 
   import Background from "./canvas/background.svelte";
   import Character from "./canvas/character.svelte";
-  import Healthbar from "./canvas/healthbar.svelte";
+  import UI from "./canvas/UI.svelte";
   import { onMount } from "svelte";
   import { click } from "./objects/prop";
   import Particle from "./canvas/particle.svelte";
@@ -37,6 +37,6 @@
   {#if $state !== "none"}
     <Particle />
     <Character />
-    <Healthbar />
+    <UI />
   {/if}
 </Canvas>

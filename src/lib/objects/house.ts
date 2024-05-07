@@ -14,7 +14,7 @@ export function settingHouseProps() {
 function makeHouse() {
   addProps(newProp({
     img: getRes("prop_houseprop"),
-    source: [0, 0, 32, 64],
+    source: [0, 192, 32, 64],
     pos: [80, 80, 48, 96],
     display: "always",
     onClick: () => {
