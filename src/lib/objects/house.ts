@@ -81,7 +81,8 @@ function makePond() {
   addProps(newProp({
     img: getRes("prop_pond"),
     source: [9, 70, 81, 78],
-    pos: [900, 720, 162, 156],
+    pos: [800, 670, 162, 156],
     layer: "floor",
+    state: { tag: "pond" },
   }))
 }

@@ -1,5 +1,5 @@
 import { get, writable } from "svelte/store";
-import { state } from "../gamevalues";
+import { characterPos, state } from "../gamevalues";
 import type { CanvasInfo, Coord } from "../values";
 import { equips, setEquip } from "./equip";
 
@@ -135,6 +135,18 @@ export function dayStarted() {
     const result = p.onDayEnd(p.state);
     if (!result) removeProps(p);
   });
+}
+export function attachedTag(tag: string) {
+  let currentProps =
+    get(state) === "awake"
+      ? get(props)
+      : get(state) === "sleep"
+      ? get(nightProps)
+      : [];
+  return currentProps
+    .filter(p => isAttached(p, get(characterPos).x, get(characterPos).y))
+    .map(p => p.state.tag)
+    .includes(tag);
 }
 export function isAttached(p: Prop, x: number, y: number) {
   return (
