@@ -2,7 +2,8 @@ import { writable } from "svelte/store";
 import { spring } from "svelte/motion";
 import { initializeProps } from "./objects/prop";
 import { settingHouseProps } from "./objects/house";
-import { initializeEquips } from "./objects/equip";
+import { equips, initializeEquips } from "./objects/equip";
+import { initializePot } from "./objects/pot";
 
 export const maxHealth = 3000;
 export const health = writable(maxHealth);
@@ -18,9 +19,11 @@ export function reset() {
   health.set(maxHealth);
   statesEnteredTime.set(0);
   state.set("none");
+  equips.set(undefined);
 
   initializeProps();
   initializeEquips();
+  initializePot();
   
   settingHouseProps();
 }

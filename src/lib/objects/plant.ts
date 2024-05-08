@@ -1,5 +1,7 @@
 import { getRes } from "../../assets/image";
+import { getGrass } from "../data/grass";
 import { makeGrabbableProp } from "./equip";
+import { addGrass } from "./pot";
 import { type Prop } from "./prop";
 
 export function generatePlant(): Prop {
@@ -19,6 +21,10 @@ export function generatePlant(): Prop {
         if (typeof state.amountTime !== "number") return false;
         state.amountTime -= 1;
         if (state.amountTime === 0) return false;
+        return true;
+      },
+      onWheelUp: (state) => {
+        if (addGrass(getGrass("grass"))) return undefined;
         return true;
       }
     }
