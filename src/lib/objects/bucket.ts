@@ -9,14 +9,10 @@ export function makeBucket() {
     getRes("prop_houseprop"),
     [326, 454, 20, 21],
     [0, 3, 30, 30],
-    { progress: 0 },
+    {},
     {
-      onWheelUp: (state) => {
-        if (typeof state.progress !== "number") return undefined;
+      onWheelUp: () => {
         if (attachedTag("pond")) {
-          state.progress++;
-        }
-        if (state.progress >= 10) {
           return waterBucket;
         }
         return true;
@@ -27,14 +23,10 @@ export function makeBucket() {
     getRes("prop_houseprop"),
     [294, 454, 20, 21],
     [0, 3, 30, 30],
-    { progress: 0 },
+    {},
     {
-      onWheelDown: (state) => {
-        if (typeof state.progress !== "number") return undefined;
+      onWheelDown: () => {
         if (attachedTag("pot")) {
-          state.progress++;
-        }
-        if (state.progress >= 10) {
           waterCount.set(Math.min(maxWater, get(waterCount) + 1));
           return justBucket;
         }
@@ -47,14 +39,10 @@ export function makeBucket() {
     [326, 454, 20, 21],
     [210, 180, 30, 30],
     [0, 3, 30, 30],
-    { progress: 0 },
+    {},
     {
       onWheelUp: (state) => {
-        if (typeof state.progress !== "number") return undefined;
         if (attachedTag("pond")) {
-          state.progress++;
-        }
-        if (state.progress >= 10) {
           return waterBucket;
         }
         return true;
