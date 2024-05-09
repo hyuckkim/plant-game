@@ -87,6 +87,51 @@ export function drawPanel(
   context.restore();
 }
 
+export function drawItemPanel(
+  { context }: CanvasInfo,
+  [x, y, w, h]: Coord
+) {
+  context.save();
+  context.imageSmoothingEnabled = false;
+  context.drawImage(
+    getRes("ui"), 30, 329, 6, 6,
+    x, y, 12, 12
+  );
+  context.drawImage(
+    getRes("ui"), 48, 329, 6, 6,
+    x + 12, y, w - 24, 12
+  );
+  context.drawImage(
+    getRes("ui"), 64, 329, 6, 6,
+    x + w - 12, y, 12, 12
+  );
+  context.drawImage(
+    getRes("ui"), 30, 346, 6, 6,
+    x, y + 12, 12, h - 24
+  );
+  context.drawImage(
+    getRes("ui"), 48, 346, 6, 6,
+    x + 12, y + 12, w - 24, h - 24
+  );
+  context.drawImage(
+    getRes("ui"), 64, 346, 6, 6,
+    x + w - 12, y + 12, 12, h - 24
+  );
+  context.drawImage(
+    getRes("ui"), 30, 363, 6, 6,
+    x, y + h - 12, 12, 12
+  );
+  context.drawImage(
+    getRes("ui"), 48, 363, 6, 6,
+    x + 12, y + h - 12, w - 24, 12
+  );
+  context.drawImage(
+    getRes("ui"), 64, 363, 6, 6,
+    x + w - 12, y + h - 12, 12, 12
+  );
+  context.restore();
+}
+
 export function drawExtendBar(
   { context }: CanvasInfo,
   [x, y, w]: Coord,

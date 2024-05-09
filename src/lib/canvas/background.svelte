@@ -104,12 +104,20 @@
     props
       .filter((p) => p.layer === "floor")
       .forEach((p) => {
-        drawSprite(context, p.img, p.pos, p.source, p.flipped);
+        if (typeof p.img === "function") {
+          p.img({ context, pos: p.pos });
+        } else {
+          drawSprite(context, p.img, p.pos, p.source, p.flipped);
+        }
       });
     props
       .filter((p) => p.layer === "normal")
       .forEach((p) => {
-        drawSprite(context, p.img, p.pos, p.source, p.flipped);
+        if (typeof p.img === "function") {
+          p.img({ context, pos: p.pos });
+        } else {
+          drawSprite(context, p.img, p.pos, p.source, p.flipped);
+        }
       });
     props
       .filter((p) => p.layer === "roof")
@@ -117,7 +125,11 @@
         if ($state === "sleep" || isAttached(p, pos.x, pos.y)) {
           context.globalAlpha = 0.2;
         }
-        drawSprite(context, p.img, p.pos, p.source, p.flipped);
+        if (typeof p.img === "function") {
+          p.img({ context, pos: p.pos });
+        } else {
+          drawSprite(context, p.img, p.pos, p.source, p.flipped);
+        }
         context.globalAlpha = 1;
       });
   }

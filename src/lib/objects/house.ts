@@ -6,6 +6,7 @@ import { latestT, type Coord } from "../values";
 import { generatePlant } from "./plant";
 import { makePot } from "./pot";
 import { makeBucket } from "./bucket";
+import { makeBottle } from "./bottle";
 
 export function settingHouseProps() {
   makeHouse();
@@ -14,6 +15,7 @@ export function settingHouseProps() {
   makePond();
   makePot();
   makeBucket();
+  makeBottle();
 }
 function makeHouse() {
   addProps(newProp({

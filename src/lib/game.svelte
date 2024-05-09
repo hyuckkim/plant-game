@@ -37,8 +37,8 @@
 >
   <Background />
   {#if $state !== "none"}
-    <Particle />
-    <Character />
-    <UI />
+  <Particle />
+  <Character />
+  <UI />
   {/if}
 </Canvas>

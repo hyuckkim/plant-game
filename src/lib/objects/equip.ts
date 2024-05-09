@@ -1,10 +1,10 @@
 import { get, writable } from "svelte/store";
-import { addProps, newProp, type Prop, type PropState } from "./prop";
+import { addProps, newProp, type Prop, type PropRender, type PropState } from "./prop";
 import type { Coord } from "../values";
 import { characterPos } from "../gamevalues";
 
 export type Equip = {
-  img: CanvasImageSource;
+  img: CanvasImageSource | PropRender;
   source: Coord;
   pos: Coord;
   flipped: { x: boolean; y: boolean };
@@ -36,7 +36,7 @@ export function setEquip(data: Partial<Equip>) {
 }
 
 export function makeGrabbableProp(
-  img: HTMLImageElement,
+  img: HTMLImageElement | PropRender,
   source: Coord,
   propPos: Coord,
   equipPos: Coord,
@@ -87,7 +87,7 @@ export function makeGrabbableProp(
   return propNow;
 }
 export function makeGrabbableEquip(
-  img: HTMLImageElement,
+  img: HTMLImageElement | PropRender,
   source: Coord,
   equipPos: Coord,
   state: PropState,

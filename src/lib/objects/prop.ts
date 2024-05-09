@@ -4,7 +4,7 @@ import type { CanvasInfo, Coord } from "../values";
 import { equips, setEquip } from "./equip";
 
 export type Prop = {
-  img: CanvasImageSource;
+  img: CanvasImageSource | PropRender;
   source: Coord;
   pos: Coord;
   flipped: { x: boolean; y: boolean };
@@ -17,6 +17,12 @@ export type Prop = {
   onDayEnd: (state: PropState) => boolean;
   ui: (canvas: CanvasInfo, state: PropState) => void;
 };
+
+export type PropRender = (canvas: {
+  context: CanvasRenderingContext2D,
+  pos: Coord
+}) => void;
+
 export type PropState = {[key: string]: string | number};
 
 export function newProp(data: Partial<Prop>): Prop {
