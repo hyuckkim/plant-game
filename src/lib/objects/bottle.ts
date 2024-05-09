@@ -2,11 +2,11 @@ import { get, writable } from "svelte/store";
 import { getRes } from "../../assets/image";
 import { equips, makeGrabbableProp } from "./equip";
 import { addProps, attachedTag, newProp, props } from "./prop";
-import { potion, type Potion } from "../data/potion";
+import { type Potion } from "../data/potion";
 import { getMadenPotion } from "./pot";
 import { addCoord, type Coord } from "../values";
 import { characterPos } from "../gamevalues";
-import { drawSprite } from "../canvas/sprite";
+import { drawSprite } from "../layers/sprite";
 
 export const bottlePotion = writable<Potion | undefined>();
 export const bottleImgData = writable<HTMLImageElement>();

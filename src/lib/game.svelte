@@ -3,12 +3,12 @@
   import { health, state, reset } from "./gamevalues";
   import { mouseX, mouseY } from "./values";
 
-  import Background from "./canvas/background.svelte";
-  import Character from "./canvas/character.svelte";
-  import UI from "./canvas/UI.svelte";
+  import Background from "./layers/background.svelte";
+  import Character from "./layers/character.svelte";
+  import UI from "./layers/UI.svelte";
   import { onMount } from "svelte";
   import { click, wheelMove } from "./objects/prop";
-  import Particle from "./canvas/particle.svelte";
+  import Particle from "./layers/particle.svelte";
 
   onMount(() => {
     reset();

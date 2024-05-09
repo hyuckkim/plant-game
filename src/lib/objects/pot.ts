@@ -1,9 +1,9 @@
 import { get, writable } from "svelte/store";
 import { getRes } from "../../assets/image";
-import { drawExtendBar, drawItemPanel, drawPanel } from "../canvas/ui";
+import { drawExtendBar, drawItemPanel, drawPanel } from "../layers/ui";
 import { addProps, newProp } from "./prop";
 import { type Grass } from "../data/grass";
-import { drawSprite } from "../canvas/sprite";
+import { drawSprite } from "../layers/sprite";
 import { latestT } from "../values";
 import { getPotion, type Potion } from "../data/potion";
 import { createBottleData } from "./bottle";
