@@ -77,6 +77,11 @@ export function removeProps(p: Prop) {
     nightProps.set(get(nightProps).filter((t) => t !== p));
   }
 }
+export function getCurrentProps(): Prop[] {
+  if (get(state) === "awake") return get(props);
+  if (get(state) === "sleep") return get(nightProps);
+  return [];
+}
 
 export function click(x: number, y: number) {
   const equip = get(equips);
@@ -90,13 +95,7 @@ export function click(x: number, y: number) {
     return;
   }
 
-  let currentProps =
-    get(state) === "awake"
-      ? get(props)
-      : get(state) === "sleep"
-      ? get(nightProps)
-      : [];
-  const clickedProp = currentProps
+  const clickedProp = getCurrentProps()
     .filter((p) => isAttached(p, x, y))
     .filter((p) => p.layer === "normal")
     .sort((a, b) => getDistance(a, x, y) - getDistance(b, x, y))[0];
@@ -141,13 +140,7 @@ export function dayStarted() {
   });
 }
 export function attachedTag(tag: string) {
-  let currentProps =
-    get(state) === "awake"
-      ? get(props)
-      : get(state) === "sleep"
-      ? get(nightProps)
-      : [];
-  return currentProps
+  return getCurrentProps()
     .filter(p => isAttached(p, get(characterPos).x, get(characterPos).y))
     .map(p => p.state.tag)
     .includes(tag);

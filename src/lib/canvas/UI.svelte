@@ -4,7 +4,7 @@
   import { spring } from "svelte/motion";
   import { onMount } from "svelte";
   import { drawHealthBar } from "./ui";
-  import { isAttached, nightProps, props } from "../objects/prop";
+  import { getCurrentProps, isAttached, nightProps, props } from "../objects/prop";
 
   const margin = 10;
   const extraHeight = spring(300);
@@ -24,13 +24,7 @@
       $health / maxHealth
     );
 
-    let currentProps =
-      $state === "awake"
-        ? $props
-        : $state === "sleep"
-        ? $nightProps
-        : [];
-    currentProps
+    getCurrentProps()
       .filter(p => isAttached(p, $characterPos.x, $characterPos.y))
       .forEach(p => {
         p.ui(canvas, p.state);
