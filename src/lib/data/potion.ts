@@ -1,3 +1,5 @@
+import { writable } from "svelte/store";
+
 export type Potion = {
   id: number,
   color: {r: number, g: number, b: number},
@@ -13,9 +15,16 @@ export const potion: Potion[] = [
   {
     id: 0,
     color: {
-      r: 0,
-      g: 0,
-      b: 0
+      r: 33,
+      g: 80,
+      b: 29
     }
   }
 ];
+
+export const potionDrop = writable<{
+  time: number,
+  pos: { x: number, y: number },
+  potion: Potion,
+  direction?: number,
+}[]>([]);

@@ -1,8 +1,9 @@
+
 <script>
 
   import { Layer } from "svelte-canvas";
-  import { particles } from "../particle";
-  import { characterPos, characterReady } from "../gamevalues";
+  import { particles } from "../../particle";
+  import { characterPos, characterReady } from "../../gamevalues";
 
   const maximumTime = 800;
   const maximumSize = 10;

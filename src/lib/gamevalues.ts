@@ -12,6 +12,7 @@ export const statesEnteredTime = writable(0);
 export const characterPos = spring({ x: 0, y: 0 }, {
   stiffness: 0.5
 });
+export const characterDir = writable(0);
 export const characterReady = writable(false);
 export const lastCharacterPos = writable({ x: 0, y: 0 });
 

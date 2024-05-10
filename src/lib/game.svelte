@@ -8,7 +8,8 @@
   import UI from "./layers/UI.svelte";
   import { onMount } from "svelte";
   import { click, wheelMove } from "./objects/prop";
-  import Particle from "./layers/particle.svelte";
+  import ParticleWalk from "./layers/particle/particleWalk.svelte";
+  import ParticleDrop from "./layers/particle/particleDrop.svelte";
 
   onMount(() => {
     reset();
@@ -37,8 +38,9 @@
 >
   <Background />
   {#if $state !== "none"}
-  <Particle />
+  <ParticleWalk />
   <Character />
   <UI />
+  <ParticleDrop />
   {/if}
 </Canvas>

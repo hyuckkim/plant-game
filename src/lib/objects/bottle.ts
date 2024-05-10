@@ -2,15 +2,19 @@ import { get, writable } from "svelte/store";
 import { getRes } from "../../assets/image";
 import { equips, makeGrabbableProp } from "./equip";
 import { addProps, attachedTag, newProp, props } from "./prop";
-import { type Potion } from "../data/potion";
+import { potionDrop, type Potion } from "../data/potion";
 import { getMadenPotion } from "./pot";
-import { addCoord, type Coord } from "../values";
+import { addCoord, latestT, type Coord } from "../values";
 import { characterPos } from "../gamevalues";
 import { drawSprite } from "../layers/sprite";
 
 export const bottlePotion = writable<Potion | undefined>();
+export const amountPotion = writable(10);
 export const bottleImgData = writable<HTMLImageElement>();
 
+function addNoise(pos: {x: number, y: number }) {
+  return {x: pos.x + (Math.random() * 6 - 3), y: pos.y + (Math.random() * 6 - 3)};
+}
 export function makeBottle() {
   const bottle = makeGrabbableProp(
     ({ context, pos }) => {
@@ -27,11 +31,17 @@ export function makeBottle() {
     {},
     {
       onWheelDown: () => {
-        if (get(bottlePotion) === undefined) {
+        const potion = get(bottlePotion);
+        if (potion === undefined) {
           if (attachedTag("pot")) {
-            bottlePotion.set(getMadenPotion());
-            bottleImgData.set(createBottleData(0, 0, 0));
+            const newPotion = getMadenPotion();
+            bottlePotion.set(newPotion);
+            if (newPotion) {
+              bottleImgData.set(createBottleData(newPotion.color.r, newPotion.color.g, newPotion.color.b));
+            }
           }
+        } else {
+          potionDrop.set([...get(potionDrop), { time: get(latestT), pos: addNoise(get(characterPos)), potion}]);
         }
         return true;
       }

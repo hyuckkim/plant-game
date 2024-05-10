@@ -1,6 +1,6 @@
 <script lang="ts">
   import { addCoord, latestT, mouseX, mouseY } from "../values";
-  import { characterPos, health, maxHealth, state } from "../gamevalues";
+  import { characterDir, characterPos, health, maxHealth, state } from "../gamevalues";
   import { getRes } from "../../assets/image";
 
   import Sprite from "./sprite.svelte";
@@ -30,12 +30,11 @@
     dx = 0,
     dy = 0,
     dt = 0,
-    dir = 0,
     ddt = 0;
-  $: position = getDirectionFrame(dx, dy, dir, $latestT);
+  $: position = getDirectionFrame(dx, dy, $characterDir, $latestT);
   $: diedPosition = frames.die[Math.min(3, Math.floor(($latestT - ddt) / 160))];
 
-  $: equipPos = dir === 0 ? -7 : dir === 1 ? 0 : dir === 2 ? 0 : 7;
+  $: equipPos = $characterDir === 0 ? -7 : $characterDir === 1 ? 0 : $characterDir === 2 ? 0 : 7;
 
   function getDirectionFrame(
     dx: number,
@@ -44,7 +43,7 @@
     time: number
   ) {
     if (dx * dx + dy * dy > 0.5) {
-      dir = (dx < dy ? 2 : 0) + (dx < -dy ? 1 : 0);
+      $characterDir = (dx < dy ? 2 : 0) + (dx < -dy ? 1 : 0);
       dt = $latestT;
     }
 
@@ -57,7 +56,7 @@
 </script>
 
 {#if $health > 0}
-  {#if dir === 2 && $equips}
+  {#if $characterDir === 2 && $equips}
     {#if typeof $equips.img === "function"}
       <Layer
         render={({ context }) => {
@@ -96,7 +95,7 @@
     source={[position * 24, 0, 24, 24]}
     render={[$characterPos.x, $characterPos.y, size, size]}
   />
-  {#if dir !== 2 && $equips}
+  {#if $characterDir !== 2 && $equips}
     {#if typeof $equips.img === "function"}
       <Layer
         render={({ context }) => {
