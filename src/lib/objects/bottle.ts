@@ -20,7 +20,13 @@ export function makeBottle() {
     ({ context, pos }) => {
       const bottle = get(bottlePotion);
       if (bottle) {
+        context.save();
+        context.beginPath();
+        context.rect(pos[0] - pos[2] / 2, (pos[1] - pos[3] / 2) + pos[3] / 10 * (10 - get(amountPotion)), pos[2], pos[3] * get(amountPotion));
+        context.clip();
         drawSprite(context, get(bottleImgData), pos, [0, 0, 16, 16]);
+        context.closePath();
+        context.restore();
       }
       drawSprite(context, getRes("prop_potion_empty"), pos, [96, 0, 16, 16]);
       
@@ -38,10 +44,13 @@ export function makeBottle() {
             bottlePotion.set(newPotion);
             if (newPotion) {
               bottleImgData.set(createBottleData(newPotion.color.r, newPotion.color.g, newPotion.color.b));
+              amountPotion.set(10);
             }
           }
         } else {
-          potionDrop.set([...get(potionDrop), { time: get(latestT), pos: addNoise(get(characterPos)), potion}]);
+          addNewPotionDrop(potion);
+          amountPotion.set(get(amountPotion) - 1);
+          if (get(amountPotion) === 0) bottlePotion.set(undefined);
         }
         return true;
       }
@@ -86,4 +95,8 @@ export function createBottleData(r: number, g: number, b: number) {
   const img = new Image();
   img.src = canvas.toDataURL("image/png");
   return img;
+}
+
+export function addNewPotionDrop(potion: Potion) {
+  potionDrop.set([...get(potionDrop), { time: get(latestT), pos: addNoise(get(characterPos)), potion}]);
 }
