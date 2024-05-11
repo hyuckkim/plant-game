@@ -8,7 +8,6 @@
 <Layer render={({ context,  time }) => {
   context.save();
   $potionDrop.forEach(p => {
-    console.log((p.time + 1000 - time) / (7));
     context.fillStyle = `rgb(${p.potion.color.r} ${p.potion.color.g} ${p.potion.color.b} / ${Math.min(100, (p.time + 1000 - time) / (7))}%)`;
     context.fillRect(p.pos.x - 3, p.pos.y, 6, 6);
   });

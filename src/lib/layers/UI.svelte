@@ -6,7 +6,8 @@
   import { drawHealthBar } from "./ui";
   import { getCurrentProps, isAttached } from "../objects/prop";
 
-  const margin = 10;
+  const marginX = 20;
+  const marginY = 5;
   const extraHeight = spring(300);
 
   onMount(() => {
@@ -20,9 +21,16 @@
   render={(canvas) => {
     drawHealthBar(
       canvas, 
-      [margin, canvas.height - 40 - margin + $extraHeight, canvas.width - margin * 2, 0],
-      $health / maxHealth
+      [marginX, canvas.height - 40 - marginY + $extraHeight, canvas.width - marginX * 2, 0],
+      Math.min($health, 3000) / Math.min($maxHealth, 3000)
     );
+    if ($maxHealth > 3000) {
+      drawHealthBar(
+        canvas, 
+        [marginX, canvas.height - 80 - marginY - marginY + $extraHeight, (canvas.width - marginX * 2) * ($maxHealth - 3000) / 3000, 0],
+        Math.min($health - 3000, 3000) / Math.min($maxHealth - 3000, 3000)
+      );
+    }
 
     getCurrentProps()
       .filter(p => isAttached(p, $characterPos.x, $characterPos.y))

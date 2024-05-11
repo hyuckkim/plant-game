@@ -5,12 +5,13 @@ import { addProps, attachedTag, newProp, props } from "./prop";
 import { potionDrop, type Potion } from "../data/potion";
 import { getMadenPotion } from "./pot";
 import { addCoord, latestT, type Coord } from "../values";
-import { characterPos } from "../gamevalues";
+import { characterPos, maxHealth } from "../gamevalues";
 import { drawSprite } from "../layers/sprite";
 
 export const bottlePotion = writable<Potion | undefined>();
 export const amountPotion = writable(10);
 export const bottleImgData = writable<HTMLImageElement>();
+export const drinkedPotions = writable<{[potion: number]: number}>({});
 
 function addNoise(pos: {x: number, y: number }) {
   return {x: pos.x + (Math.random() * 6 - 3), y: pos.y + (Math.random() * 6 - 3)};
@@ -51,6 +52,22 @@ export function makeBottle() {
           addNewPotionDrop(potion);
           amountPotion.set(get(amountPotion) - 1);
           if (get(amountPotion) === 0) bottlePotion.set(undefined);
+        }
+        return true;
+      },
+      onWheelUp: () => {
+        const potion = get(bottlePotion);
+        if (potion !== undefined) {
+          if (potion.id % 3 === 0) {
+            drinkedPotions.set({...get(drinkedPotions), [potion.id]: Math.min(10, (get(drinkedPotions)[potion.id] ?? 0) + 1)});
+            maxHealth.set(3000 + 3000 * Object.values(get(drinkedPotions)).reduce((pre, curr) => pre + curr, 0) / 80);
+            console.log(get(drinkedPotions));
+            amountPotion.set(get(amountPotion) - 1);
+            if (get(amountPotion) === 0) bottlePotion.set(undefined);
+          }
+          else {
+
+          }
         }
         return true;
       }

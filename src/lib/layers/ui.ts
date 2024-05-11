@@ -10,30 +10,30 @@ export function drawHealthBar(
   context.imageSmoothingEnabled = false;
   context.drawImage(
     getRes("ui"), 259, 40, 9, 20,
-    x, y, 18, 40
+    x - 18, y, 18, 40
   );
   context.drawImage(
     getRes("ui"), 284, 40, 23, 20,
-    x + 18, y, w - 36, 40
+    x, y, w, 40
   );
   context.drawImage(
     getRes("ui"), 323, 40, 9, 20,
-    x + w - 18, y, 18, 40
+    x + w, y, 18, 40
   );
 
   if (health > 0) {
     context.drawImage(
       getRes("ui"), 341, 40, 1, 14,
-      x + 18, y + 6, 2, 28
+      x, y + 6, 2, 28
     );
     context.drawImage(
       getRes("ui"), 350, 40, 7, 14,
-      x + 20, y + 6, (w - 36) * health, 28
+      x + 2, y + 6, w * health - 2, 28
     );
     if (health === 1) {
       context.drawImage(
         getRes("ui"), 365, 40, 1, 14,
-        x + w - 18, y + 6, 2, 28
+        x + w, y + 6, 2, 28
       );
     }
   }

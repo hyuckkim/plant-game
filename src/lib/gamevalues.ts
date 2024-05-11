@@ -5,8 +5,8 @@ import { settingHouseProps } from "./objects/house";
 import { equips, initializeEquips } from "./objects/equip";
 import { initializePot } from "./objects/pot";
 
-export const maxHealth = 3000;
-export const health = writable(maxHealth);
+export const maxHealth = writable(3000);
+export const health = writable(3000);
 export const state = writable<"awake" | "sleep" | "none">("none");
 export const statesEnteredTime = writable(0);
 export const characterPos = spring({ x: 0, y: 0 }, {
@@ -17,7 +17,7 @@ export const characterReady = writable(false);
 export const lastCharacterPos = writable({ x: 0, y: 0 });
 
 export function reset() {
-  health.set(maxHealth);
+  health.set(3000);
   statesEnteredTime.set(0);
   state.set("none");
   equips.set(undefined);

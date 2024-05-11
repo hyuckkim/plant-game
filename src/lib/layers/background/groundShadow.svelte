@@ -12,7 +12,6 @@
   context.save();
   context.fillStyle = "#000c";
   context.beginPath();
-    console.log(clip, clipReversed);
   if (clip) {
     context.ellipse(roundPos.x, roundPos.y, clipCircle * (width + height), clipCircle * (width + height), 0, 0, 360);
     if (clipReversed) {
