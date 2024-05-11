@@ -40,7 +40,7 @@
   {#if $state !== "none"}
   <ParticleWalk />
   <Character />
-  <UI />
   <ParticleDrop />
+  <UI />
   {/if}
 </Canvas>

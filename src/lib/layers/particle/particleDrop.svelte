@@ -17,9 +17,9 @@
   $potionDrop = $potionDrop.filter(p => time - p.time < 1000)
     .map(p => typeof p.direction === "undefined" ? {...p, direction: $characterDir } 
     : time - p.time > 300 ? p :
-    p.direction === 0 ? {...p, pos: {x: p.pos.x - 1, y: p.pos.y + ((time - p.time)) / 300}} :
-    p.direction === 1 ? {...p, pos: {x: p.pos.x, y: p.pos.y + ((time - p.time)) / 300 + 1}} :
-    p.direction === 2 ? {...p, pos: {x: p.pos.x, y: p.pos.y + ((time - p.time)) / 300 - 1}} :
-    p.direction === 3 ? {...p, pos: {x: p.pos.x + 1, y: p.pos.y + ((time - p.time)) / 300}} : p);
+    p.direction === 0 ? {...p, pos: {x: p.pos.x - 1, y: p.pos.y + (time - p.time) / 300}} :
+    p.direction === 1 ? {...p, pos: {x: p.pos.x, y: p.pos.y + (time - p.time) / 300 + 1}} :
+    p.direction === 2 ? {...p, pos: {x: p.pos.x, y: p.pos.y + (time - p.time) / 300 - 1}} :
+    p.direction === 3 ? {...p, pos: {x: p.pos.x + 1, y: p.pos.y + (time - p.time) / 300}} : p);
 }}
 />

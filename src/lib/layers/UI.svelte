@@ -1,10 +1,10 @@
 <script lang="ts">
   import { Layer } from "svelte-canvas";
-  import { characterPos, health, maxHealth, state } from "../gamevalues";
+  import { characterPos, health, maxHealth } from "../gamevalues";
   import { spring } from "svelte/motion";
   import { onMount } from "svelte";
   import { drawHealthBar } from "./ui";
-  import { getCurrentProps, isAttached, nightProps, props } from "../objects/prop";
+  import { getCurrentProps, isAttached } from "../objects/prop";
 
   const margin = 10;
   const extraHeight = spring(300);
