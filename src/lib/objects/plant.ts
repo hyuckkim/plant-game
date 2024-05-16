@@ -1,8 +1,10 @@
+import { get } from "svelte/store";
 import { getRes } from "../../assets/image";
 import { getGrass, type Grass } from "../data/grass";
+import { getRandomPotionGrass, potiondropResult, type Potion } from "../data/potion";
 import { makeGrabbableProp } from "./equip";
 import { addGrass } from "./pot";
-import { type Prop } from "./prop";
+import { attachedTag, type Prop } from "./prop";
 
 export function generatePlant(): Prop {
   const length = randn_bm(0, 1200, 1);
@@ -12,6 +14,44 @@ export function generatePlant(): Prop {
 
   if (Math.random() > 0.95) return generateGrassProp(getGrass("red"), x, y);
   else return generateGrassProp(getGrass("grass"), x, y);
+}
+
+export function resolvePotionDropResult(): Prop[] {
+  const sliced: {
+    potion: Potion;
+    pos: { x: number; y: number; };
+}[][] = [];
+  drop: for (let i = 0; i < get(potiondropResult).length; i++) {
+    for (let j = 0; j < sliced.length; j++) {
+      if (sliced[j][0].potion === get(potiondropResult)[i].potion) {
+        sliced[j].push(get(potiondropResult)[i]);
+        continue drop;
+      }
+    }
+    sliced.push([get(potiondropResult)[i]]);
+  }
+  const props: Prop[] = [];
+  for (let i = 0; i < sliced.length; i++) {
+    const used: number[] = [];
+    for (let j = 0; j < sliced[i].length; j++) {
+      if (used.includes(j)) continue;
+      const counted = [j];
+      for (let k = 0; k < sliced[i].length; k++) {
+        if (counted.length === 4) break;
+        if (j === k || used.includes(k)) continue;
+        if (attached(sliced[i][j].pos, sliced[i][j].pos)) counted.push(k);
+      }
+      if (counted.length === 4) {
+        used.push(...counted);
+        props.push(generateGrassProp(getRandomPotionGrass(sliced[i][j].potion), sliced[i][j].pos.x, sliced[i][j].pos.y));
+      }
+    }
+  }
+  potiondropResult.set([]);
+  return props;
+}
+function attached({x: x1, y: y1}: {x: number, y: number}, {x: x2, y: y2}: {x: number, y: number}, range: number = 20) {
+  return (x1 - x2) < range && (x2 - x1) < range && (y1 - y2) < range && (y2 - y1) < range;
 }
 
 export function generateGrassProp(grass: Grass, x: number, y: number): Prop {
@@ -29,7 +69,7 @@ export function generateGrassProp(grass: Grass, x: number, y: number): Prop {
         return true;
       },
       onWheelUp: (state) => {
-        if (addGrass(grass)) return undefined;
+        if (attachedTag("pot") && addGrass(grass)) return undefined;
         return true;
       }
     }

@@ -11,6 +11,7 @@
     props,
     nightProps,
     yesterdayProps,
+    type Prop,
   } from "../objects/prop";
   import { mouseX, mouseY } from "../values";
   import GroundGrass from "./background/groundGrass.svelte";
@@ -25,6 +26,10 @@
   let isFullyChanged = true;
   let circleRadius = 0;
   let gottenStatus = "none";
+
+  let gottenProps: Prop[] = [];
+  let gottenYesterdayProps: Prop[] = [];
+  let gottenNightProps: Prop[] = [];
 </script>
 
 <Layer
@@ -39,19 +44,23 @@
         $characterReady = true;
       }
     }
+
+    gottenProps = $props;
+    gottenYesterdayProps = $yesterdayProps;
+    gottenNightProps = $nightProps;
   }}
 />
 
 <GroundGrass />
 {#if gottenStatus === "awake"}
-  <GroundProp props={$props}
+  <GroundProp props={gottenProps}
   clip={!isFullyChanged}
   clipCircle={circleRadius} />
 {/if}
 {#if gottenStatus === "sleep"}
-  <GroundProp props={$yesterdayProps} />
+  <GroundProp props={gottenYesterdayProps} />
 {:else if gottenStatus === "awake" && !isFullyChanged}
-<GroundProp props={$yesterdayProps} clip clipReversed
+<GroundProp props={gottenYesterdayProps} clip clipReversed
   clipCircle={circleRadius} />
 {/if}
 
@@ -60,8 +69,8 @@
   clipCircle={circleRadius} />
 {/if}
 {#if !isFullyChanged}
-  <GroundProp props={$nightProps} clip clipReversed={gottenStatus === "awake"}
+  <GroundProp props={gottenNightProps} clip clipReversed={gottenStatus === "awake"}
   clipCircle={circleRadius} />
 {:else if gottenStatus === "sleep"}
-  <GroundProp props={$nightProps} />
+  <GroundProp props={gottenNightProps} />
 {/if}

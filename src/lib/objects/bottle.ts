@@ -2,7 +2,7 @@ import { get, writable } from "svelte/store";
 import { getRes } from "../../assets/image";
 import { equips, makeGrabbableProp } from "./equip";
 import { addProps, attachedTag, newProp, props } from "./prop";
-import { potionDrop, type Potion } from "../data/potion";
+import { potionDrop, potiondropResult, type Potion } from "../data/potion";
 import { getMadenPotion } from "./pot";
 import { addCoord, latestT, type Coord } from "../values";
 import { characterPos, maxHealth } from "../gamevalues";
@@ -120,5 +120,7 @@ export function createBottleData(r: number, g: number, b: number) {
 }
 
 export function addNewPotionDrop(potion: Potion) {
-  potionDrop.set([...get(potionDrop), { time: get(latestT), pos: addNoise(get(characterPos)), potion}]);
+  const pos = addNoise(get(characterPos));
+  potionDrop.set([...get(potionDrop), { time: get(latestT), pos, potion}]);
+  potiondropResult.set([...get(potiondropResult), { pos, potion }]);
 }

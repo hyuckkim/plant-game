@@ -3,7 +3,7 @@ import { getRes } from "../../assets/image";
 import { addProps, dayEnd, dayStarted, newProp } from "./prop";
 import { characterPos, lastCharacterPos, state, statesEnteredTime } from "../gamevalues";
 import { latestT, type Coord } from "../values";
-import { generatePlant } from "./plant";
+import { generatePlant, resolvePotionDropResult } from "./plant";
 import { makePot } from "./pot";
 import { makeBucket } from "./bucket";
 import { makeBottle } from "./bottle";
@@ -37,9 +37,15 @@ function changeAwakenState(time: number) {
     statesEnteredTime.set(time);
     dayEnd();
 
-    addProps(generatePlant());
-    addProps(generatePlant());
-    addProps(generatePlant());
+    [
+      generatePlant(),
+      generatePlant(),
+      generatePlant(),
+      ...resolvePotionDropResult()
+    ].forEach(p => {
+      addProps(p);
+    });
+    
   } else if (current === "sleep") {
     state.set("awake");
     statesEnteredTime.set(time);
