@@ -4,6 +4,7 @@ import { initializeProps } from "./objects/prop";
 import { settingHouseProps } from "./objects/house";
 import { equips, initializeEquips } from "./objects/equip";
 import { initializePot } from "./objects/pot";
+import { initializeBottle } from "./objects/bottle";
 
 export const maxHealth = writable(3000);
 export const health = writable(3000);
@@ -25,6 +26,7 @@ export function reset() {
   initializeProps();
   initializeEquips();
   initializePot();
+  initializeBottle();
   
   settingHouseProps();
 }

@@ -9,9 +9,15 @@ import { characterPos, maxHealth } from "../gamevalues";
 import { drawSprite } from "../layers/sprite";
 
 export const bottlePotion = writable<Potion | undefined>();
-export const amountPotion = writable(10);
+export const quantityPotion = writable(0);
 export const bottleImgData = writable<HTMLImageElement>();
 export const drinkedPotions = writable<{[potion: number]: number}>({});
+
+export function initializeBottle() {
+  bottlePotion.set(undefined);
+  quantityPotion.set(0);
+  drinkedPotions.set({});
+}
 
 function addNoise(pos: {x: number, y: number }) {
   return {x: pos.x + (Math.random() * 6 - 3), y: pos.y + (Math.random() * 6 - 3)};
@@ -23,7 +29,7 @@ export function makeBottle() {
       if (bottle) {
         context.save();
         context.beginPath();
-        context.rect(pos[0] - pos[2] / 2, (pos[1] - pos[3] / 2) + pos[3] / 10 * (10 - get(amountPotion)), pos[2], pos[3] * get(amountPotion));
+        context.rect(pos[0] - pos[2] / 2, (pos[1] - pos[3] / 2) + pos[3] / 10 * (10 - get(quantityPotion)), pos[2], pos[3] * get(quantityPotion));
         context.clip();
         drawSprite(context, get(bottleImgData), pos, [0, 0, 16, 16]);
         context.closePath();
@@ -45,13 +51,13 @@ export function makeBottle() {
             bottlePotion.set(newPotion);
             if (newPotion) {
               bottleImgData.set(createBottleData(newPotion.color.r, newPotion.color.g, newPotion.color.b));
-              amountPotion.set(10);
+              quantityPotion.set(10);
             }
           }
         } else {
           addNewPotionDrop(potion);
-          amountPotion.set(get(amountPotion) - 1);
-          if (get(amountPotion) === 0) bottlePotion.set(undefined);
+          quantityPotion.set(get(quantityPotion) - 1);
+          if (get(quantityPotion) === 0) bottlePotion.set(undefined);
         }
         return true;
       },
@@ -61,9 +67,8 @@ export function makeBottle() {
           if (potion.id % 3 === 0) {
             drinkedPotions.set({...get(drinkedPotions), [potion.id]: Math.min(10, (get(drinkedPotions)[potion.id] ?? 0) + 1)});
             maxHealth.set(3000 + 3000 * Object.values(get(drinkedPotions)).reduce((pre, curr) => pre + curr, 0) / 80);
-            console.log(get(drinkedPotions));
-            amountPotion.set(get(amountPotion) - 1);
-            if (get(amountPotion) === 0) bottlePotion.set(undefined);
+            quantityPotion.set(get(quantityPotion) - 1);
+            if (get(quantityPotion) === 0) bottlePotion.set(undefined);
           }
           else {
 

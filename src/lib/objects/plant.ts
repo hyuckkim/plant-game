@@ -1,5 +1,5 @@
 import { getRes } from "../../assets/image";
-import { getGrass } from "../data/grass";
+import { getGrass, type Grass } from "../data/grass";
 import { makeGrabbableProp } from "./equip";
 import { addGrass } from "./pot";
 import { type Prop } from "./prop";
@@ -10,9 +10,14 @@ export function generatePlant(): Prop {
   const x = Math.cos(angle) * length;
   const y = Math.sin(angle) * length;
 
+  if (Math.random() > 0.95) return generateGrassProp(getGrass("red"), x, y);
+  else return generateGrassProp(getGrass("grass"), x, y);
+}
+
+export function generateGrassProp(grass: Grass, x: number, y: number): Prop {
   return makeGrabbableProp(
-    getRes("prop_flower_tile"),
-    [96, 16, 16, 16],
+    getRes(grass.img),
+    grass.source,
     [x, y, 40, 40],
     [0, 0, 40, 40],
     {amountTime: 3},
@@ -24,7 +29,7 @@ export function generatePlant(): Prop {
         return true;
       },
       onWheelUp: (state) => {
-        if (addGrass(getGrass("grass"))) return undefined;
+        if (addGrass(grass)) return undefined;
         return true;
       }
     }
