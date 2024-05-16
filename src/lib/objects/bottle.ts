@@ -5,7 +5,7 @@ import { addProps, attachedTag, newProp, props } from "./prop";
 import { potionDrop, potiondropResult, type Potion } from "../data/potion";
 import { getMadenPotion } from "./pot";
 import { addCoord, latestT, type Coord } from "../values";
-import { characterPos, maxHealth } from "../gamevalues";
+import { characterPos, health, maxHealth } from "../gamevalues";
 import { drawSprite } from "../layers/sprite";
 
 export const bottlePotion = writable<Potion | undefined>();
@@ -71,7 +71,9 @@ export function makeBottle() {
             if (get(quantityPotion) === 0) bottlePotion.set(undefined);
           }
           else {
-
+            health.set(Math.min(get(health) + 100, get(maxHealth)));
+            quantityPotion.set(get(quantityPotion) - 1);
+            if (get(quantityPotion) === 0) bottlePotion.set(undefined);
           }
         }
         return true;
