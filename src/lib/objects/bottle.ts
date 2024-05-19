@@ -71,7 +71,7 @@ export function makeBottle() {
             if (get(quantityPotion) === 0) bottlePotion.set(undefined);
           }
           else {
-            health.set(Math.min(get(health) + 100, get(maxHealth)));
+            health.set(Math.min(get(health) + 1000, get(maxHealth)));
             quantityPotion.set(get(quantityPotion) - 1);
             if (get(quantityPotion) === 0) bottlePotion.set(undefined);
           }
