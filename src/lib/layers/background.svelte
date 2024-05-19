@@ -13,10 +13,11 @@
     yesterdayProps,
     type Prop,
   } from "../objects/prop";
-  import { mouseX, mouseY } from "../values";
+  import { mouseButtons, mouseX, mouseY } from "../values";
   import GroundGrass from "./background/groundGrass.svelte";
   import GroundProp from "./background/groundProp.svelte";
   import GroundShadow from "./background/groundShadow.svelte";
+  import MouseButton from "./mouseButton.svelte";
 
   const leapRadius = (start: number, now: number) => {
     const end = start + 600;
@@ -73,4 +74,7 @@
   clipCircle={circleRadius} />
 {:else if gottenStatus === "sleep"}
   <GroundProp props={gottenNightProps} />
+{/if}
+{#if gottenStatus === "none"}
+  <MouseButton pos={[300, 300, 200, 250]} buttons={mouseButtons.Left} />
 {/if}

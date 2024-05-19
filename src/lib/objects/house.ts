@@ -7,6 +7,7 @@ import { generatePlant, resolvePotionDropResult } from "./plant";
 import { makePot } from "./pot";
 import { makeBucket } from "./bucket";
 import { makeBottle } from "./bottle";
+import { makeBooks } from "./books";
 
 export function settingHouseProps() {
   makeHouse();
@@ -16,6 +17,7 @@ export function settingHouseProps() {
   makePot();
   makeBucket();
   makeBottle();
+  makeBooks();
 }
 function makeHouse() {
   addProps(newProp({

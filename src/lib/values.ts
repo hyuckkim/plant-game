@@ -14,3 +14,11 @@ export type CanvasInfo = {
   height: number;
   time: number;
 };
+
+export enum mouseButtons {
+  None = 0,
+  Left = 1 << 0,
+  Right = 1 << 1,
+  WheelUp = 1 << 2,
+  WheelDown = 1 << 3,
+};
