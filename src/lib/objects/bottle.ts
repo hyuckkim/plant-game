@@ -113,5 +113,4 @@ export function createBottleData(r: number, g: number, b: number) {
 export function addNewPotionDrop(potion: Potion) {
   const pos = addNoise(get(characterPos));
   potionDrop.set([...get(potionDrop), { time: get(latestT), pos, potion}]);
-  potiondropResult.set([...get(potiondropResult), { pos, potion }]);
 }
