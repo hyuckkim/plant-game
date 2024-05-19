@@ -29,5 +29,7 @@
     height: auto;
     max-height: 200px;
     position: sticky;
+    background: repeating-conic-gradient(gray 0% 25%, transparent 0% 50%) 
+      50% / 20px 20px;
   }
 </style>
