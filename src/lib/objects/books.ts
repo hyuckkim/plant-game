@@ -48,26 +48,25 @@ function book2(x: number, y: number): Prop {
     ui: (canvas, state) => {
       canvas.context.save();
       drawPanel(canvas, [x - 150, y + 30, 300, 150]);
-      canvas.context.restore();
 
       if (state.page === 1) {
         drawSprite(
           canvas.context,
           getRes("prop/flower"),
           [x - 100, y + 120, 32, 32],
-          [0, 0, 16, 16],
+          [48, 112, 16, 16],
         );
         drawSprite(
           canvas.context,
           getRes("prop/flower"),
           [x - 70, y + 115, 32, 32],
-          [0, 0, 16, 16],
+          [48, 112, 16, 16],
         );
         drawSprite(
           canvas.context,
           getRes("prop/flower"),
           [x - 85, y + 95, 32, 32],
-          [0, 0, 16, 16],
+          [48, 112, 16, 16],
         );
         drawSprite(
           canvas.context,
@@ -93,19 +92,19 @@ function book2(x: number, y: number): Prop {
           canvas.context,
           getRes("prop/flower"),
           [x - 100, y + 75, 32, 32],
-          [0, 0, 16, 16],
+          [48, 112, 16, 16],
         );
         drawSprite(
           canvas.context,
           getRes("prop/flower"),
           [x - 70, y + 75, 32, 32],
-          [0, 0, 16, 16],
+          [48, 112, 16, 16],
         );
         drawSprite(
           canvas.context,
           getRes("prop/flower"),
           [x - 40, y + 75, 32, 32],
-          [0, 0, 16, 16],
+          [48, 112, 16, 16],
         );
         drawSprite(
           canvas.context,
@@ -123,13 +122,13 @@ function book2(x: number, y: number): Prop {
           canvas.context,
           getRes("prop/flower"),
           [x - 100, y + 120, 32, 32],
-          [0, 0, 16, 16],
+          [48, 112, 16, 16],
         );
         drawSprite(
           canvas.context,
           getRes("prop/flower"),
           [x - 70, y + 120, 32, 32],
-          [0, 0, 16, 16],
+          [48, 112, 16, 16],
         );
         drawSprite(
           canvas.context,
@@ -156,10 +155,31 @@ function book2(x: number, y: number): Prop {
           [358, 40, 8, 14],
         );
       }
+      if (state.page === 3) {
+        canvas.context.fillStyle = "#21501D";
+        canvas.context.fillRect(x - 62, y + 120, 6, 6);
+        canvas.context.fillRect(x - 70, y + 116, 6, 6);
+        canvas.context.fillRect(x - 64, y + 124, 6, 6);
+        canvas.context.fillRect(x - 68, y + 126, 6, 6);
+        drawSprite(
+          canvas.context,
+          getRes("ui"),
+          [x, y + 120, 14, 16],
+          [134, 124, 6, 8],
+        );
+        drawSprite(
+          canvas.context,
+          getRes("prop/flower"),
+          [x + 70, y + 120, 32, 32],
+          [48, 112, 16, 16],
+        );
+      }
+      canvas.context.restore();
     },
     onClick: (state) => {
       if (state.page == 1) state.page = 2;
-      else if (state.page == 2) state.page = 1;
+      else if (state.page == 2) state.page = 3;
+      else if (state.page == 3) state.page = 1;
       return true;
     }
   });
