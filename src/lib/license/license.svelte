@@ -1,5 +1,7 @@
 <script lang="ts">
   import { GirlSheetImage, TXTileset, UIPieces, RPGTileC, RPGTiles, PixelArtHouse, FlowerTile, EmptyPotions, Pond } from "../../assets/image";
+  import { WaterUpSFX, backgroundMusic } from "../../assets/sound";
+  import AudioText from "./audioText.svelte";
   import SourceText from "./sourceText.svelte";
 </script>
 
@@ -32,6 +34,12 @@
   <SourceText
   href="https://opengameart.org/content/lpc-animated-water-and-fire"
   img={Pond}>[LPC] Animated Water and Fire</SourceText>
+  <AudioText
+  href="https://potat0master.itch.io/free-background-music-for-visual-novels-bgm-pack-1"
+  sound={backgroundMusic}>Free Background Music for Visual Novels</AudioText>
+  <AudioText
+  href="https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound"
+  sound={WaterUpSFX}>Essentials Series - Free Sound Effect</AudioText>
 </div>
 
 <style>

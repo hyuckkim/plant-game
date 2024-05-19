@@ -12,6 +12,11 @@ import WaterUpSFX from "./sfx/Footsteps_WaterV1_Walk_01.wav";
 import WaterDownSFX from "./sfx/Footsteps_WaterV1_Walk_02.wav";
 import MachineSFX from "./sfx/Vehicle_Truck_Sliding_Door_Opening_Mono_01.wav";
 
+export {
+  backgroundMusic,
+  WaterUpSFX
+};
+
 export type SoundResources = Awaited<ReturnType<typeof loadGameSounds>>;
 export const soundResources = writable<SoundResources>();
 export function getSoundRes(name: keyof SoundResources): Howl {
