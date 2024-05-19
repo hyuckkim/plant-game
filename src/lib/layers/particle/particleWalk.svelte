@@ -1,6 +1,5 @@
 
-<script>
-
+<script lang="ts">
   import { Layer } from "svelte-canvas";
   import { particles } from "../../particle";
   import { characterPos, characterReady } from "../../gamevalues";

@@ -1,10 +1,10 @@
 import { get, writable } from "svelte/store";
 import { getRes } from "../../assets/image";
-import { equips, makeGrabbableProp } from "./equip";
-import { addProps, attachedTag, newProp, props } from "./prop";
-import { potionDrop, potiondropResult, type Potion } from "../data/potion";
+import { makeGrabbableProp } from "./equip";
+import { addProps, attachedTag, newProp } from "./prop";
+import { potionDrop, type Potion } from "../data/potion";
 import { getMadenPotion } from "./pot";
-import { addCoord, latestT, type Coord } from "../values";
+import { latestT } from "../values";
 import { characterPos, health, maxHealth } from "../gamevalues";
 import { drawSprite } from "../layers/sprite";
 import { playSoundSFX } from "../../assets/sound";

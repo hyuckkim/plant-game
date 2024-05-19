@@ -95,12 +95,13 @@ export function getRandomPotionGrass(p: Potion): Grass {
   return getGrass(names[Math.floor(Math.random() * names.length)]);
 }
 
-export const potionDrop = writable<{
+export type PotionDrop = {
   time: number,
   pos: { x: number, y: number },
   potion: Potion,
   direction?: number,
-}[]>([]);
+};
+export const potionDrop = writable<PotionDrop[]>([]);
 
 export const potiondropResult = writable<{
   potion: Potion,
