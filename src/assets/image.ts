@@ -1,15 +1,15 @@
 import { get, writable } from "svelte/store";
 
-import GirlSheetImage from "./Girl-Sheet.png";
-import TXTileset from "./TX Tileset Grass.png";
-import UIPieces from "./ui_big_pieces.png";
-import PixelArtHouse from "./pixel-art-house-export-2.png";
-import RPGTileC from "./RPG Maker VX - Tile C.png";
-import RPGTiles from "./RPG Maker Tiles.png";
-import FlowerTile from "./flower.png";
-import EmptyPotions from "./rpg_potions_16x16_overlay.png";
-import Pond from "./WaterAndFire.png";
-import Furniture from "./100 furniture sprites.png";
+import GirlSheetImage from "./image/Girl-Sheet.png";
+import TXTileset from "./image/TX Tileset Grass.png";
+import UIPieces from "./image/ui_big_pieces.png";
+import PixelArtHouse from "./image/pixel-art-house-export-2.png";
+import RPGTileC from "./image/RPG Maker VX - Tile C.png";
+import RPGTiles from "./image/RPG Maker Tiles.png";
+import FlowerTile from "./image/flower.png";
+import EmptyPotions from "./image/rpg_potions_16x16_overlay.png";
+import Pond from "./image/WaterAndFire.png";
+import Furniture from "./image/100 furniture sprites.png";
 
 export {
   GirlSheetImage,

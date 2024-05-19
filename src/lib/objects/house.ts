@@ -8,7 +8,7 @@ import { makePot } from "./pot";
 import { makeBucket } from "./bucket";
 import { makeBottle } from "./bottle";
 import { makeBooks } from "./books";
-import { getSoundRes } from "../../assets/sound";
+import { getSoundRes, playSoundSFX } from "../../assets/sound";
 import { makeSoundObjects } from "./soundObjects";
 
 export function settingHouseProps() {
@@ -30,6 +30,8 @@ function makeHouse() {
     display: "always",
     onClick: () => {
       changeAwakenState(get(latestT));
+      if (get(state) === "awake")  playSoundSFX("prop/house");
+      else playSoundSFX("prop/house_close");
       return true;
     }
   }));

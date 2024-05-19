@@ -175,7 +175,6 @@ function book3(x: number, y: number): Prop {
       drawPanel(canvas, [x - 130, y + 30, 100, 60]);
       canvas.context.restore();
 
-      canvas.context.font = '80px';
       canvas.context.fillText("Thanks to...", x - 110, y + 60);
       canvas.context.fillText("(reset game)", x - 110, y + 70);
     },

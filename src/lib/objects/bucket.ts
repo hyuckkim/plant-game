@@ -3,6 +3,7 @@ import { getRes } from "../../assets/image";
 import { makeGrabbableEquip, makeGrabbableProp } from "./equip";
 import { maxWater, waterCount } from "./pot";
 import { addProps, attachedTag } from "./prop";
+import { playSoundSFX } from "../../assets/sound";
 
 export function makeBucket() {
   const justBucket = makeGrabbableEquip(
@@ -13,6 +14,7 @@ export function makeBucket() {
     {
       onWheelUp: () => {
         if (attachedTag("pond")) {
+          playSoundSFX("prop/water_up");
           return waterBucket;
         }
         return true;
@@ -28,6 +30,7 @@ export function makeBucket() {
       onWheelDown: () => {
         if (attachedTag("pot")) {
           waterCount.set(Math.min(maxWater, get(waterCount) + 1));
+          playSoundSFX("prop/water_down");
           return justBucket;
         }
         return true;
@@ -43,6 +46,7 @@ export function makeBucket() {
     {
       onWheelUp: (state) => {
         if (attachedTag("pond")) {
+          playSoundSFX("prop/water_up");
           return waterBucket;
         }
         return true;

@@ -4,6 +4,7 @@
 
   import License from "./lib/license/license.svelte";
   import Game from "./lib/game.svelte";
+  import { loadGameSounds } from "./assets/sound";
 
   let hash = window.location.hash;
   onMount(() => {
@@ -20,7 +21,7 @@
 {#if hash === "#license"}
   <License />
 {:else}
-  {#await Promise.all([loadGameImages()])}
+  {#await Promise.all([loadGameImages(), loadGameSounds()])}
     <div class="loading">loading...</div>
   {:then}
     <Game />

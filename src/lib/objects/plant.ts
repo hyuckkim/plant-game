@@ -5,6 +5,7 @@ import { getRandomPotionGrass, potiondropResult, type Potion } from "../data/pot
 import { makeGrabbableProp } from "./equip";
 import { addGrass } from "./pot";
 import { attachedTag, type Prop } from "./prop";
+import { playSoundSFX } from "../../assets/sound";
 
 export function generatePlant(): Prop {
   const length = randn_bm(0, 1200, 1);
@@ -69,7 +70,10 @@ export function generateGrassProp(grass: Grass, x: number, y: number): Prop {
         return true;
       },
       onWheelUp: (state) => {
-        if (attachedTag("pot") && addGrass(grass)) return undefined;
+        if (attachedTag("pot") && addGrass(grass)) {
+          playSoundSFX("prop/plant");
+          return undefined;
+        }
         return true;
       }
     }

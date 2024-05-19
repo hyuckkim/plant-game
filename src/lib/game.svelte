@@ -10,7 +10,7 @@
   import { click, wheelMove } from "./objects/prop";
   import ParticleWalk from "./layers/particle/particleWalk.svelte";
   import ParticleDrop from "./layers/particle/particleDrop.svelte";
-  import { getSoundRes, loadGameSounds } from "../assets/sound";
+  import { getSoundRes } from "../assets/sound";
 
   onMount(() => {
     reset();
@@ -31,7 +31,6 @@
     $mouseY = e.y;
     if ($state === "none") {
       $state = "sleep";
-      await loadGameSounds();
       getSoundRes("bgm").volume(0.5);
       getSoundRes("bgm").play();
       getSoundRes("bgm").loop(true);

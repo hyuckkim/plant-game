@@ -4,6 +4,8 @@
   import { Layer } from "svelte-canvas";
   import { particles } from "../../particle";
   import { characterPos, characterReady } from "../../gamevalues";
+  import { attachedTag } from "../../objects/prop";
+  import { playSoundSFX } from "../../../assets/sound";
 
   const maximumTime = 800;
   const maximumSize = 10;
@@ -37,7 +39,11 @@
         y: $characterPos.y,
         t: time
       })];
-      movements -= 100;
+
+      if (attachedTag("pond")) playSoundSFX("step/water");
+      else playSoundSFX("step/grass");
+      
+      movements %= 100;
     }
   }
   latestCharacterPos = $characterPos;

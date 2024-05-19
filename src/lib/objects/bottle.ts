@@ -7,6 +7,7 @@ import { getMadenPotion } from "./pot";
 import { addCoord, latestT, type Coord } from "../values";
 import { characterPos, health, maxHealth } from "../gamevalues";
 import { drawSprite } from "../layers/sprite";
+import { playSoundSFX } from "../../assets/sound";
 
 export const bottlePotion = writable<Potion | undefined>();
 export const quantityPotion = writable(0);
@@ -52,6 +53,7 @@ export function makeBottle() {
             if (newPotion) {
               bottleImgData.set(createBottleData(newPotion.color.r, newPotion.color.g, newPotion.color.b));
               quantityPotion.set(10);
+              playSoundSFX("prop/water_up");
             }
           }
         } else {
@@ -88,19 +90,6 @@ export function makeBottle() {
     layer: "floor",
   }))
   addProps(bottle);
-}
-
-export function getBottlePos(): Coord {
-  const chara = get(characterPos);
-  const equip = get(equips);
-  if (equip && equip.img === getRes("prop/potion")) {
-    return addCoord([chara.x, chara.y, 0, 0], equip.pos);
-  }
-  else {
-    return get(props)
-      .filter(p => p.img === getRes("prop/potion"))[0]
-      .pos;
-  }
 }
 
 export function createBottleData(r: number, g: number, b: number) {

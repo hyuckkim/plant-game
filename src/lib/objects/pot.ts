@@ -7,6 +7,7 @@ import { drawSprite } from "../layers/sprite";
 import { latestT } from "../values";
 import { getPotion, type Potion } from "../data/potion";
 import { createBottleData } from "./bottle";
+import { playSoundSFX } from "../../assets/sound";
 
 export const maxWater = 3;
 export const waterCount = writable(0);
@@ -90,6 +91,7 @@ export function makePot() {
         potionCount.set(get(waterCount));
         waterCount.set(0);
         if (get(potionCount) === 0) madenPotion.set(undefined);
+        playSoundSFX("prop/machine");
       }
       return true;
     }
