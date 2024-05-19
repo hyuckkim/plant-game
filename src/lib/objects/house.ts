@@ -21,7 +21,7 @@ export function settingHouseProps() {
 }
 function makeHouse() {
   addProps(newProp({
-    img: getRes("prop_houseprop"),
+    img: getRes("prop/rpg"),
     source: [0, 192, 32, 64],
     pos: [80, 80, 48, 96],
     display: "always",
@@ -56,7 +56,7 @@ function changeAwakenState(time: number) {
 }
 function makeRoof() {
   addProps(newProp({
-    img: getRes("prop_house"),
+    img: getRes("prop/house"),
     source: [89, 49, 205, 289],
     pos: [110, 110, 180, 260],
     layer: "roof",
@@ -79,7 +79,7 @@ function makeFloor() {
   ];
   posDatas.forEach(p => {
     addProps(newProp({
-      img: getRes("prop_tile"),
+      img: getRes("prop/rpgtile"),
       source: [192, 0, 32, 32],
       pos: p,
       layer: "floor",
@@ -89,7 +89,7 @@ function makeFloor() {
 
 function makePond() {
   addProps(newProp({
-    img: getRes("prop_pond"),
+    img: getRes("prop/pond"),
     source: [9, 70, 81, 78],
     pos: [800, 670, 162, 156],
     layer: "floor",

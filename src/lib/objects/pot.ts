@@ -30,7 +30,7 @@ export function initializePot() {
 
 export function makePot() {
   addProps(newProp({
-    img: getRes("prop_furniture"),
+    img: getRes("prop/furniture"),
     source: [1036, 646, 44, 82],
     pos: [150, 30, 53, 98],
     state: { tag: "pot" },
@@ -44,7 +44,7 @@ export function makePot() {
       const potion = get(madenPotion);
       if (potion) {
         drawSprite(canvas.context, get(potPotionData), [354, 134, 40, 40], [0, 0, 16, 16]);
-        drawSprite(canvas.context, getRes("prop_potion_empty"), [354, 134, 40, 40], [96, 0, 16, 16]);
+        drawSprite(canvas.context, getRes("prop/potion"), [354, 134, 40, 40], [96, 0, 16, 16]);
       }
 
 

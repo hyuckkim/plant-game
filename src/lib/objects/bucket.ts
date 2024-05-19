@@ -6,7 +6,7 @@ import { addProps, attachedTag } from "./prop";
 
 export function makeBucket() {
   const justBucket = makeGrabbableEquip(
-    getRes("prop_houseprop"),
+    getRes("prop/rpg"),
     [326, 454, 20, 21],
     [0, 3, 30, 30],
     {},
@@ -20,7 +20,7 @@ export function makeBucket() {
     }
   );
   const waterBucket = makeGrabbableEquip(
-    getRes("prop_houseprop"),
+    getRes("prop/rpg"),
     [294, 454, 20, 21],
     [0, 3, 30, 30],
     {},
@@ -35,7 +35,7 @@ export function makeBucket() {
     }
   );
   const bucketProp = makeGrabbableProp(
-    getRes("prop_houseprop"),
+    getRes("prop/rpg"),
     [326, 454, 20, 21],
     [210, 180, 30, 30],
     [0, 3, 30, 30],

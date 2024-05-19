@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { GirlSheetImage, TXTileset, UIPieces, RPGTileC, RPGTiles, PixelArtHouse, FlowerTile, FlowerItem, Potions, EmptyPotions, Pond } from "../../assets/image";
+  import { GirlSheetImage, TXTileset, UIPieces, RPGTileC, RPGTiles, PixelArtHouse, FlowerTile, EmptyPotions, Pond } from "../../assets/image";
   import SourceText from "./sourceText.svelte";
 </script>
 
@@ -26,12 +26,6 @@
   <SourceText
   href="https://btl-games.itch.io/pixel-art-fauna-asset-pack"
   img={FlowerTile}>100 hand picked pixel flowers</SourceText>
-  <SourceText
-  href="https://gimichi.itch.io/flower-and-herb"
-  img={FlowerItem}>Flower And Herb</SourceText>
-  <SourceText
-  href="https://opengameart.org/content/rpg-potions-16x16"
-  img={Potions}>RPG Potions 16x16</SourceText>
   <SourceText
   href="https://opengameart.org/content/rpg-potions-16x16"
   img={EmptyPotions}>RPG Potions 16x16 overlay</SourceText>

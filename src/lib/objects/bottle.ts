@@ -35,7 +35,7 @@ export function makeBottle() {
         context.closePath();
         context.restore();
       }
-      drawSprite(context, getRes("prop_potion_empty"), pos, [96, 0, 16, 16]);
+      drawSprite(context, getRes("prop/potion"), pos, [96, 0, 16, 16]);
       
     },
     [96, 0, 16, 16],
@@ -82,7 +82,7 @@ export function makeBottle() {
   );
 
   addProps(newProp({
-    img: getRes("prop_houseprop"),
+    img: getRes("prop/rpg"),
     source: [0, 256, 32, 32],
     pos: [75, 180, 48, 48],
     layer: "floor",
@@ -93,12 +93,12 @@ export function makeBottle() {
 export function getBottlePos(): Coord {
   const chara = get(characterPos);
   const equip = get(equips);
-  if (equip && equip.img === getRes("prop_potion_empty")) {
+  if (equip && equip.img === getRes("prop/potion")) {
     return addCoord([chara.x, chara.y, 0, 0], equip.pos);
   }
   else {
     return get(props)
-      .filter(p => p.img === getRes("prop_potion_empty"))[0]
+      .filter(p => p.img === getRes("prop/potion"))[0]
       .pos;
   }
 }
@@ -108,7 +108,7 @@ export function createBottleData(r: number, g: number, b: number) {
   const ctx = canvas.getContext("2d");
   if (!ctx) throw Error("cannot create other canvas");
   ctx.clearRect(0, 0, 16, 16);
-  ctx.drawImage(getRes("prop_potion_empty"), 96, 16, 16, 16, 0, 0, 16, 16);
+  ctx.drawImage(getRes("prop/potion"), 96, 16, 16, 16, 0, 0, 16, 16);
   const data = ctx.getImageData(0, 0, 16, 16);
   for (let i = 0; i < data.width * data.height; i++) {
     data.data[i * 4 + 0] = r;

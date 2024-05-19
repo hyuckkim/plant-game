@@ -13,7 +13,7 @@ export function makeBooks() {
 
 function book1(x: number, y: number): Prop {
   return newProp({
-    img: getRes("prop_houseprop"),
+    img: getRes("prop/rpg"),
     source: [169, 291, 18, 10],
     pos: [x, y, 36, 20],
     display: "night",
@@ -40,7 +40,7 @@ function book1(x: number, y: number): Prop {
 }
 function book2(x: number, y: number): Prop {
   return newProp({
-    img: getRes("prop_houseprop"),
+    img: getRes("prop/rpg"),
     source: [169, 291, 18, 10],
     pos: [x, y, 36, 20],
     display: "night",
@@ -53,25 +53,25 @@ function book2(x: number, y: number): Prop {
       if (state.page === 1) {
         drawSprite(
           canvas.context,
-          getRes("prop_flower_tile"),
+          getRes("prop/flower"),
           [x - 100, y + 120, 32, 32],
           [0, 0, 16, 16],
         );
         drawSprite(
           canvas.context,
-          getRes("prop_flower_tile"),
+          getRes("prop/flower"),
           [x - 70, y + 115, 32, 32],
           [0, 0, 16, 16],
         );
         drawSprite(
           canvas.context,
-          getRes("prop_flower_tile"),
+          getRes("prop/flower"),
           [x - 85, y + 95, 32, 32],
           [0, 0, 16, 16],
         );
         drawSprite(
           canvas.context,
-          getRes("prop_houseprop"),
+          getRes("prop/rpg"),
           [x - 15, y + 110, 30, 31],
           [294, 454, 20, 21],
         );
@@ -83,7 +83,7 @@ function book2(x: number, y: number): Prop {
         );
         drawSprite(
           canvas.context,
-          getRes("prop_furniture"),
+          getRes("prop/furniture"),
           [x + 115, y + 100, 44, 82],
           [1036, 646, 44, 82],
         );
@@ -91,19 +91,19 @@ function book2(x: number, y: number): Prop {
       if (state.page === 2) {
         drawSprite(
           canvas.context,
-          getRes("prop_flower_tile"),
+          getRes("prop/flower"),
           [x - 100, y + 75, 32, 32],
           [0, 0, 16, 16],
         );
         drawSprite(
           canvas.context,
-          getRes("prop_flower_tile"),
+          getRes("prop/flower"),
           [x - 70, y + 75, 32, 32],
           [0, 0, 16, 16],
         );
         drawSprite(
           canvas.context,
-          getRes("prop_flower_tile"),
+          getRes("prop/flower"),
           [x - 40, y + 75, 32, 32],
           [0, 0, 16, 16],
         );
@@ -121,19 +121,19 @@ function book2(x: number, y: number): Prop {
         );
         drawSprite(
           canvas.context,
-          getRes("prop_flower_tile"),
+          getRes("prop/flower"),
           [x - 100, y + 120, 32, 32],
           [0, 0, 16, 16],
         );
         drawSprite(
           canvas.context,
-          getRes("prop_flower_tile"),
+          getRes("prop/flower"),
           [x - 70, y + 120, 32, 32],
           [0, 0, 16, 16],
         );
         drawSprite(
           canvas.context,
-          getRes("prop_flower_tile"),
+          getRes("prop/flower"),
           [x - 40, y + 120, 32, 32],
           [96, 16, 16, 16],
         );
@@ -166,7 +166,7 @@ function book2(x: number, y: number): Prop {
 }
 function book3(x: number, y: number): Prop {
   return newProp({
-    img: getRes("prop_houseprop"),
+    img: getRes("prop/rpg"),
     source: [169, 291, 18, 10],
     pos: [x, y, 36, 20],
     display: "night",
