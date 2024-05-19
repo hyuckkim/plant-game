@@ -16,12 +16,14 @@ export const characterPos = spring({ x: 0, y: 0 }, {
 export const characterDir = writable(0);
 export const characterReady = writable(false);
 export const lastCharacterPos = writable({ x: 0, y: 0 });
+export const sfx = writable(true);
 
 export function reset() {
   health.set(3000);
   statesEnteredTime.set(0);
   state.set("none");
   equips.set(undefined);
+  sfx.set(true);
 
   initializeProps();
   initializeEquips();

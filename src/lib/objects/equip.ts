@@ -49,7 +49,8 @@ export function makeGrabbableProp(
     onWheelUp: (state: PropState) => true | Partial<Equip> | undefined,
     onWheelDown: (state: PropState) => true | Partial<Equip> | undefined,
     onDayEnd: (state: PropState) => boolean,
-  }>
+  }>,
+  display: "day" | "night" | "always" = "day"
 ): Prop {
   const makeSomeProp = (pos: Coord, state: PropState) => newProp({
     img,
@@ -57,6 +58,7 @@ export function makeGrabbableProp(
     pos,
     state,
     onDayEnd: onDayEnd ?? (() => true),
+    display,
   });
   const equipSomeProp = (state: PropState) => setEquip({
     img,

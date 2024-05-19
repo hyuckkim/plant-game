@@ -20,7 +20,7 @@
 {#if hash === "#license"}
   <License />
 {:else}
-  {#await loadGameImages()}
+  {#await Promise.all([loadGameImages()])}
     <div class="loading">loading...</div>
   {:then}
     <Game />

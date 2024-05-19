@@ -8,6 +8,8 @@ import { makePot } from "./pot";
 import { makeBucket } from "./bucket";
 import { makeBottle } from "./bottle";
 import { makeBooks } from "./books";
+import { getSoundRes } from "../../assets/sound";
+import { makeSoundObjects } from "./soundObjects";
 
 export function settingHouseProps() {
   makeHouse();
@@ -18,6 +20,7 @@ export function settingHouseProps() {
   makeBucket();
   makeBottle();
   makeBooks();
+  makeSoundObjects();
 }
 function makeHouse() {
   addProps(newProp({
@@ -38,7 +41,6 @@ function changeAwakenState(time: number) {
     state.set("sleep");
     statesEnteredTime.set(time);
     dayEnd();
-
     [
       generatePlant(),
       generatePlant(),
@@ -47,11 +49,12 @@ function changeAwakenState(time: number) {
     ].forEach(p => {
       addProps(p);
     });
-    
+    getSoundRes("bgm").volume(0.5);
   } else if (current === "sleep") {
     state.set("awake");
     statesEnteredTime.set(time);
     dayStarted();
+    getSoundRes("bgm").volume(1);
   }
 }
 function makeRoof() {

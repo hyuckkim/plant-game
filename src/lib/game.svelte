@@ -10,9 +10,13 @@
   import { click, wheelMove } from "./objects/prop";
   import ParticleWalk from "./layers/particle/particleWalk.svelte";
   import ParticleDrop from "./layers/particle/particleDrop.svelte";
+  import { getSoundRes, loadGameSounds } from "../assets/sound";
 
   onMount(() => {
     reset();
+    return () => {
+      getSoundRes("bgm").pause();
+    }
   })
 </script>
 <Canvas
@@ -22,11 +26,15 @@
     $mouseX = e.x;
     $mouseY = e.y;
   }}
-  on:click={(e) => {
+  on:click={async (e) => {
     $mouseX = e.x;
     $mouseY = e.y;
     if ($state === "none") {
       $state = "sleep";
+      await loadGameSounds();
+      getSoundRes("bgm").volume(0.5);
+      getSoundRes("bgm").play();
+      getSoundRes("bgm").loop(true);
     }
     else if ($health > 0) {
       click($mouseX, $mouseY);

@@ -21,7 +21,7 @@ export type Prop = {
 export type PropRender = (canvas: {
   context: CanvasRenderingContext2D,
   pos: Coord
-}) => void;
+}, state: PropState) => void;
 
 export type PropState = {[key: string]: string | number};
 

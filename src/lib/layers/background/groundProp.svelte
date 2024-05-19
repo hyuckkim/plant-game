@@ -37,7 +37,7 @@
       .filter((p) => p.layer === "floor")
       .forEach((p) => {
         if (typeof p.img === "function") {
-          p.img({ context, pos: p.pos });
+          p.img({ context, pos: p.pos }, p.state);
         } else {
           drawSprite(context, p.img, p.pos, p.source, p.flipped);
         }
@@ -46,7 +46,7 @@
       .filter((p) => p.layer === "normal")
       .forEach((p) => {
         if (typeof p.img === "function") {
-          p.img({ context, pos: p.pos });
+          p.img({ context, pos: p.pos }, p.state);
         } else {
           drawSprite(context, p.img, p.pos, p.source, p.flipped);
         }
@@ -58,7 +58,7 @@
           context.globalAlpha = 0.2;
         }
         if (typeof p.img === "function") {
-          p.img({ context, pos: p.pos });
+          p.img({ context, pos: p.pos }, p.state);
         } else {
           drawSprite(context, p.img, p.pos, p.source, p.flipped);
         }

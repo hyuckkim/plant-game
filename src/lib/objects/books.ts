@@ -177,6 +177,7 @@ function book3(x: number, y: number): Prop {
 
       canvas.context.font = '80px';
       canvas.context.fillText("Thanks to...", x - 110, y + 60);
+      canvas.context.fillText("(reset game)", x - 110, y + 70);
     },
     onClick: () => {
       window.location.hash = "#license";
