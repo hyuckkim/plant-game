@@ -2,7 +2,7 @@
 <script lang="ts">
   import { Layer } from "svelte-canvas";
   import { particles } from "../../particle";
-  import { characterPos } from "../../gamevalues";
+  import { characterPos, endingSequence, nowEnding, savedPosition } from "../../gamevalues";
   import { attachedTag } from "../../objects/prop";
   import { playSoundSFX } from "../../../assets/sound";
 
@@ -37,9 +37,17 @@
       y: $characterPos.y,
       t: time
     })];
-
-    if (attachedTag("pond")) playSoundSFX("step/water");
-    else playSoundSFX("step/grass");
+    if ($nowEnding) {
+      if ($endingSequence === 0) playSoundSFX("step/grass");
+      else {
+        if ($characterPos.y > $savedPosition.y - 100)  playSoundSFX("step/grass");
+        else playSoundSFX("step/water");
+      }
+    }
+    else {
+      if (attachedTag("pond")) playSoundSFX("step/water");
+      else playSoundSFX("step/grass");
+    }
     
     movements %= 100;
   }

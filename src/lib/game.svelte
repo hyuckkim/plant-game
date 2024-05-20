@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Canvas } from "svelte-canvas";
-  import { health, state, reset } from "./gamevalues";
-  import { mouseX, mouseY } from "./values";
+  import { health, reset, nowEnding, endingSequence, enteredEndingTime, characterDir, characterPos, gotEnding } from "./gamevalues";
+  import { latestT, mouseX, mouseY } from "./values";
 
   import Background from "./layers/background.svelte";
   import Character from "./layers/character.svelte";
@@ -11,6 +11,9 @@
   import ParticleWalk from "./layers/particle/particleWalk.svelte";
   import ParticleDrop from "./layers/particle/particleDrop.svelte";
   import { getSoundRes } from "../assets/sound";
+  import EndingOverlay from "./layers/ending/endingOverlay.svelte";
+  import EndingBackground from "./layers/ending/endingBackground.svelte";
+  import { changeAwakenState } from "./objects/house";
 
   onMount(() => {
     reset();
@@ -24,7 +27,7 @@
   })
 </script>
 <Canvas
-  style={$health > 0 ? "cursor:none" : ""}
+  style={($health > 0 && !($nowEnding && $endingSequence === 0)) ? "cursor:none" : ""}
   autoplay
   on:mousemove={(e) => {
     $mouseX = e.x;
@@ -33,17 +36,36 @@
   on:click={async (e) => {
     $mouseX = e.x;
     $mouseY = e.y;
-    if ($health > 0) {
-      click($mouseX, $mouseY);
+    if ($nowEnding && $endingSequence === 1 && $characterPos.y > window.innerHeight - 50) {
+      $nowEnding = false;
+      $gotEnding = true;
+      changeAwakenState($latestT);
+    } else {
+        if ($health > 0) {
+        click($mouseX, $mouseY);
+      }
     }
   }}
   on:wheel={(e) => {
-    wheelMove(e.deltaY);
+    if ($nowEnding && $endingSequence === 0) {
+      $endingSequence = 1;
+      $enteredEndingTime = $latestT;
+      $characterDir = 2;
+    } else {
+      wheelMove(e.deltaY);
+    }
   }}
 >
   <Background />
+  {#if $nowEnding}
+    <EndingBackground />
+  {/if}
   <ParticleWalk />
   <Character />
   <ParticleDrop />
-  <UI />
+  {#if $nowEnding}
+    <EndingOverlay />
+  {:else}
+    <UI />
+  {/if}
 </Canvas>

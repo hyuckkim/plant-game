@@ -1,6 +1,6 @@
 <script lang="ts">
   import { addCoord, latestT, mouseX, mouseY } from "../values";
-  import { characterDir, characterPos, health, maxHealth, state } from "../gamevalues";
+  import { characterDir, characterPos, health, maxHealth, nowEnding, state } from "../gamevalues";
   import { getRes } from "../../assets/image";
 
   import Sprite from "./sprite.svelte";
@@ -88,7 +88,7 @@
     callback={({ time }) => {
       $pos = { x: $mouseX, y: $mouseY };
 
-      if ($state === "awake") $health -= Math.abs(dx) + Math.abs(dy);
+      if ($state === "awake" && !$nowEnding) $health -= Math.abs(dx) + Math.abs(dy);
       else $health = Math.min($maxHealth, $health + (time - $latestT) * 0.5);
 
       (dx = lx - $characterPos.x), (dy = ly - $characterPos.y);

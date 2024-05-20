@@ -2,6 +2,7 @@ import { get, writable } from "svelte/store";
 
 import GirlSheetImage from "./image/Girl-Sheet.png";
 import TXTileset from "./image/TX Tileset Grass.png";
+import TXProp from "./image/TX Props.png";
 import UIPieces from "./image/ui_big_pieces.png";
 import PixelArtHouse from "./image/pixel-art-house-export-2.png";
 import RPGTileC from "./image/RPG Maker VX - Tile C.png";
@@ -14,6 +15,7 @@ import Furniture from "./image/100 furniture sprites.png";
 export {
   GirlSheetImage,
   TXTileset,
+  TXProp,
   UIPieces,
   PixelArtHouse,
   RPGTileC,
@@ -39,7 +41,8 @@ export function getRes(name: keyof Resources): HTMLImageElement {
 export async function loadGameImages() {
   const images = [
     { img: GirlSheetImage, name: "character" },
-    { img: TXTileset, name: "grass"  },
+    { img: TXTileset, name: "grass" },
+    { img: TXProp, name: "stone" },
     { img: UIPieces, name: "ui" },
     { img: PixelArtHouse, name: "prop/house" },
     { img: RPGTileC, name: "prop/rpg" },

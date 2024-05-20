@@ -1,7 +1,7 @@
 import { get } from "svelte/store";
 import { getRes } from "../../assets/image";
 import { addProps, dayEnd, dayStarted, newProp } from "./prop";
-import { characterPos, lastCharacterPos, state, statesEnteredTime } from "../gamevalues";
+import { HealthBarExtraHeight, characterPos, enteredEndingTime, generatedEnding, health, lastCharacterPos, maxHealth, nowEnding, state, statesEnteredTime } from "../gamevalues";
 import { latestT, type Coord } from "../values";
 import { generatePlant, resolvePotionDropResult } from "./plant";
 import { makePot } from "./pot";
@@ -36,7 +36,7 @@ function makeHouse() {
     }
   }));
 }
-function changeAwakenState(time: number) {
+export function changeAwakenState(time: number) {
   const current = get(state);
   lastCharacterPos.set(get(characterPos));
   if (current === "awake") {
@@ -51,6 +51,20 @@ function changeAwakenState(time: number) {
     ].forEach(p => {
       addProps(p);
     });
+    if (get(maxHealth) === 6000 && !get(generatedEnding)) {
+      generatedEnding.set(true);
+      addProps(newProp({
+        img: getRes("ui"),
+        source: [116, 140, 8, 6],
+        pos: [300, 40, 16, 12],
+        onClick: () => {
+          nowEnding.set(true);
+          enteredEndingTime.set(get(latestT));
+          HealthBarExtraHeight.set(300);
+          return false;
+        }
+      }));
+    }
     getSoundRes("bgm").volume(0.5);
   } else if (current === "sleep") {
     state.set("awake");
