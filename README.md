@@ -1,3 +1,3 @@
-# My Game
+# Plant
 
-마우스 가지고 하는 게임을 만들어보고 싶어서..
+Control: Mouse
