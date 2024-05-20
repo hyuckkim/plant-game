@@ -24,6 +24,8 @@
     $particles = $particles.filter((p) => time - p.t < maximumTime);
     $particles.forEach((n) => {
       const lt = time - n.t;
+      if (maximumTime - lt < 0) return;
+
       context.save();
       context.beginPath();
       context.ellipse(

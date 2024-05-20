@@ -70,6 +70,7 @@
     } else {
       wheelMove(e.deltaY);
     }
+    e.preventDefault();
   }}
 >
   <Background />

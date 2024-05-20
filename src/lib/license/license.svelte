@@ -15,7 +15,7 @@
   import SourceText from "./sourceText.svelte";
 </script>
 
-<a href="/">return to game</a>
+<button on:click={() => { window.location.hash = "";}}>return to game</button>
 <div>
   <SourceText
     href="https://immunitys.itch.io/pixel-top-down-character"
@@ -75,5 +75,11 @@
 <style>
   div {
     padding: 40px 20px;
+    background: #eee;
+  }
+  button {
+    padding: 20px 10px;
+    height: 30px;
+    background: #eee;
   }
 </style>

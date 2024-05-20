@@ -10,6 +10,7 @@
 
 <Layer
   render={({ context, width, height }) => {
+    if (clipCircle < 0) return;
     context.save();
     context.fillStyle = "#000c";
     context.beginPath();

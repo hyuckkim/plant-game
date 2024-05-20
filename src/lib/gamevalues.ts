@@ -5,6 +5,7 @@ import { equips, initializeEquips } from "./objects/equip";
 import { initializePot } from "./objects/pot";
 import { initializeBottle } from "./objects/bottle";
 import { spring } from "svelte/motion";
+import { particles } from "./particle";
 
 export const maxHealth = writable(3000);
 export const health = writable(3000);
@@ -28,6 +29,7 @@ export function reset() {
   statesEnteredTime.set(0);
   state.set("sleep");
   equips.set(undefined);
+  particles.set([]);
   sfx.set(true);
 
   initializeProps();
