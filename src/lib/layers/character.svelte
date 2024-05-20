@@ -6,9 +6,12 @@
   import Sprite from "./sprite.svelte";
   import { equips } from "../objects/equip";
   import { Layer } from "svelte-canvas";
+  import { spring } from "svelte/motion";
 
   const size = 60;
-
+  const pos = spring({ x: $mouseX, y: $mouseY }, {
+    stiffness: 0.5
+  });
   const frames = {
     idle: [
       [4, 5, 6, 7],
@@ -83,6 +86,8 @@
   {/if}
   <Sprite
     callback={({ time }) => {
+      $pos = { x: $mouseX, y: $mouseY };
+
       if ($state === "awake") $health -= Math.abs(dx) + Math.abs(dy);
       else $health = Math.min($maxHealth, $health + (time - $latestT) * 0.5);
 
@@ -90,6 +95,7 @@
       (lx = $characterPos.x), (ly = $characterPos.y);
 
       $latestT = time;
+      $characterPos = $pos;
     }}
     image={getRes("character")}
     source={[position * 24, 0, 24, 24]}

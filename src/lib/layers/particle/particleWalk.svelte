@@ -2,7 +2,7 @@
 <script lang="ts">
   import { Layer } from "svelte-canvas";
   import { particles } from "../../particle";
-  import { characterPos, characterReady } from "../../gamevalues";
+  import { characterPos } from "../../gamevalues";
   import { attachedTag } from "../../objects/prop";
   import { playSoundSFX } from "../../../assets/sound";
 
@@ -29,21 +29,19 @@
     context.closePath();
   });
 
-  if ($characterReady) {
-    movements += Math.abs($characterPos.x - latestCharacterPos.x) + Math.abs($characterPos.y - latestCharacterPos.y);
+  movements += Math.abs($characterPos.x - latestCharacterPos.x) + Math.abs($characterPos.y - latestCharacterPos.y);
 
-    if (movements > 100) {
-      $particles = [...$particles, ({
-        x: $characterPos.x,
-        y: $characterPos.y,
-        t: time
-      })];
+  if (movements > 100) {
+    $particles = [...$particles, ({
+      x: $characterPos.x,
+      y: $characterPos.y,
+      t: time
+    })];
 
-      if (attachedTag("pond")) playSoundSFX("step/water");
-      else playSoundSFX("step/grass");
-      
-      movements %= 100;
-    }
+    if (attachedTag("pond")) playSoundSFX("step/water");
+    else playSoundSFX("step/grass");
+    
+    movements %= 100;
   }
   latestCharacterPos = $characterPos;
 }} />

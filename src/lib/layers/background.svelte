@@ -1,9 +1,6 @@
 <script lang="ts">
   import { Layer } from "svelte-canvas";
   import {
-    characterPos,
-    characterReady,
-    health,
     state,
     statesEnteredTime,
   } from "../gamevalues";
@@ -13,11 +10,9 @@
     yesterdayProps,
     type Prop,
   } from "../objects/prop";
-  import { mouseButtons, mouseX, mouseY } from "../values";
   import GroundGrass from "./background/groundGrass.svelte";
   import GroundProp from "./background/groundProp.svelte";
   import GroundShadow from "./background/groundShadow.svelte";
-  import MouseButton from "./mouseButton.svelte";
 
   const leapRadius = (start: number, now: number) => {
     const end = start + 600;
@@ -38,13 +33,6 @@
     circleRadius = leapRadius($statesEnteredTime, time);
     isFullyChanged = circleRadius === 1 || $statesEnteredTime === 0;
     gottenStatus = $state;
-
-    if ($health > 0) {
-      $characterPos = { x: $mouseX, y: $mouseY };
-      if ($characterPos.x === $mouseX && $characterPos.y === $mouseY) {
-        $characterReady = true;
-      }
-    }
 
     gottenProps = $props;
     gottenYesterdayProps = $yesterdayProps;
@@ -74,7 +62,4 @@
   clipCircle={circleRadius} />
 {:else if gottenStatus === "sleep"}
   <GroundProp props={gottenNightProps} />
-{/if}
-{#if gottenStatus === "none"}
-  <MouseButton pos={[300, 300, 200, 250]} buttons={mouseButtons.Left} />
 {/if}

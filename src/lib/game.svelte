@@ -14,13 +14,17 @@
 
   onMount(() => {
     reset();
+    getSoundRes("bgm").volume(0.5);
+    getSoundRes("bgm").play();
+    getSoundRes("bgm").loop(true);
+
     return () => {
       getSoundRes("bgm").pause();
     }
   })
 </script>
 <Canvas
-  style={$state !== "none" && $health > 0 ? "cursor:none" : ""}
+  style={$health > 0 ? "cursor:none" : ""}
   autoplay
   on:mousemove={(e) => {
     $mouseX = e.x;
@@ -29,13 +33,7 @@
   on:click={async (e) => {
     $mouseX = e.x;
     $mouseY = e.y;
-    if ($state === "none") {
-      $state = "sleep";
-      getSoundRes("bgm").volume(0.5);
-      getSoundRes("bgm").play();
-      getSoundRes("bgm").loop(true);
-    }
-    else if ($health > 0) {
+    if ($health > 0) {
       click($mouseX, $mouseY);
     }
   }}
@@ -44,10 +42,8 @@
   }}
 >
   <Background />
-  {#if $state !== "none"}
   <ParticleWalk />
   <Character />
   <ParticleDrop />
   <UI />
-  {/if}
 </Canvas>
