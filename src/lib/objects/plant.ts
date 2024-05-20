@@ -1,7 +1,11 @@
 import { get } from "svelte/store";
 import { getRes } from "../../assets/image";
 import { getGrass, type Grass } from "../data/grass";
-import { getRandomPotionGrass, potiondropResult, type Potion } from "../data/potion";
+import {
+  getRandomPotionGrass,
+  potiondropResult,
+  type Potion,
+} from "../data/potion";
 import { makeGrabbableProp } from "./equip";
 import { addGrass } from "./pot";
 import { attachedTag, type Prop } from "./prop";
@@ -9,7 +13,7 @@ import { playSoundSFX } from "../../assets/sound";
 
 export function generatePlant(): Prop {
   const length = randn_bm(0, 1200, 1);
-  const angle = Math.random() * Math.PI / 2;
+  const angle = (Math.random() * Math.PI) / 2;
   const x = Math.cos(angle) * length;
   const y = Math.sin(angle) * length;
 
@@ -20,8 +24,8 @@ export function generatePlant(): Prop {
 export function resolvePotionDropResult(): Prop[] {
   const sliced: {
     potion: Potion;
-    pos: { x: number; y: number; };
-}[][] = [];
+    pos: { x: number; y: number };
+  }[][] = [];
   drop: for (let i = 0; i < get(potiondropResult).length; i++) {
     for (let j = 0; j < sliced.length; j++) {
       if (sliced[j][0].potion === get(potiondropResult)[i].potion) {
@@ -44,15 +48,27 @@ export function resolvePotionDropResult(): Prop[] {
       }
       if (counted.length === 4) {
         used.push(...counted);
-        props.push(generateGrassProp(getRandomPotionGrass(sliced[i][j].potion), sliced[i][j].pos.x, sliced[i][j].pos.y));
+        props.push(
+          generateGrassProp(
+            getRandomPotionGrass(sliced[i][j].potion),
+            sliced[i][j].pos.x,
+            sliced[i][j].pos.y
+          )
+        );
       }
     }
   }
   potiondropResult.set([]);
   return props;
 }
-function attached({x: x1, y: y1}: {x: number, y: number}, {x: x2, y: y2}: {x: number, y: number}, range: number = 20) {
-  return (x1 - x2) < range && (x2 - x1) < range && (y1 - y2) < range && (y2 - y1) < range;
+function attached(
+  { x: x1, y: y1 }: { x: number; y: number },
+  { x: x2, y: y2 }: { x: number; y: number },
+  range: number = 20
+) {
+  return (
+    x1 - x2 < range && x2 - x1 < range && y1 - y2 < range && y2 - y1 < range
+  );
 }
 
 export function generateGrassProp(grass: Grass, x: number, y: number): Prop {
@@ -61,7 +77,7 @@ export function generateGrassProp(grass: Grass, x: number, y: number): Prop {
     grass.source,
     [x, y, 40, 40],
     [0, 0, 40, 40],
-    {amountTime: 3},
+    { amountTime: 3 },
     {
       onDayEnd: (state) => {
         if (typeof state.amountTime !== "number") return false;
@@ -75,16 +91,17 @@ export function generateGrassProp(grass: Grass, x: number, y: number): Prop {
           return undefined;
         }
         return true;
-      }
+      },
     }
   );
 }
 
 const randn_bm = (min: number, max: number, skew: number) => {
-  var u = 0, v = 0;
-  while(u === 0) u = Math.random(); //Converting [0,1) to (0,1)
-  while(v === 0) v = Math.random();
-  let num = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+  var u = 0,
+    v = 0;
+  while (u === 0) u = Math.random(); //Converting [0,1) to (0,1)
+  while (v === 0) v = Math.random();
+  let num = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
 
   num = num / 10.0 + 0.5; // Translate to 0 -> 1
   if (num > 1 || num < 0) num = randn_bm(min, max, skew); // resample between 0 and 1 if out of range
@@ -92,4 +109,4 @@ const randn_bm = (min: number, max: number, skew: number) => {
   num *= max - min; // Stretch to fill range
   num += min; // offset to min
   return num;
-}
+};

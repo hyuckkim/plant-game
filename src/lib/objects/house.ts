@@ -1,7 +1,18 @@
 import { get } from "svelte/store";
 import { getRes } from "../../assets/image";
 import { addProps, dayEnd, dayStarted, newProp } from "./prop";
-import { HealthBarExtraHeight, characterPos, enteredEndingTime, generatedEnding, health, lastCharacterPos, maxHealth, nowEnding, state, statesEnteredTime } from "../gamevalues";
+import {
+  HealthBarExtraHeight,
+  characterPos,
+  enteredEndingTime,
+  generatedEnding,
+  health,
+  lastCharacterPos,
+  maxHealth,
+  nowEnding,
+  state,
+  statesEnteredTime,
+} from "../gamevalues";
 import { latestT, type Coord } from "../values";
 import { generatePlant, resolvePotionDropResult } from "./plant";
 import { makePot } from "./pot";
@@ -23,18 +34,20 @@ export function settingHouseProps() {
   makeSoundObjects();
 }
 function makeHouse() {
-  addProps(newProp({
-    img: getRes("prop/rpg"),
-    source: [0, 192, 32, 64],
-    pos: [80, 80, 48, 96],
-    display: "always",
-    onClick: () => {
-      changeAwakenState(get(latestT));
-      if (get(state) === "awake")  playSoundSFX("prop/house");
-      else playSoundSFX("prop/house_close");
-      return true;
-    }
-  }));
+  addProps(
+    newProp({
+      img: getRes("prop/rpg"),
+      source: [0, 192, 32, 64],
+      pos: [80, 80, 48, 96],
+      display: "always",
+      onClick: () => {
+        changeAwakenState(get(latestT));
+        if (get(state) === "awake") playSoundSFX("prop/house");
+        else playSoundSFX("prop/house_close");
+        return true;
+      },
+    })
+  );
 }
 export function changeAwakenState(time: number) {
   const current = get(state);
@@ -47,23 +60,25 @@ export function changeAwakenState(time: number) {
       generatePlant(),
       generatePlant(),
       generatePlant(),
-      ...resolvePotionDropResult()
-    ].forEach(p => {
+      ...resolvePotionDropResult(),
+    ].forEach((p) => {
       addProps(p);
     });
     if (get(maxHealth) === 6000 && !get(generatedEnding)) {
       generatedEnding.set(true);
-      addProps(newProp({
-        img: getRes("ui"),
-        source: [116, 140, 8, 6],
-        pos: [300, 40, 16, 12],
-        onClick: () => {
-          nowEnding.set(true);
-          enteredEndingTime.set(get(latestT));
-          HealthBarExtraHeight.set(300);
-          return false;
-        }
-      }));
+      addProps(
+        newProp({
+          img: getRes("ui"),
+          source: [116, 140, 8, 6],
+          pos: [300, 40, 16, 12],
+          onClick: () => {
+            nowEnding.set(true);
+            enteredEndingTime.set(get(latestT));
+            HealthBarExtraHeight.set(300);
+            return false;
+          },
+        })
+      );
     }
     getSoundRes("bgm").volume(0.5);
   } else if (current === "sleep") {
@@ -74,12 +89,14 @@ export function changeAwakenState(time: number) {
   }
 }
 function makeRoof() {
-  addProps(newProp({
-    img: getRes("prop/house"),
-    source: [89, 49, 205, 289],
-    pos: [110, 110, 180, 260],
-    layer: "roof",
-  }));
+  addProps(
+    newProp({
+      img: getRes("prop/house"),
+      source: [89, 49, 205, 289],
+      pos: [110, 110, 180, 260],
+      layer: "roof",
+    })
+  );
 }
 function makeFloor() {
   const posDatas: Coord[] = [
@@ -96,22 +113,26 @@ function makeFloor() {
     [108, 194, 48, 48],
     [156, 194, 48, 48],
   ];
-  posDatas.forEach(p => {
-    addProps(newProp({
-      img: getRes("prop/rpgtile"),
-      source: [192, 0, 32, 32],
-      pos: p,
-      layer: "floor",
-    }));
-  })
+  posDatas.forEach((p) => {
+    addProps(
+      newProp({
+        img: getRes("prop/rpgtile"),
+        source: [192, 0, 32, 32],
+        pos: p,
+        layer: "floor",
+      })
+    );
+  });
 }
 
 function makePond() {
-  addProps(newProp({
-    img: getRes("prop/pond"),
-    source: [9, 70, 81, 78],
-    pos: [800, 670, 162, 156],
-    layer: "floor",
-    state: { tag: "pond" },
-  }))
+  addProps(
+    newProp({
+      img: getRes("prop/pond"),
+      source: [9, 70, 81, 78],
+      pos: [800, 670, 162, 156],
+      layer: "floor",
+      state: { tag: "pond" },
+    })
+  );
 }

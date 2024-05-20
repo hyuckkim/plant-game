@@ -10,7 +10,7 @@ export const maxHealth = writable(3000);
 export const health = writable(3000);
 export const state = writable<"awake" | "sleep">("sleep");
 export const statesEnteredTime = writable(0);
-export const characterPos = writable({x: 0, y: 0});
+export const characterPos = writable({ x: 0, y: 0 });
 export const characterDir = writable(0);
 export const lastCharacterPos = writable({ x: 0, y: 0 });
 export const sfx = writable(true);
@@ -20,7 +20,7 @@ export const gotEnding = writable(false);
 export const nowEnding = writable(false);
 export const enteredEndingTime = writable(0);
 export const endingSequence = writable(0);
-export const savedPosition = writable({x: 0, y: 0});
+export const savedPosition = writable({ x: 0, y: 0 });
 
 export const HealthBarExtraHeight = spring(300);
 export function reset() {
@@ -34,6 +34,6 @@ export function reset() {
   initializeEquips();
   initializePot();
   initializeBottle();
-  
+
   settingHouseProps();
 }

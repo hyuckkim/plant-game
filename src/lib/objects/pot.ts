@@ -30,73 +30,117 @@ export function initializePot() {
 }
 
 export function makePot() {
-  addProps(newProp({
-    img: getRes("prop/furniture"),
-    source: [1036, 646, 44, 82],
-    pos: [150, 30, 53, 98],
-    state: { tag: "pot" },
-    ui: (canvas, _) => {
-      canvas.context.save();
-      drawPanel(canvas, [200, 10, 120, 120]);
-      drawExtendBar(canvas, [320, 20, 3, 0], get(waterCount), 1);
-      drawExtendBar(canvas, [320, 60, 3, 0], get(potionCount), 2);
-      drawItemPanel(canvas, [324, 100, 60, 60]);
+  addProps(
+    newProp({
+      img: getRes("prop/furniture"),
+      source: [1036, 646, 44, 82],
+      pos: [150, 30, 53, 98],
+      state: { tag: "pot" },
+      ui: (canvas, _) => {
+        canvas.context.save();
+        drawPanel(canvas, [200, 10, 120, 120]);
+        drawExtendBar(canvas, [320, 20, 3, 0], get(waterCount), 1);
+        drawExtendBar(canvas, [320, 60, 3, 0], get(potionCount), 2);
+        drawItemPanel(canvas, [324, 100, 60, 60]);
 
-      const potion = get(madenPotion);
-      if (potion) {
-        drawSprite(canvas.context, get(potPotionData), [354, 134, 40, 40], [0, 0, 16, 16]);
-        drawSprite(canvas.context, getRes("prop/potion"), [354, 134, 40, 40], [96, 0, 16, 16]);
-      }
+        const potion = get(madenPotion);
+        if (potion) {
+          drawSprite(
+            canvas.context,
+            get(potPotionData),
+            [354, 134, 40, 40],
+            [0, 0, 16, 16]
+          );
+          drawSprite(
+            canvas.context,
+            getRes("prop/potion"),
+            [354, 134, 40, 40],
+            [96, 0, 16, 16]
+          );
+        }
 
-
-      canvas.context.beginPath();
-      canvas.context.rect(214, 24, 98, 98);
-      canvas.context.clip();
-      if (get(previousTime) !== 0 && canvas.time - get(previousTime) < 300) {
-        const dt = canvas.time - get(previousTime);
-        const m = get(previousMaterials);
-        drawSprite(canvas.context, getRes(m[0].img), [260, 30 + dt / 300 * 120, 40, 40], m[0].source);
-        drawSprite(canvas.context, getRes(m[1].img), [235, 60 + dt / 300 * 120, 40, 40], m[1].source);
-        drawSprite(canvas.context, getRes(m[1].img), [285, 90 + dt / 300 * 120, 40, 40], m[2].source);
-      } else {
-        const m = get(materials);
-        if (m.length >= 1) {
-          drawSprite(canvas.context, getRes(m[0].img), [260, 30, 40, 40], m[0].source);
+        canvas.context.beginPath();
+        canvas.context.rect(214, 24, 98, 98);
+        canvas.context.clip();
+        if (get(previousTime) !== 0 && canvas.time - get(previousTime) < 300) {
+          const dt = canvas.time - get(previousTime);
+          const m = get(previousMaterials);
+          drawSprite(
+            canvas.context,
+            getRes(m[0].img),
+            [260, 30 + (dt / 300) * 120, 40, 40],
+            m[0].source
+          );
+          drawSprite(
+            canvas.context,
+            getRes(m[1].img),
+            [235, 60 + (dt / 300) * 120, 40, 40],
+            m[1].source
+          );
+          drawSprite(
+            canvas.context,
+            getRes(m[1].img),
+            [285, 90 + (dt / 300) * 120, 40, 40],
+            m[2].source
+          );
+        } else {
+          const m = get(materials);
+          if (m.length >= 1) {
+            drawSprite(
+              canvas.context,
+              getRes(m[0].img),
+              [260, 30, 40, 40],
+              m[0].source
+            );
+          }
+          if (m.length >= 2) {
+            drawSprite(
+              canvas.context,
+              getRes(m[1].img),
+              [235, 60, 40, 40],
+              m[1].source
+            );
+          }
+          if (m.length >= 3) {
+            drawSprite(
+              canvas.context,
+              getRes(m[2].img),
+              [285, 90, 40, 40],
+              m[2].source
+            );
+          }
         }
-        if (m.length >= 2) {
-          drawSprite(canvas.context, getRes(m[1].img), [235, 60, 40, 40], m[1].source);
+        canvas.context.closePath();
+        canvas.context.restore();
+      },
+      onClick: () => {
+        const material = get(materials);
+        if (material.length === 3) {
+          previousMaterials.set(material);
+          const gotPotion = getPotion(
+            material[0].dataNum + material[1].dataNum + material[2].dataNum
+          );
+          madenPotion.set(gotPotion);
+          if (gotPotion) {
+            potPotionData.set(
+              createBottleData(
+                gotPotion.color.r,
+                gotPotion.color.g,
+                gotPotion.color.b
+              )
+            );
+          }
+          materials.set([]);
+          previousTime.set(get(latestT));
+          potionCount.set(get(waterCount));
+          waterCount.set(0);
+          if (get(potionCount) === 0) madenPotion.set(undefined);
+          playSoundSFX("prop/machine");
         }
-        if (m.length >= 3) {
-          drawSprite(canvas.context, getRes(m[2].img), [285, 90, 40, 40], m[2].source);
-        }
-      }
-      canvas.context.closePath();
-      canvas.context.restore();
-    },
-    onClick: () => {
-      const material = get(materials);
-      if (material.length === 3) {
-        previousMaterials.set(material);
-        const gotPotion = getPotion(
-          material[0].dataNum + 
-          material[1].dataNum + 
-          material[2].dataNum
-        );
-        madenPotion.set(gotPotion);
-        if (gotPotion) {
-          potPotionData.set(createBottleData(gotPotion.color.r, gotPotion.color.g, gotPotion.color.b));
-        }
-        materials.set([]);
-        previousTime.set(get(latestT));
-        potionCount.set(get(waterCount));
-        waterCount.set(0);
-        if (get(potionCount) === 0) madenPotion.set(undefined);
-        playSoundSFX("prop/machine");
-      }
-      return true;
-    }
-  }));
-
+        return true;
+      },
+    })
+  );
 }
 
 export function addGrass(grass: Grass): boolean {

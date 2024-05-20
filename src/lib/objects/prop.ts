@@ -18,12 +18,15 @@ export type Prop = {
   ui: (canvas: CanvasInfo, state: PropState) => void;
 };
 
-export type PropRender = (canvas: {
-  context: CanvasRenderingContext2D,
-  pos: Coord
-}, state: PropState) => void;
+export type PropRender = (
+  canvas: {
+    context: CanvasRenderingContext2D;
+    pos: Coord;
+  },
+  state: PropState
+) => void;
 
-export type PropState = {[key: string]: any};
+export type PropState = { [key: string]: any };
 
 export function newProp(data: Partial<Prop>): Prop {
   const defaultProp: Prop = {
@@ -128,21 +131,21 @@ export function wheelMove(dy: number) {
 }
 export function dayEnd() {
   yesterdayProps.set(get(props));
-  get(props).forEach(p => {
+  get(props).forEach((p) => {
     const result = p.onDayEnd(p.state);
     if (!result) removeProps(p);
   });
 }
 export function dayStarted() {
-  get(nightProps).forEach(p => {
+  get(nightProps).forEach((p) => {
     const result = p.onDayEnd(p.state);
     if (!result) removeProps(p);
   });
 }
 export function attachedTag(tag: string) {
   return getCurrentProps()
-    .filter(p => isAttached(p, get(characterPos).x, get(characterPos).y))
-    .map(p => p.state.tag)
+    .filter((p) => isAttached(p, get(characterPos).x, get(characterPos).y))
+    .map((p) => p.state.tag)
     .includes(tag);
 }
 export function isAttached(p: Prop, x: number, y: number) {

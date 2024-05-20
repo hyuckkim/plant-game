@@ -1,6 +1,13 @@
 <script lang="ts">
   import { addCoord, latestT, mouseX, mouseY } from "../values";
-  import { characterDir, characterPos, health, maxHealth, nowEnding, state } from "../gamevalues";
+  import {
+    characterDir,
+    characterPos,
+    health,
+    maxHealth,
+    nowEnding,
+    state,
+  } from "../gamevalues";
   import { getRes } from "../../assets/image";
 
   import Sprite from "./sprite.svelte";
@@ -9,9 +16,12 @@
   import { spring } from "svelte/motion";
 
   const size = 60;
-  const pos = spring({ x: $mouseX, y: $mouseY }, {
-    stiffness: 0.5
-  });
+  const pos = spring(
+    { x: $mouseX, y: $mouseY },
+    {
+      stiffness: 0.5,
+    }
+  );
   const frames = {
     idle: [
       [4, 5, 6, 7],
@@ -37,7 +47,14 @@
   $: position = getDirectionFrame(dx, dy, $characterDir, $latestT);
   $: diedPosition = frames.die[Math.min(3, Math.floor(($latestT - ddt) / 160))];
 
-  $: equipPos = $characterDir === 0 ? -7 : $characterDir === 1 ? 0 : $characterDir === 2 ? 0 : 7;
+  $: equipPos =
+    $characterDir === 0
+      ? -7
+      : $characterDir === 1
+        ? 0
+        : $characterDir === 2
+          ? 0
+          : 7;
 
   function getDirectionFrame(
     dx: number,
@@ -47,7 +64,10 @@
   ) {
     if (dx * dx + dy * dy > 2) {
       dt = $latestT;
-      if ((Math.abs(dx * 2.5) < Math.abs(dy)) || (Math.abs(dy * 2.5) < Math.abs(dx))) {
+      if (
+        Math.abs(dx * 2.5) < Math.abs(dy) ||
+        Math.abs(dy * 2.5) < Math.abs(dx)
+      ) {
         $characterDir = (dx < dy ? 2 : 0) + (dx < -dy ? 1 : 0);
       }
     }
@@ -66,15 +86,18 @@
       <Layer
         render={({ context }) => {
           if (typeof $equips.img === "function") {
-            $equips.img({
-              context,
-              pos: addCoord($equips.pos, [
-                $characterPos.x + equipPos,
-                $characterPos.y,
-                0,
-                0,
-              ]),
-            }, $equips.state);
+            $equips.img(
+              {
+                context,
+                pos: addCoord($equips.pos, [
+                  $characterPos.x + equipPos,
+                  $characterPos.y,
+                  0,
+                  0,
+                ]),
+              },
+              $equips.state
+            );
           }
         }}
       />
@@ -82,7 +105,12 @@
       <Sprite
         image={$equips.img}
         source={$equips.source}
-        render={addCoord($equips.pos, [$characterPos.x + equipPos, $characterPos.y, 0, 0])}
+        render={addCoord($equips.pos, [
+          $characterPos.x + equipPos,
+          $characterPos.y,
+          0,
+          0,
+        ])}
       />
     {/if}
   {/if}
@@ -90,7 +118,8 @@
     callback={({ time }) => {
       $pos = { x: $mouseX, y: $mouseY };
 
-      if ($state === "awake" && !$nowEnding) $health -= Math.abs(dx) + Math.abs(dy);
+      if ($state === "awake" && !$nowEnding)
+        $health -= Math.abs(dx) + Math.abs(dy);
       else $health = Math.min($maxHealth, $health + (time - $latestT) * 0.5);
 
       (dx = lx - $characterPos.x), (dy = ly - $characterPos.y);
@@ -108,15 +137,18 @@
       <Layer
         render={({ context }) => {
           if (typeof $equips.img === "function") {
-            $equips.img({
-              context,
-              pos: addCoord($equips.pos, [
-                $characterPos.x + equipPos,
-                $characterPos.y,
-                0,
-                0,
-              ]),
-            }, $equips.state);
+            $equips.img(
+              {
+                context,
+                pos: addCoord($equips.pos, [
+                  $characterPos.x + equipPos,
+                  $characterPos.y,
+                  0,
+                  0,
+                ]),
+              },
+              $equips.state
+            );
           }
         }}
       />
@@ -124,7 +156,12 @@
       <Sprite
         image={$equips.img}
         source={$equips.source}
-        render={addCoord($equips.pos, [$characterPos.x + equipPos, $characterPos.y, 0, 0])}
+        render={addCoord($equips.pos, [
+          $characterPos.x + equipPos,
+          $characterPos.y,
+          0,
+          0,
+        ])}
       />
     {/if}
   {/if}

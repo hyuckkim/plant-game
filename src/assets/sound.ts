@@ -12,10 +12,7 @@ import WaterUpSFX from "./sfx/Footsteps_WaterV1_Walk_01.wav";
 import WaterDownSFX from "./sfx/Footsteps_WaterV1_Walk_02.wav";
 import MachineSFX from "./sfx/Vehicle_Truck_Sliding_Door_Opening_Mono_01.wav";
 
-export {
-  backgroundMusic,
-  WaterUpSFX
-};
+export { backgroundMusic, WaterUpSFX };
 
 export type SoundResources = Awaited<ReturnType<typeof loadGameSounds>>;
 export const soundResources = writable<SoundResources>();
@@ -47,26 +44,32 @@ export async function loadGameSounds() {
     { sound: WaterDownSFX, name: "prop/water_down", loop: false },
     { sound: MachineSFX, name: "prop/machine", loop: false },
   ] as const;
-  type res = typeof sounds[number]['name'];
+  type res = (typeof sounds)[number]["name"];
 
   const soundSources = await Promise.all(
-    sounds.map(async (v) => new Promise<{ sound: Howl, name: string}>((resolve, reject) => {
-      const sound: { sound: Howl, name: string } = {
-        sound: new Howl({
-          src: v.sound,
-          loop: v.loop,
-          volume: 0.5,
-          onload: () => resolve(sound),
-          onloaderror: () => reject(sound)
-        }),
-        name: v.name
-      };
-    }))
+    sounds.map(
+      async (v) =>
+        new Promise<{ sound: Howl; name: string }>((resolve, reject) => {
+          const sound: { sound: Howl; name: string } = {
+            sound: new Howl({
+              src: v.sound,
+              loop: v.loop,
+              volume: 0.5,
+              onload: () => resolve(sound),
+              onloaderror: () => reject(sound),
+            }),
+            name: v.name,
+          };
+        })
+    )
   );
 
-  const soundData = soundSources.reduce<Partial<{[K in res]: Howl}>>((pre, curr) => {
-    return {...pre, [curr.name]: curr.sound};
-  }, {});
+  const soundData = soundSources.reduce<Partial<{ [K in res]: Howl }>>(
+    (pre, curr) => {
+      return { ...pre, [curr.name]: curr.sound };
+    },
+    {}
+  );
   soundResources.set(soundData);
   return soundData;
 }

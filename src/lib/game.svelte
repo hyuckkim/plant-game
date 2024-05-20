@@ -1,6 +1,15 @@
 <script lang="ts">
   import { Canvas } from "svelte-canvas";
-  import { health, reset, nowEnding, endingSequence, enteredEndingTime, characterDir, characterPos, gotEnding } from "./gamevalues";
+  import {
+    health,
+    reset,
+    nowEnding,
+    endingSequence,
+    enteredEndingTime,
+    characterDir,
+    characterPos,
+    gotEnding,
+  } from "./gamevalues";
   import { latestT, mouseX, mouseY } from "./values";
 
   import Background from "./layers/background.svelte";
@@ -23,11 +32,14 @@
 
     return () => {
       getSoundRes("bgm").pause();
-    }
-  })
+    };
+  });
 </script>
+
 <Canvas
-  style={($health > 0 && !($nowEnding && $endingSequence === 0)) ? "cursor:none" : ""}
+  style={$health > 0 && !($nowEnding && $endingSequence === 0)
+    ? "cursor:none"
+    : ""}
   autoplay
   on:mousemove={(e) => {
     $mouseX = e.x;
@@ -36,12 +48,16 @@
   on:click={async (e) => {
     $mouseX = e.x;
     $mouseY = e.y;
-    if ($nowEnding && $endingSequence === 1 && $characterPos.y > window.innerHeight - 50) {
+    if (
+      $nowEnding &&
+      $endingSequence === 1 &&
+      $characterPos.y > window.innerHeight - 50
+    ) {
       $nowEnding = false;
       $gotEnding = true;
       changeAwakenState($latestT);
     } else {
-        if ($health > 0) {
+      if ($health > 0) {
         click($mouseX, $mouseY);
       }
     }

@@ -21,4 +21,4 @@ export enum mouseButtons {
   Right = 1 << 1,
   WheelUp = 1 << 2,
   WheelDown = 1 << 3,
-};
+}

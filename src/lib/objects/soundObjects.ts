@@ -13,13 +13,10 @@ export function makeSoundObjects() {
 function addBGMProp(): Prop {
   return makeGrabbableProp(
     ({ context, pos }, state) => {
-      drawSprite(
-        context,
-        getRes("prop/furniture"),
-        pos,
-        [1000, 528, 114, 96],
-        { x: state.reversed === 1, y: state.reversed === 1 }
-      );
+      drawSprite(context, getRes("prop/furniture"), pos, [1000, 528, 114, 96], {
+        x: state.reversed === 1,
+        y: state.reversed === 1,
+      });
     },
     [1000, 528, 114, 96],
     [50, 600, 114, 96],
@@ -39,7 +36,7 @@ function addBGMProp(): Prop {
           state.reversed = 0;
         }
         return true;
-      }
+      },
     },
     "night"
   );
@@ -48,13 +45,10 @@ function addBGMProp(): Prop {
 function addSFXProp(): Prop {
   return makeGrabbableProp(
     ({ context, pos }, state) => {
-      drawSprite(
-        context,
-        getRes("prop/furniture"),
-        pos,
-        [1152, 910, 56, 26],
-        { x: state.reversed === 1, y: state.reversed === 1 }
-      );
+      drawSprite(context, getRes("prop/furniture"), pos, [1152, 910, 56, 26], {
+        x: state.reversed === 1,
+        y: state.reversed === 1,
+      });
     },
     [1152, 910, 56, 26],
     [150, 650, 56, 26],
@@ -74,7 +68,7 @@ function addSFXProp(): Prop {
           state.reversed = 0;
         }
         return true;
-      }
+      },
     },
     "night"
   );

@@ -11,7 +11,7 @@
   export let clipCircle: number = 0;
   export let clip: boolean = false;
   export let clipReversed: boolean = false;
-  
+
   function clipDayCircle(
     { context, width, height, time }: CanvasInfo,
     reversed: boolean = false
@@ -22,8 +22,11 @@
     }
     if (clipCircle > 0) {
       context.arc(
-        roundPos.x, roundPos.y,
-        clipCircle * (width + height), 0, 360
+        roundPos.x,
+        roundPos.y,
+        clipCircle * (width + height),
+        0,
+        360
       );
       context.clip("evenodd");
     }
@@ -36,20 +39,16 @@
     props
       .filter((p) => p.layer === "floor")
       .forEach((p) => {
-        if (typeof p.img === "function") {
+        if (typeof p.img === "function")
           p.img({ context, pos: p.pos }, p.state);
-        } else {
-          drawSprite(context, p.img, p.pos, p.source, p.flipped);
-        }
+        else drawSprite(context, p.img, p.pos, p.source, p.flipped);
       });
     props
       .filter((p) => p.layer === "normal")
       .forEach((p) => {
-        if (typeof p.img === "function") {
+        if (typeof p.img === "function")
           p.img({ context, pos: p.pos }, p.state);
-        } else {
-          drawSprite(context, p.img, p.pos, p.source, p.flipped);
-        }
+        else drawSprite(context, p.img, p.pos, p.source, p.flipped);
       });
     props
       .filter((p) => p.layer === "roof")
@@ -57,23 +56,20 @@
         if ($state === "sleep" || isAttached(p, pos.x, pos.y)) {
           context.globalAlpha = 0.2;
         }
-        if (typeof p.img === "function") {
+        if (typeof p.img === "function")
           p.img({ context, pos: p.pos }, p.state);
-        } else {
-          drawSprite(context, p.img, p.pos, p.source, p.flipped);
-        }
+        else drawSprite(context, p.img, p.pos, p.source, p.flipped);
         context.globalAlpha = 1;
       });
   }
 </script>
 
+<Layer
+  render={({ context, width, height, time }) => {
+    context.save();
+    if (clip) clipDayCircle({ context, width, height, time }, clipReversed);
 
-<Layer render={({ context, width, height, time}) => {
-  context.save();
-  if (clip) {
-    clipDayCircle({ context, width, height, time }, clipReversed);
-  }
-
-  drawLayeredProps(props, $characterPos, context);
-  context.restore();
-}} />
+    drawLayeredProps(props, $characterPos, context);
+    context.restore();
+  }}
+/>

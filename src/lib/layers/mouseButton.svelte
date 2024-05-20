@@ -5,9 +5,10 @@
 
   export let pos: Coord;
   export let buttons: mouseButtons;
-
 </script>
 
-<Layer render={({ context }) => {
-  drawMouseButton(context, pos, buttons);
-}} />
+<Layer
+  render={({ context }) => {
+    drawMouseButton(context, pos, buttons);
+  }}
+/>

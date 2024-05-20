@@ -50,32 +50,35 @@ export async function loadGameImages() {
     { img: FlowerTile, name: "prop/flower" },
     { img: EmptyPotions, name: "prop/potion" },
     { img: Pond, name: "prop/pond" },
-    { img: Furniture, name: "prop/furniture"  },
+    { img: Furniture, name: "prop/furniture" },
   ] as const;
-  type res = typeof images[number]['name'];
+  type res = (typeof images)[number]["name"];
 
   const imageSources = await Promise.all(
-      images.map((v) => {
+    images
+      .map((v) => {
         const element = new Image();
         element.src = v.img;
 
-        return {img: element, name: v.name};
+        return { img: element, name: v.name };
       })
       .map(async (e) => {
-        return new Promise<{ img: HTMLImageElement, name: string}>((resolve, reject) => {
-          e.img.addEventListener("load", () => {
-            resolve({ img: e.img, name: e.name });
-          });
-          e.img.addEventListener("error", () => {
-            reject(e);
-          });
-        });
+        return new Promise<{ img: HTMLImageElement; name: string }>(
+          (resolve, reject) => {
+            e.img.addEventListener("load", () => {
+              resolve({ img: e.img, name: e.name });
+            });
+            e.img.addEventListener("error", () => {
+              reject(e);
+            });
+          }
+        );
       })
   );
-  
-  const imageData = imageSources.reduce<Partial<{[K in res]: HTMLImageElement}>>((pre, curr) => {
-    return {...pre, [curr.name]: curr.img};
-  }, {});
+
+  const imageData = imageSources.reduce<
+    Partial<{ [K in res]: HTMLImageElement }>
+  >((pre, curr) => ({ ...pre, [curr.name]: curr.img }), {});
   resources.set(imageData);
   return imageData;
 }

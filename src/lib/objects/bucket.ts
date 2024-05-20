@@ -18,7 +18,7 @@ export function makeBucket() {
           return waterBucket;
         }
         return true;
-      }
+      },
     }
   );
   const waterBucket = makeGrabbableEquip(
@@ -34,7 +34,7 @@ export function makeBucket() {
           return justBucket;
         }
         return true;
-      }
+      },
     }
   );
   const bucketProp = makeGrabbableProp(
@@ -50,7 +50,7 @@ export function makeBucket() {
           return waterBucket;
         }
         return true;
-      }
+      },
     }
   );
   addProps(bucketProp);

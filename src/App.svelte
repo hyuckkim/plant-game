@@ -29,8 +29,8 @@
   <Skeleton />
 {:else}
   {#await Promise.all([loadGameImages(), loadGameSounds()])}
-  <Skeleton />
+    <Skeleton />
   {:then}
-  <Game />
+    <Game />
   {/await}
 {/if}

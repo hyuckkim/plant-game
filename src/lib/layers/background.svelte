@@ -1,9 +1,6 @@
 <script lang="ts">
   import { Layer } from "svelte-canvas";
-  import {
-    state,
-    statesEnteredTime,
-  } from "../gamevalues";
+  import { state, statesEnteredTime } from "../gamevalues";
   import {
     props,
     nightProps,
@@ -42,24 +39,37 @@
 
 <GroundGrass />
 {#if gottenStatus === "awake"}
-  <GroundProp props={gottenProps}
-  clip={!isFullyChanged}
-  clipCircle={circleRadius} />
+  <GroundProp
+    props={gottenProps}
+    clip={!isFullyChanged}
+    clipCircle={circleRadius}
+  />
 {/if}
 {#if gottenStatus === "sleep"}
   <GroundProp props={gottenYesterdayProps} />
 {:else if gottenStatus === "awake" && !isFullyChanged}
-<GroundProp props={gottenYesterdayProps} clip clipReversed
-  clipCircle={circleRadius} />
+  <GroundProp
+    props={gottenYesterdayProps}
+    clip
+    clipReversed
+    clipCircle={circleRadius}
+  />
 {/if}
 
 {#if gottenStatus !== "awake" || !isFullyChanged}
-  <GroundShadow clip={!isFullyChanged} clipReversed={gottenStatus === "awake"}
-  clipCircle={circleRadius} />
+  <GroundShadow
+    clip={!isFullyChanged}
+    clipReversed={gottenStatus === "awake"}
+    clipCircle={circleRadius}
+  />
 {/if}
 {#if !isFullyChanged}
-  <GroundProp props={gottenNightProps} clip clipReversed={gottenStatus === "awake"}
-  clipCircle={circleRadius} />
+  <GroundProp
+    props={gottenNightProps}
+    clip
+    clipReversed={gottenStatus === "awake"}
+    clipCircle={circleRadius}
+  />
 {:else if gottenStatus === "sleep"}
   <GroundProp props={gottenNightProps} />
 {/if}

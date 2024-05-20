@@ -1,5 +1,11 @@
 import { get, writable } from "svelte/store";
-import { addProps, newProp, type Prop, type PropRender, type PropState } from "./prop";
+import {
+  addProps,
+  newProp,
+  type Prop,
+  type PropRender,
+  type PropState,
+} from "./prop";
 import type { Coord } from "../values";
 import { characterPos } from "../gamevalues";
 
@@ -13,7 +19,7 @@ export type Equip = {
   onClick: (state: PropState) => true | Partial<Equip> | undefined;
   onWheelUp: (state: PropState) => true | Partial<Equip> | undefined;
   onWheelDown: (state: PropState) => true | Partial<Equip> | undefined;
-}
+};
 export const equips = writable<Equip | undefined>(undefined);
 
 export function initializeEquips() {
@@ -31,8 +37,8 @@ export function setEquip(data: Partial<Equip>) {
     onClick: () => true,
     onWheelUp: () => true,
     onWheelDown: () => true,
-  }
-  equips.set({...defaultEquip, ...data})
+  };
+  equips.set({ ...defaultEquip, ...data });
 }
 
 export function makeGrabbableProp(
@@ -44,42 +50,44 @@ export function makeGrabbableProp(
   {
     onWheelUp,
     onWheelDown,
-    onDayEnd
+    onDayEnd,
   }: Partial<{
-    onWheelUp: (state: PropState) => true | Partial<Equip> | undefined,
-    onWheelDown: (state: PropState) => true | Partial<Equip> | undefined,
-    onDayEnd: (state: PropState) => boolean,
+    onWheelUp: (state: PropState) => true | Partial<Equip> | undefined;
+    onWheelDown: (state: PropState) => true | Partial<Equip> | undefined;
+    onDayEnd: (state: PropState) => boolean;
   }>,
   display: "day" | "night" | "always" = "day"
 ): Prop {
-  const makeSomeProp = (pos: Coord, state: PropState) => newProp({
-    img,
-    source,
-    pos,
-    state,
-    onDayEnd: onDayEnd ?? (() => true),
-    display,
-  });
-  const equipSomeProp = (state: PropState) => setEquip({
-    img,
-    source,
-    pos: equipPos,
-    state,
-    onWheelUp: onWheelUp ?? (() => true),
-    onWheelDown: onWheelDown ?? (() => true),
-    onClick: (state) => {
-      const propNow = makeSomeProp(
-        [get(characterPos).x, get(characterPos).y, equipPos[2], equipPos[3]],
-        state
-      );
-      propNow.onClick = (state) => {
-        equipSomeProp(state);
-        return false;
-      };
-      addProps(propNow);
-      return undefined;
-    }
-  });
+  const makeSomeProp = (pos: Coord, state: PropState) =>
+    newProp({
+      img,
+      source,
+      pos,
+      state,
+      onDayEnd: onDayEnd ?? (() => true),
+      display,
+    });
+  const equipSomeProp = (state: PropState) =>
+    setEquip({
+      img,
+      source,
+      pos: equipPos,
+      state,
+      onWheelUp: onWheelUp ?? (() => true),
+      onWheelDown: onWheelDown ?? (() => true),
+      onClick: (state) => {
+        const propNow = makeSomeProp(
+          [get(characterPos).x, get(characterPos).y, equipPos[2], equipPos[3]],
+          state
+        );
+        propNow.onClick = (state) => {
+          equipSomeProp(state);
+          return false;
+        };
+        addProps(propNow);
+        return undefined;
+      },
+    });
   const propNow = makeSomeProp(propPos, state);
   propNow.onClick = (state) => {
     equipSomeProp(state);
@@ -96,20 +104,21 @@ export function makeGrabbableEquip(
   {
     onWheelUp,
     onWheelDown,
-    onDayEnd
+    onDayEnd,
   }: Partial<{
-    onWheelUp: (state: PropState) => true | Partial<Equip> | undefined,
-    onWheelDown: (state: PropState) => true | Partial<Equip> | undefined,
-    onDayEnd: (state: PropState) => boolean,
+    onWheelUp: (state: PropState) => true | Partial<Equip> | undefined;
+    onWheelDown: (state: PropState) => true | Partial<Equip> | undefined;
+    onDayEnd: (state: PropState) => boolean;
   }>
 ): Partial<Equip> {
-  const makeSomeProp = (pos: Coord, state: PropState) => newProp({
-    img,
-    source,
-    pos,
-    state,
-    onDayEnd: onDayEnd ?? (() => true),
-  });
+  const makeSomeProp = (pos: Coord, state: PropState) =>
+    newProp({
+      img,
+      source,
+      pos,
+      state,
+      onDayEnd: onDayEnd ?? (() => true),
+    });
   const equipSomeProp = (state: PropState): Partial<Equip> => ({
     img,
     source,
@@ -128,7 +137,7 @@ export function makeGrabbableEquip(
       };
       addProps(propNow);
       return undefined;
-    }
+    },
   });
   return equipSomeProp(state);
 }

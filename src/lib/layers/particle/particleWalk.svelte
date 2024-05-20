@@ -1,8 +1,12 @@
-
 <script lang="ts">
   import { Layer } from "svelte-canvas";
   import { particles } from "../../particle";
-  import { characterPos, endingSequence, nowEnding, savedPosition } from "../../gamevalues";
+  import {
+    characterPos,
+    endingSequence,
+    nowEnding,
+    savedPosition,
+  } from "../../gamevalues";
   import { attachedTag } from "../../objects/prop";
   import { playSoundSFX } from "../../../assets/sound";
 
@@ -12,44 +16,59 @@
   const footY = 25;
 
   let movements = 0;
-  let latestCharacterPos = {x: 0, y: 0};
+  let latestCharacterPos = { x: 0, y: 0 };
 </script>
 
-<Layer render={({ context, time }) => {
-  $particles = $particles.filter(p => time - p.t < maximumTime);
-  $particles.forEach(n => {
-    const lt = time - n.t;
-    context.save();
-    context.beginPath();
-    context.ellipse(n.x, n.y + footY, (maximumTime - lt) / maximumTime * maximumSize * xSize, (maximumTime - lt) / maximumTime * maximumSize, 0, 0, 2 * Math.PI);
-    context.strokeStyle = "#fff2";
-    context.lineWidth = 2;
-    context.stroke();
-    context.restore();
-    context.closePath();
-  });
+<Layer
+  render={({ context, time }) => {
+    $particles = $particles.filter((p) => time - p.t < maximumTime);
+    $particles.forEach((n) => {
+      const lt = time - n.t;
+      context.save();
+      context.beginPath();
+      context.ellipse(
+        n.x,
+        n.y + footY,
+        ((maximumTime - lt) / maximumTime) * maximumSize * xSize,
+        ((maximumTime - lt) / maximumTime) * maximumSize,
+        0,
+        0,
+        2 * Math.PI
+      );
+      context.strokeStyle = "#fff2";
+      context.lineWidth = 2;
+      context.stroke();
+      context.restore();
+      context.closePath();
+    });
 
-  movements += Math.abs($characterPos.x - latestCharacterPos.x) + Math.abs($characterPos.y - latestCharacterPos.y);
+    movements +=
+      Math.abs($characterPos.x - latestCharacterPos.x) +
+      Math.abs($characterPos.y - latestCharacterPos.y);
 
-  if (movements > 100) {
-    $particles = [...$particles, ({
-      x: $characterPos.x,
-      y: $characterPos.y,
-      t: time
-    })];
-    if ($nowEnding) {
-      if ($endingSequence === 0) playSoundSFX("step/grass");
-      else {
-        if ($characterPos.y > $savedPosition.y - 100)  playSoundSFX("step/grass");
-        else playSoundSFX("step/water");
+    if (movements > 100) {
+      $particles = [
+        ...$particles,
+        {
+          x: $characterPos.x,
+          y: $characterPos.y,
+          t: time,
+        },
+      ];
+      if ($nowEnding) {
+        if ($endingSequence === 0) playSoundSFX("step/grass");
+        else {
+          if ($characterPos.y > $savedPosition.y - 100)
+            playSoundSFX("step/grass");
+          else playSoundSFX("step/water");
+        }
+      } else {
+        if (attachedTag("pond")) playSoundSFX("step/water");
+        else playSoundSFX("step/grass");
       }
+
+      movements %= 100;
     }
-    else {
-      if (attachedTag("pond")) playSoundSFX("step/water");
-      else playSoundSFX("step/grass");
-    }
-    
-    movements %= 100;
-  }
-  latestCharacterPos = $characterPos;
-}} />
+    latestCharacterPos = $characterPos;
+  }}
+/>
