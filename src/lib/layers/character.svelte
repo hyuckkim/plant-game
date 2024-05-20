@@ -45,9 +45,11 @@
     direction: number,
     time: number
   ) {
-    if (dx * dx + dy * dy > 0.5) {
-      $characterDir = (dx < dy ? 2 : 0) + (dx < -dy ? 1 : 0);
+    if (dx * dx + dy * dy > 2) {
       dt = $latestT;
+      if ((Math.abs(dx * 2.5) < Math.abs(dy)) || (Math.abs(dy * 2.5) < Math.abs(dx))) {
+        $characterDir = (dx < dy ? 2 : 0) + (dx < -dy ? 1 : 0);
+      }
     }
 
     if ($latestT - dt < 500) {
