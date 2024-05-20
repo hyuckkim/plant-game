@@ -23,7 +23,7 @@ export type PropRender = (canvas: {
   pos: Coord
 }, state: PropState) => void;
 
-export type PropState = {[key: string]: string | number};
+export type PropState = {[key: string]: any};
 
 export function newProp(data: Partial<Prop>): Prop {
   const defaultProp: Prop = {

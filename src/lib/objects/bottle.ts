@@ -9,14 +9,9 @@ import { characterPos, health, maxHealth } from "../gamevalues";
 import { drawSprite } from "../layers/sprite";
 import { playSoundSFX } from "../../assets/sound";
 
-export const bottlePotion = writable<Potion | undefined>();
-export const quantityPotion = writable(0);
-export const bottleImgData = writable<HTMLImageElement>();
 export const drinkedPotions = writable<{[potion: number]: number}>({});
 
 export function initializeBottle() {
-  bottlePotion.set(undefined);
-  quantityPotion.set(0);
   drinkedPotions.set({});
 }
 
@@ -25,14 +20,14 @@ function addNoise(pos: {x: number, y: number }) {
 }
 export function makeBottle() {
   const bottle = makeGrabbableProp(
-    ({ context, pos }) => {
-      const bottle = get(bottlePotion);
-      if (bottle) {
+    ({ context, pos }, state) => {
+      
+      if (state.potion) {
         context.save();
         context.beginPath();
-        context.rect(pos[0] - pos[2] / 2, (pos[1] - pos[3] / 2) + pos[3] / 10 * (10 - get(quantityPotion)), pos[2], pos[3] * get(quantityPotion));
+        context.rect(pos[0] - pos[2] / 2, (pos[1] - pos[3] / 2) + pos[3] / 10 * (10 - state.quantity), pos[2], pos[3] * state.quantity);
         context.clip();
-        drawSprite(context, get(bottleImgData), pos, [0, 0, 16, 16]);
+        drawSprite(context, state.image, pos, [0, 0, 16, 16]);
         context.closePath();
         context.restore();
       }
@@ -42,40 +37,44 @@ export function makeBottle() {
     [96, 0, 16, 16],
     [75, 170, 40, 40],
     [0, 3, 40, 40],
-    {},
     {
-      onWheelDown: () => {
-        const potion = get(bottlePotion);
+      potion: undefined,
+      quantity: 0,
+      image: undefined,
+    },
+    {
+      onWheelDown: (state) => {
+        const potion = state.potion;
         if (potion === undefined) {
           if (attachedTag("pot")) {
             const newPotion = getMadenPotion();
-            bottlePotion.set(newPotion);
+            state.potion = newPotion;
             if (newPotion) {
-              bottleImgData.set(createBottleData(newPotion.color.r, newPotion.color.g, newPotion.color.b));
-              quantityPotion.set(10);
+              state.image = createBottleData(newPotion.color.r, newPotion.color.g, newPotion.color.b);
+              state.quantity = 10;
               playSoundSFX("prop/water_up");
             }
           }
         } else {
           addNewPotionDrop(potion);
-          quantityPotion.set(get(quantityPotion) - 1);
-          if (get(quantityPotion) === 0) bottlePotion.set(undefined);
+          state.quantity -= 1;
+          if (state.quantity === 0) state.potion = undefined;
         }
         return true;
       },
-      onWheelUp: () => {
-        const potion = get(bottlePotion);
+      onWheelUp: (state) => {
+        const potion = state.potion;
         if (potion !== undefined) {
           if (potion.id % 3 === 0) {
             drinkedPotions.set({...get(drinkedPotions), [potion.id]: Math.min(10, (get(drinkedPotions)[potion.id] ?? 0) + 1)});
             maxHealth.set(3000 + 3000 * Object.values(get(drinkedPotions)).reduce((pre, curr) => pre + curr, 0) / 80);
-            quantityPotion.set(get(quantityPotion) - 1);
-            if (get(quantityPotion) === 0) bottlePotion.set(undefined);
+            state.quantity -= 1;
+            if (state.quantity === 0) state.potion = undefined;
           }
           else {
             health.set(Math.min(get(health) + 1000, get(maxHealth)));
-            quantityPotion.set(get(quantityPotion) - 1);
-            if (get(quantityPotion) === 0) bottlePotion.set(undefined);
+            state.quantity -= 1;
+            if (state.quantity === 0) state.potion = undefined;
           }
         }
         return true;
