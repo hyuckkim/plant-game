@@ -86,7 +86,11 @@ export function generateGrassProp(grass: Grass, x: number, y: number): Prop {
         return true;
       },
       onWheelUp: (state) => {
-        if (attachedTag("pot") && addGrass(grass)) {
+        const pot = attachedTag("pot")?.[0];
+        if (pot) {
+          const done = addGrass(pot, grass);
+          if (!done) return true;
+          
           playSoundSFX("prop/plant");
           return undefined;
         }

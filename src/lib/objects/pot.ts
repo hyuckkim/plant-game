@@ -1,7 +1,7 @@
 import { get, writable } from "svelte/store";
 import { getRes } from "../../assets/image";
 import { drawExtendBar, drawItemPanel, drawPanel } from "../layers/ui";
-import { addProps, newProp } from "./prop";
+import { addProps, newProp, type Prop } from "./prop";
 import { type Grass } from "../data/grass";
 import { drawSprite } from "../layers/sprite";
 import { latestT } from "../values";
@@ -10,24 +10,6 @@ import { createBottleData } from "./bottle";
 import { playSoundSFX } from "../../assets/sound";
 
 export const maxWater = 3;
-export const waterCount = writable(0);
-export const potionCount = writable(0);
-
-export const materials = writable<Grass[]>([]);
-export const previousMaterials = writable<Grass[]>([]);
-export const previousTime = writable(0);
-export const madenPotion = writable<Potion | undefined>(undefined);
-export const potPotionData = writable<HTMLImageElement>();
-
-export function initializePot() {
-  waterCount.set(0);
-  potionCount.set(0);
-
-  materials.set([]);
-  previousMaterials.set([]);
-  previousTime.set(0);
-  madenPotion.set(undefined);
-}
 
 export function makePot() {
   addProps(
@@ -35,19 +17,28 @@ export function makePot() {
       img: getRes("prop/furniture"),
       source: [1036, 646, 44, 82],
       pos: [150, 30, 53, 98],
-      state: { tag: "pot" },
-      ui: (canvas, _) => {
+      state: {
+        tag: "pot",
+        water: 0,
+        potion: 0,
+        
+        potionTag: undefined,
+        potionImage: undefined,
+        materials: [],
+        oldMaterials: [],
+        oldTime: 0,
+      },
+      ui: (canvas, state) => {
         canvas.context.save();
         drawPanel(canvas, [200, 10, 120, 120]);
-        drawExtendBar(canvas, [320, 20, 3, 0], get(waterCount), 1);
-        drawExtendBar(canvas, [320, 60, 3, 0], get(potionCount), 2);
+        drawExtendBar(canvas, [320, 20, 3, 0], state.water, 1);
+        drawExtendBar(canvas, [320, 60, 3, 0], state.potion, 2);
         drawItemPanel(canvas, [324, 100, 60, 60]);
 
-        const potion = get(madenPotion);
-        if (potion) {
+        if (state.potionTag) {
           drawSprite(
             canvas.context,
-            get(potPotionData),
+            state.potionImage,
             [354, 134, 40, 40],
             [0, 0, 16, 16]
           );
@@ -62,9 +53,10 @@ export function makePot() {
         canvas.context.beginPath();
         canvas.context.rect(214, 24, 98, 98);
         canvas.context.clip();
-        if (get(previousTime) !== 0 && canvas.time - get(previousTime) < 300) {
-          const dt = canvas.time - get(previousTime);
-          const m = get(previousMaterials);
+        const isDropNow = state.oldTime !== 0 && canvas.time - state.oldTime < 300;
+        if (isDropNow) {
+          const dt = canvas.time - state.oldTime;
+          const m = state.oldMaterials;
           drawSprite(
             canvas.context,
             getRes(m[0].img),
@@ -84,7 +76,7 @@ export function makePot() {
             m[2].source
           );
         } else {
-          const m = get(materials);
+          const m = state.materials;
           if (m.length >= 1) {
             drawSprite(
               canvas.context,
@@ -113,28 +105,27 @@ export function makePot() {
         canvas.context.closePath();
         canvas.context.restore();
       },
-      onClick: () => {
-        const material = get(materials);
+      onClick: (state) => {
+        const material = state.materials;
         if (material.length === 3) {
-          previousMaterials.set(material);
+          state.oldMaterials = material;
           const gotPotion = getPotion(
             material[0].dataNum + material[1].dataNum + material[2].dataNum
           );
-          madenPotion.set(gotPotion);
+          state.potionTag = gotPotion;
           if (gotPotion) {
-            potPotionData.set(
+            state.potionImage =
               createBottleData(
                 gotPotion.color.r,
                 gotPotion.color.g,
                 gotPotion.color.b
-              )
-            );
+              );
           }
-          materials.set([]);
-          previousTime.set(get(latestT));
-          potionCount.set(get(waterCount));
-          waterCount.set(0);
-          if (get(potionCount) === 0) madenPotion.set(undefined);
+          state.materials = [];
+          state.oldTime = get(latestT);
+          state.potion = state.water;
+          state.water = 0;
+          if (state.potion === 0) state.potionTag = undefined;
           playSoundSFX("prop/machine");
         }
         return true;
@@ -143,15 +134,21 @@ export function makePot() {
   );
 }
 
-export function addGrass(grass: Grass): boolean {
-  if (get(materials).length >= 3) return false;
-  materials.set([...get(materials), grass]);
+export function addWater(pot: Prop): boolean {
+  if (pot.state.water === maxWater) return false;
+  pot.state.water += 1;
   return true;
 }
 
-export function getMadenPotion(): Potion | undefined {
-  const potion = get(madenPotion);
-  if (potion) potionCount.set(get(potionCount) - 1);
-  if (get(potionCount) === 0) madenPotion.set(undefined);
+export function addGrass(pot: Prop, grass: Grass): boolean {
+  if (pot.state.materials.length >= 3) return false;
+  pot.state.materials = [...pot.state.materials, grass];
+  return true;
+}
+
+export function getMadenPotion(pot: Prop): Potion | undefined {
+  const potion = pot.state.potionTag;
+  if (potion) pot.state.potion -= 1;
+  if (pot.state.potion === 0) pot.state.potionTag = undefined;
   return potion;
 }

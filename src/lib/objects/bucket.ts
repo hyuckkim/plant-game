@@ -1,7 +1,6 @@
-import { get } from "svelte/store";
 import { getRes } from "../../assets/image";
 import { makeGrabbableEquip, makeGrabbableProp } from "./equip";
-import { maxWater, waterCount } from "./pot";
+import { addWater } from "./pot";
 import { addProps, attachedTag } from "./prop";
 import { playSoundSFX } from "../../assets/sound";
 
@@ -28,8 +27,11 @@ export function makeBucket() {
     {},
     {
       onWheelDown: () => {
-        if (attachedTag("pot")) {
-          waterCount.set(Math.min(maxWater, get(waterCount) + 1));
+        const pot = attachedTag("pot")?.[0];
+        if (pot) {
+          const watering = addWater(pot);
+          if (!watering) return true;
+
           playSoundSFX("prop/water_down");
           return justBucket;
         }

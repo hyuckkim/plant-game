@@ -143,10 +143,12 @@ export function dayStarted() {
   });
 }
 export function attachedTag(tag: string) {
-  return getCurrentProps()
-    .filter((p) => isAttached(p, get(characterPos).x, get(characterPos).y))
-    .map((p) => p.state.tag)
-    .includes(tag);
+  const result = getCurrentProps()
+  .filter((p) => isAttached(p, get(characterPos).x, get(characterPos).y))
+  .filter(p => p.state.tag === tag);
+  
+  if (result.length === 0) return undefined;
+  return result;
 }
 export function isAttached(p: Prop, x: number, y: number) {
   return (

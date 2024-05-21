@@ -52,8 +52,9 @@ export function makeBottle() {
       onWheelDown: (state) => {
         const potion = state.potion;
         if (potion === undefined) {
-          if (attachedTag("pot")) {
-            const newPotion = getMadenPotion();
+          const pot = attachedTag("pot")?.[0];
+          if (pot) {
+            const newPotion = getMadenPotion(pot);
             state.potion = newPotion;
             if (newPotion) {
               state.image = createBottleData(

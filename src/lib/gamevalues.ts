@@ -2,7 +2,6 @@ import { writable } from "svelte/store";
 import { initializeProps } from "./objects/prop";
 import { settingHouseProps } from "./objects/house";
 import { equips, initializeEquips } from "./objects/equip";
-import { initializePot } from "./objects/pot";
 import { initializeBottle } from "./objects/bottle";
 import { spring } from "svelte/motion";
 import { particles } from "./particle";
@@ -35,7 +34,6 @@ export function reset() {
 
   initializeProps();
   initializeEquips();
-  initializePot();
   initializeBottle();
 
   settingHouseProps();
