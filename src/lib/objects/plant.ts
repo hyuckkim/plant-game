@@ -40,7 +40,7 @@ export function resolvePotionDropResult(): Prop[] {
   for (let i = 0; i < sliced.length; i++) {
     const used: number[] = [];
     for (let j = 0; j < sliced[i].length; j++) {
-      if (used.includes(j)) continue;
+      if (used.includes(j) || (sliced[i][j].pos.x < 220 && sliced[i][j].pos.y < 220)) continue;
       const counted = [j];
       for (let k = 0; k < sliced[i].length; k++) {
         if (counted.length === 4) break;
