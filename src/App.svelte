@@ -26,12 +26,14 @@
 
 {#if hash === "#license"}
   <License />
-{:else if !mouseMoved}
-  <Skeleton />
 {:else}
-  {#await Promise.all([loadGameImages(), loadGameSounds()])}
-    <Skeleton />
-  {:then}
-    <Game />
-  {/await}
+{#await Promise.all([loadGameImages(), loadGameSounds()])}
+  <Skeleton />
+{:then [res, soundRes]}
+  {#if mouseMoved}
+  <Game {res} {soundRes} />
+  {:else}
+  <Skeleton />
+  {/if}
+{/await}
 {/if}

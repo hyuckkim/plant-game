@@ -23,8 +23,16 @@
   import EndingOverlay from "./layers/ending/endingOverlay.svelte";
   import EndingBackground from "./layers/ending/endingBackground.svelte";
   import { changeAwakenState } from "./objects/house";
+  import { resources } from "../assets/image";
+  import { soundResources } from "../assets/sound";
+
+  export let res;
+  export let soundRes;
 
   onMount(() => {
+    $resources = res;
+    $soundResources = soundRes;
+
     reset();
     getSoundRes("bgm").volume(0.5);
     getSoundRes("bgm").play();
