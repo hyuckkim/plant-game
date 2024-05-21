@@ -13,7 +13,7 @@
     isHovered = false;
   }}
 >
-  <a {href}><slot /></a>
+  <a {href} target="_blank"><slot /></a>
 </p>
 {#if isHovered}
   <img src={img} alt="" />

@@ -3,7 +3,7 @@
   export let sound: string;
 </script>
 
-<p><a {href}><slot /></a></p>
+<p><a {href} target="_blank"><slot /></a></p>
 <audio src={sound} controls></audio>
 
 <style>
