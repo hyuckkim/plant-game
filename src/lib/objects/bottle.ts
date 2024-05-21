@@ -5,7 +5,7 @@ import { addProps, attachedTag, newProp } from "./prop";
 import { potionDrop, type Potion } from "../data/potion";
 import { getMadenPotion } from "./pot";
 import { latestT } from "../values";
-import { characterPos, health, maxHealth } from "../gamevalues";
+import { characterPos, health, initializeMaxHealth, maxHealth } from "../gamevalues";
 import { drawSprite } from "../layers/sprite";
 import { playSoundSFX } from "../../assets/sound";
 
@@ -84,8 +84,8 @@ export function makeBottle() {
               ),
             });
             maxHealth.set(
-              3000 +
-                (3000 *
+              initializeMaxHealth +
+                (initializeMaxHealth *
                   Object.values(get(drinkedPotions)).reduce(
                     (pre, curr) => pre + curr,
                     0

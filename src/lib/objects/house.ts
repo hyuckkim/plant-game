@@ -7,6 +7,7 @@ import {
   enteredEndingTime,
   generatedEnding,
   health,
+  initializeMaxHealth,
   lastCharacterPos,
   maxHealth,
   nowEnding,
@@ -64,7 +65,7 @@ export function changeAwakenState(time: number) {
     ].forEach((p) => {
       addProps(p);
     });
-    if (get(maxHealth) === 6000 && !get(generatedEnding)) {
+    if (get(maxHealth) === initializeMaxHealth * 2 && !get(generatedEnding)) {
       generatedEnding.set(true);
       addProps(
         newProp({

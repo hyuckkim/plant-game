@@ -7,8 +7,9 @@ import { initializeBottle } from "./objects/bottle";
 import { spring } from "svelte/motion";
 import { particles } from "./particle";
 
-export const maxHealth = writable(3000);
-export const health = writable(3000);
+export const initializeMaxHealth = 3000;
+export const maxHealth = writable(initializeMaxHealth);
+export const health = writable(initializeMaxHealth);
 export const state = writable<"awake" | "sleep">("sleep");
 export const statesEnteredTime = writable(0);
 export const characterPos = writable({ x: 0, y: 0 });
@@ -25,7 +26,7 @@ export const savedPosition = writable({ x: 0, y: 0 });
 
 export const HealthBarExtraHeight = spring(300);
 export function reset() {
-  health.set(3000);
+  health.set(initializeMaxHealth);
   statesEnteredTime.set(0);
   state.set("sleep");
   equips.set(undefined);

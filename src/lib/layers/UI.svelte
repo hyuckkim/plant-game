@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Layer } from "svelte-canvas";
-  import { characterPos, health, maxHealth } from "../gamevalues";
+  import { characterPos, health, initializeMaxHealth, maxHealth } from "../gamevalues";
   import { HealthBarExtraHeight } from "../gamevalues";
   import { onMount } from "svelte";
   import { drawHealthBar } from "./ui";
@@ -18,26 +18,16 @@
 
 <Layer
   render={(canvas) => {
-    drawHealthBar(
-      canvas,
-      [
-        marginX,
-        canvas.height - 40 - marginY + $HealthBarExtraHeight,
-        canvas.width - marginX * 2,
-        0,
-      ],
-      Math.min($health, 3000) / Math.min($maxHealth, 3000)
-    );
-    if ($maxHealth > 3000) {
+    for (let i = $maxHealth, j = 1; i > 0; i -= initializeMaxHealth, j++) {
       drawHealthBar(
         canvas,
         [
-          marginX,
-          canvas.height - 80 - marginY - marginY + $HealthBarExtraHeight,
-          ((canvas.width - marginX * 2) * ($maxHealth - 3000)) / 3000,
-          0,
-        ],
-        Math.min($health - 3000, 3000) / Math.min($maxHealth - 3000, 3000)
+        marginX,
+        canvas.height - 40 * j - marginY + $HealthBarExtraHeight,
+        (canvas.width - marginX * 2) * (Math.min($maxHealth, initializeMaxHealth) / initializeMaxHealth),
+        0,
+      ],
+      Math.min($health, initializeMaxHealth) / Math.min($maxHealth, initializeMaxHealth)
       );
     }
 
