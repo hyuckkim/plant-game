@@ -1,4 +1,5 @@
 import { getRes } from "../../assets/image";
+import { getText } from "../../assets/text";
 import { drawMouseButton } from "../layers/mouseButton";
 import { drawSprite } from "../layers/sprite";
 import { drawPanel } from "../layers/ui";
@@ -21,27 +22,31 @@ function book1(x: number, y: number): Prop {
     ui: ({ context }, state) => {
       context.save();
       drawPanel(context, [x - 150, y + 30, 300, 150]);
-      context.restore();
-
+      context.font = "12px Verdana";
+      context.fillStyle = "white";
       if (state.page === 1) {
+        context.fillText(getText("b1_1_1"), x - 130, y + 55);
         drawMouseButton(
           context,
-          [x - 110, y + 60, 80, 100],
+          [x - 110, y + 80, 80, 80],
           mouseButtons.Left
         );
       }
       if (state.page === 2) {
+        context.fillText(getText("b1_2_1"), x - 130, y + 55);
+        context.fillText(getText("b1_2_2"), x - 130, y + 68);
         drawMouseButton(
           context,
-          [x - 110, y + 60, 80, 100],
+          [x - 110, y + 80, 80, 80],
           mouseButtons.WheelUp
         );
         drawMouseButton(
           context,
-          [x + 20, y + 60, 80, 100],
+          [x + 20, y + 80, 80, 80],
           mouseButtons.WheelDown
         );
       }
+      context.restore();
     },
     onClick: (state) => {
       if (state.page == 1) state.page = 2;
@@ -60,8 +65,12 @@ function book2(x: number, y: number): Prop {
     ui: ({ context }, state) => {
       context.save();
       drawPanel(context, [x - 150, y + 30, 300, 150]);
+      context.font = "12px Verdana";
+      context.fillStyle = "white";
 
       if (state.page === 1) {
+        context.fillText(getText("b2_1_1"), x - 130, y + 55);
+        context.fillText(getText("b2_1_2"), x - 130, y + 68);
         drawSprite(
           context,
           getRes("prop/flower"),
@@ -98,76 +107,87 @@ function book2(x: number, y: number): Prop {
           [x + 115, y + 100, 44, 82],
           [1036, 646, 44, 82]
         );
+        drawSprite(
+          context,
+          getRes("prop/potion"),
+          [x + 130, y + 130, 32, 32],
+          [96, 0, 16, 16] 
+        );
       }
       if (state.page === 2) {
+        context.fillText(getText("b2_2_1"), x - 130, y + 55);
+        context.fillText(getText("b2_2_2"), x - 130, y + 68);
         drawSprite(
           context,
           getRes("prop/flower"),
-          [x - 100, y + 75, 32, 32],
+          [x - 100, y + 90, 32, 32],
           [48, 112, 16, 16]
         );
         drawSprite(
           context,
           getRes("prop/flower"),
-          [x - 70, y + 75, 32, 32],
+          [x - 70, y + 90, 32, 32],
           [48, 112, 16, 16]
         );
         drawSprite(
           context,
           getRes("prop/flower"),
-          [x - 40, y + 75, 32, 32],
+          [x - 40, y + 90, 32, 32],
           [48, 112, 16, 16]
         );
         drawSprite(
           context,
           getRes("ui"),
-          [x, y + 80, 14, 16],
+          [x, y + 95, 14, 16],
           [134, 124, 6, 8]
         );
         drawSprite(
           context,
           getRes("ui"),
-          [x + 60, y + 80, 50, 40],
+          [x + 60, y + 95, 50, 40],
           [308, 40, 25, 20]
         );
         drawSprite(
           context,
           getRes("prop/flower"),
-          [x - 100, y + 120, 32, 32],
+          [x - 100, y + 135, 32, 32],
           [48, 112, 16, 16]
         );
         drawSprite(
           context,
           getRes("prop/flower"),
-          [x - 70, y + 120, 32, 32],
+          [x - 70, y + 135, 32, 32],
           [48, 112, 16, 16]
         );
         drawSprite(
           context,
           getRes("prop/flower"),
-          [x - 40, y + 120, 32, 32],
+          [x - 40, y + 135, 32, 32],
           [96, 16, 16, 16]
         );
         drawSprite(
           context,
           getRes("ui"),
-          [x, y + 125, 14, 16],
+          [x, y + 140, 14, 16],
           [134, 124, 6, 8]
         );
         drawSprite(
           context,
           getRes("ui"),
-          [x + 60, y + 125, 50, 40],
+          [x + 60, y + 140, 50, 40],
           [308, 40, 25, 20]
         );
         drawSprite(
           context,
           getRes("ui"),
-          [x + 52, y + 125, 32, 28],
+          [x + 52, y + 140, 32, 28],
           [358, 40, 8, 14]
         );
       }
       if (state.page === 3) {
+        context.fillText(getText("b2_3_1"), x - 130, y + 55);
+        context.fillText(getText("b2_3_2"), x - 130, y + 68);
+
         context.fillStyle = "#21501D";
         context.fillRect(x - 62, y + 120, 6, 6);
         context.fillRect(x - 70, y + 116, 6, 6);
