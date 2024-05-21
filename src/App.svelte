@@ -10,6 +10,7 @@
   let hash = window.location.hash;
   let mouseMoved = false;
   onMount(() => {
+    mouseMoved = false;
     const changeHash = () => {
       hash = window.location.hash;
     };
