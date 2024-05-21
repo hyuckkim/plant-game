@@ -28,49 +28,49 @@ export function makePot() {
         oldMaterials: [],
         oldTime: 0,
       },
-      ui: (canvas, state) => {
-        canvas.context.save();
-        drawPanel(canvas, [200, 10, 120, 120]);
-        drawExtendBar(canvas, [320, 20, 3, 0], state.water, 1);
-        drawExtendBar(canvas, [320, 60, 3, 0], state.potion, 2);
-        drawItemPanel(canvas, [324, 100, 60, 60]);
+      ui: ({ context, time }, state) => {
+        context.save();
+        drawPanel(context, [200, 10, 120, 120]);
+        drawExtendBar(context, [320, 20, 3, 0], state.water, 1);
+        drawExtendBar(context, [320, 60, 3, 0], state.potion, 2);
+        drawItemPanel(context, [324, 100, 60, 60]);
 
         if (state.potionTag) {
           drawSprite(
-            canvas.context,
+            context,
             state.potionImage,
             [354, 134, 40, 40],
             [0, 0, 16, 16]
           );
           drawSprite(
-            canvas.context,
+            context,
             getRes("prop/potion"),
             [354, 134, 40, 40],
             [96, 0, 16, 16]
           );
         }
 
-        canvas.context.beginPath();
-        canvas.context.rect(214, 24, 98, 98);
-        canvas.context.clip();
-        const isDropNow = state.oldTime !== 0 && canvas.time - state.oldTime < 300;
+        context.beginPath();
+        context.rect(214, 24, 98, 98);
+        context.clip();
+        const isDropNow = state.oldTime !== 0 && time - state.oldTime < 300;
         if (isDropNow) {
-          const dt = canvas.time - state.oldTime;
+          const dt = time - state.oldTime;
           const m = state.oldMaterials;
           drawSprite(
-            canvas.context,
+            context,
             getRes(m[0].img),
             [260, 30 + (dt / 300) * 120, 40, 40],
             m[0].source
           );
           drawSprite(
-            canvas.context,
+            context,
             getRes(m[1].img),
             [235, 60 + (dt / 300) * 120, 40, 40],
             m[1].source
           );
           drawSprite(
-            canvas.context,
+            context,
             getRes(m[2].img),
             [285, 90 + (dt / 300) * 120, 40, 40],
             m[2].source
@@ -79,7 +79,7 @@ export function makePot() {
           const m = state.materials;
           if (m.length >= 1) {
             drawSprite(
-              canvas.context,
+              context,
               getRes(m[0].img),
               [260, 30, 40, 40],
               m[0].source
@@ -87,7 +87,7 @@ export function makePot() {
           }
           if (m.length >= 2) {
             drawSprite(
-              canvas.context,
+              context,
               getRes(m[1].img),
               [235, 60, 40, 40],
               m[1].source
@@ -95,15 +95,15 @@ export function makePot() {
           }
           if (m.length >= 3) {
             drawSprite(
-              canvas.context,
+              context,
               getRes(m[2].img),
               [285, 90, 40, 40],
               m[2].source
             );
           }
         }
-        canvas.context.closePath();
-        canvas.context.restore();
+        context.closePath();
+        context.restore();
       },
       onClick: (state) => {
         const material = state.materials;

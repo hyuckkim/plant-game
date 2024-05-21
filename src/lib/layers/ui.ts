@@ -32,7 +32,7 @@ export function drawHealthBar(
   context.restore();
 }
 
-export function drawPanel({ context }: CanvasInfo, [x, y, w, h]: Coord) {
+export function drawPanel(context: CanvasRenderingContext2D, [x, y, w, h]: Coord) {
   context.save();
   context.imageSmoothingEnabled = false;
   context.drawImage(getRes("ui"), 16, 40, 7, 7, x, y, 14, 14);
@@ -89,7 +89,7 @@ export function drawPanel({ context }: CanvasInfo, [x, y, w, h]: Coord) {
   context.restore();
 }
 
-export function drawItemPanel({ context }: CanvasInfo, [x, y, w, h]: Coord) {
+export function drawItemPanel(context: CanvasRenderingContext2D, [x, y, w, h]: Coord) {
   context.save();
   context.imageSmoothingEnabled = false;
   context.drawImage(getRes("ui"), 30, 329, 6, 6, x, y, 12, 12);
@@ -145,7 +145,7 @@ export function drawItemPanel({ context }: CanvasInfo, [x, y, w, h]: Coord) {
 }
 
 export function drawExtendBar(
-  { context }: CanvasInfo,
+  context: CanvasRenderingContext2D,
   [x, y, w]: Coord,
   health: number,
   color: number
