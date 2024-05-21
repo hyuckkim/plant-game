@@ -18,16 +18,16 @@
 
 <Layer
   render={(canvas) => {
-    for (let i = $maxHealth, j = 1; i > 0; i -= initializeMaxHealth, j++) {
+    for (let m = $maxHealth, h = $health, j = 1; m > 0; m -= initializeMaxHealth, h -= initializeMaxHealth, j++) {
       drawHealthBar(
         canvas,
         [
         marginX,
         canvas.height - 40 * j - marginY + $HealthBarExtraHeight,
-        (canvas.width - marginX * 2) * (Math.min($maxHealth, initializeMaxHealth) / initializeMaxHealth),
+        (canvas.width - marginX * 2) * (Math.min(m, initializeMaxHealth) / initializeMaxHealth),
         0,
       ],
-      Math.min($health, initializeMaxHealth) / Math.min($maxHealth, initializeMaxHealth)
+      Math.min(h, initializeMaxHealth) / Math.min(m, initializeMaxHealth)
       );
     }
 
