@@ -16,9 +16,8 @@ function book1(x: number, y: number): Prop {
   return newProp({
     img: getRes("prop/rpg"),
     source: [169, 291, 18, 10],
-    pos: [x, y, 36, 20],
     display: "night",
-    state: { page: 1 },
+    state: { pos: [x, y, 36, 20], page: 1 },
     ui: ({ context }, state) => {
       context.save();
       drawPanel(context, [x - 150, y + 30, 300, 150]);
@@ -59,9 +58,8 @@ function book2(x: number, y: number): Prop {
   return newProp({
     img: getRes("prop/rpg"),
     source: [169, 291, 18, 10],
-    pos: [x, y, 36, 20],
     display: "night",
-    state: { page: 1 },
+    state: { pos: [x, y, 36, 20], page: 1 },
     ui: ({ context }, state) => {
       context.save();
       drawPanel(context, [x - 150, y + 30, 300, 150]);
@@ -220,7 +218,7 @@ function book3(x: number, y: number): Prop {
   return newProp({
     img: getRes("prop/rpg"),
     source: [169, 291, 18, 10],
-    pos: [x, y, 36, 20],
+    state: {pos: [x, y, 36, 20]},
     display: "night",
     ui: ({ context }) => {
       context.save();

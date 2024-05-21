@@ -19,9 +19,8 @@ function addBGMProp(): Prop {
       });
     },
     [1000, 528, 114, 96],
-    [50, 600, 114, 96],
     [0, -20, 114, 96],
-    { reversed: 0 },
+    { pos: [50, 600, 114, 96], reversed: 0 },
     {
       onWheelUp: (state) => {
         if (state.reversed == 0) {
@@ -51,9 +50,8 @@ function addSFXProp(): Prop {
       });
     },
     [1152, 910, 56, 26],
-    [150, 650, 56, 26],
     [0, 0, 56, 26],
-    { reversed: 0 },
+    { pos: [150, 650, 56, 26], reversed: 0 },
     {
       onWheelUp: (state) => {
         if (state.reversed == 0) {

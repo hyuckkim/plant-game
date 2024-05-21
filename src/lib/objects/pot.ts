@@ -16,11 +16,11 @@ export function makePot() {
     newProp({
       img: getRes("prop/furniture"),
       source: [1036, 646, 44, 82],
-      pos: [150, 30, 53, 98],
       state: {
         tag: "pot",
         water: 0,
         potion: 0,
+        pos: [150, 30, 53, 98],
         
         potionTag: undefined,
         potionImage: undefined,

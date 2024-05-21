@@ -9,7 +9,7 @@ export function makeBucket() {
     getRes("prop/rpg"),
     [326, 454, 20, 21],
     [0, 3, 30, 30],
-    {},
+    {pos: [0, 3, 30, 30]},
     {
       onWheelUp: () => {
         if (attachedTag("pond")) {
@@ -24,7 +24,7 @@ export function makeBucket() {
     getRes("prop/rpg"),
     [294, 454, 20, 21],
     [0, 3, 30, 30],
-    {},
+    {pos: [0, 3, 30, 30]},
     {
       onWheelDown: () => {
         const pot = attachedTag("pot")?.[0];
@@ -42,11 +42,10 @@ export function makeBucket() {
   const bucketProp = makeGrabbableProp(
     getRes("prop/rpg"),
     [326, 454, 20, 21],
-    [210, 180, 30, 30],
     [0, 3, 30, 30],
-    {},
+    {pos: [210, 180, 30, 30]},
     {
-      onWheelUp: (state) => {
+      onWheelUp: () => {
         if (attachedTag("pond")) {
           playSoundSFX("prop/water_up");
           return waterBucket;

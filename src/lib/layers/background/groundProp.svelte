@@ -58,8 +58,8 @@
   }
   function drawProp(c: CanvasRenderingContext2D, p: Prop) {
     if (typeof p.img === "function")
-      p.img({ context: c, pos: p.pos }, p.state);
-    else drawSprite(c, p.img, p.pos, p.source, p.flipped);
+      p.img({ context: c, pos: p.state.pos }, p.state);
+    else drawSprite(c, p.img, p.state.pos, p.source, p.flipped);
   }
 </script>
 

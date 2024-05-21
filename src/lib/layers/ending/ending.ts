@@ -13,7 +13,7 @@ export function endingObject(): Prop | undefined {
   return newProp({
     img: getRes("ui"),
     source: [116, 140, 8, 6],
-    pos: [300, 40, 16, 12],
+    state: { pos: [300, 40, 16, 12]},
     onClick: () => {
       nowEnding.set(true);
       enteredEndingTime.set(get(latestT));

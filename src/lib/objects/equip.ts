@@ -33,7 +33,7 @@ export function setEquip(data: Partial<Equip>) {
     pos: [0, 0, 0, 0],
     flipped: { x: false, y: false },
 
-    state: {},
+    state: { pos: [0, 0, 0, 0] },
     onClick: () => true,
     onWheelUp: () => true,
     onWheelDown: () => true,
@@ -44,7 +44,6 @@ export function setEquip(data: Partial<Equip>) {
 export function makeGrabbableProp(
   img: HTMLImageElement | PropRender,
   source: Coord,
-  propPos: Coord,
   equipPos: Coord,
   state: PropState,
   {
@@ -62,8 +61,7 @@ export function makeGrabbableProp(
     newProp({
       img,
       source,
-      pos,
-      state,
+      state: {...state, pos},
       onDayEnd: onDayEnd ?? (() => true),
       display,
     });
@@ -88,7 +86,7 @@ export function makeGrabbableProp(
         return undefined;
       },
     });
-  const propNow = makeSomeProp(propPos, state);
+  const propNow = makeSomeProp(state.pos, state);
   propNow.onClick = (state) => {
     equipSomeProp(state);
     return false;
@@ -115,8 +113,7 @@ export function makeGrabbableEquip(
     newProp({
       img,
       source,
-      pos,
-      state,
+      state: {...state, pos},
       onDayEnd: onDayEnd ?? (() => true),
     });
   const equipSomeProp = (state: PropState): Partial<Equip> => ({

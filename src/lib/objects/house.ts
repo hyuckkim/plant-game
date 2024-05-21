@@ -34,7 +34,7 @@ function makeHouse() {
     newProp({
       img: getRes("prop/rpg"),
       source: [0, 192, 32, 64],
-      pos: [80, 80, 48, 96],
+      state: {pos: [80, 80, 48, 96]},
       display: "always",
       onClick: () => {
         changeAwakenState(get(latestT));
@@ -79,7 +79,7 @@ function makeRoof() {
     newProp({
       img: getRes("prop/house"),
       source: [89, 49, 205, 289],
-      pos: [110, 110, 180, 260],
+      state: { pos: [110, 110, 180, 260]},
       layer: "roof",
     })
   );
@@ -104,7 +104,7 @@ function makeFloor() {
       newProp({
         img: getRes("prop/rpgtile"),
         source: [192, 0, 32, 32],
-        pos: p,
+        state: { pos: p },
         layer: "floor",
       })
     );
@@ -116,9 +116,8 @@ function makePond() {
     newProp({
       img: getRes("prop/pond"),
       source: [9, 70, 81, 78],
-      pos: [800, 670, 162, 156],
       layer: "floor",
-      state: { tag: "pond" },
+      state: { pos: [800, 670, 162, 156], tag: "pond" },
     })
   );
 }

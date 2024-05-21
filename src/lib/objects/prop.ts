@@ -6,7 +6,6 @@ import { equips, setEquip } from "./equip";
 export type Prop = {
   img: CanvasImageSource | PropRender;
   source: Coord;
-  pos: Coord;
   flipped: { x: boolean; y: boolean };
 
   display: "always" | "day" | "night";
@@ -26,17 +25,20 @@ export type PropRender = (
   state: PropState
 ) => void;
 
-export type PropState = { [key: string]: any };
+export type PropState = {
+  pos: Coord,
+  tag?: string,
+  [key: string]: any
+};
 
 export function newProp(data: Partial<Prop>): Prop {
   const defaultProp: Prop = {
     img: new Image(),
     source: [0, 0, 0, 0],
-    pos: [0, 0, 0, 0],
     flipped: { x: false, y: false },
     display: "day",
     layer: "normal",
-    state: {},
+    state: { pos: [0, 0, 0, 0]},
     onClick: () => true,
     onDayEnd: () => true,
     ui: () => {},
@@ -152,12 +154,12 @@ export function attachedTag(tag: string) {
 }
 export function isAttached(p: Prop, x: number, y: number) {
   return (
-    p.pos[0] - p.pos[2] * 0.5 < x &&
-    x < p.pos[0] + p.pos[2] * 0.5 &&
-    p.pos[1] - p.pos[3] * 0.5 < y &&
-    y < p.pos[1] + p.pos[3] * 0.5
+    p.state.pos[0] - p.state.pos[2] * 0.5 < x &&
+    x < p.state.pos[0] + p.state.pos[2] * 0.5 &&
+    p.state.pos[1] - p.state.pos[3] * 0.5 < y &&
+    y < p.state.pos[1] + p.state.pos[3] * 0.5
   );
 }
 export function getDistance(p: Prop, x: number, y: number) {
-  return p.pos[0] - x * p.pos[0] - x + p.pos[1] - y * p.pos[1] - y;
+  return p.state.pos[0] - x * p.state.pos[0] - x + p.state.pos[1] - y * p.state.pos[1] - y;
 }

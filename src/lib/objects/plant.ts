@@ -44,8 +44,7 @@ export function checkDropToSeed(potion: Potion, pos: { x: number, y: number }): 
   if (used.length === 3) return newProp({
     img: getRes("grass"),
     source: [152, 111, 4, 4],
-    pos: [pos.x, pos.y, 8, 8],
-    state: {tag: "seed", potion, pos: [pos.x, pos.y]},
+    state: {tag: "seed", potion, pos: [pos.x, pos.y, 8, 8]},
     onDayEnd: (state) => {
       addProps(newProp(generateGrassProp(
         getRandomPotionGrass(state.potion),
@@ -71,9 +70,8 @@ export function generateGrassProp(grass: Grass, x: number, y: number): Prop {
   return makeGrabbableProp(
     getRes(grass.img),
     grass.source,
-    [x, y, 40, 40],
     [0, 0, 40, 40],
-    { amountTime: 3 },
+    { pos: [x, y, 40, 40], amountTime: 3 },
     {
       onDayEnd: (state) => {
         if (typeof state.amountTime !== "number") return false;

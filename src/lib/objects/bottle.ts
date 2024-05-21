@@ -41,9 +41,9 @@ export function makeBottle() {
       drawSprite(context, getRes("prop/potion"), pos, [96, 0, 16, 16]);
     },
     [96, 0, 16, 16],
-    [75, 170, 40, 40],
     [0, 3, 40, 40],
     {
+      pos: [75, 170, 40, 40],
       potion: undefined,
       quantity: 0,
       image: undefined,
@@ -110,7 +110,7 @@ export function makeBottle() {
     newProp({
       img: getRes("prop/rpg"),
       source: [0, 256, 32, 32],
-      pos: [75, 180, 48, 48],
+      state: { pos: [75, 180, 48, 48]},
       layer: "floor",
     })
   );
