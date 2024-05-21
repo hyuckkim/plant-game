@@ -1,10 +1,11 @@
 import { writable } from "svelte/store";
-import { initializeProps } from "./objects/prop";
+import { addProps, initializeProps } from "./objects/prop";
 import { settingHouseProps } from "./objects/house";
 import { equips, initializeEquips } from "./objects/equip";
 import { initializeBottle } from "./objects/bottle";
 import { spring } from "svelte/motion";
 import { particles } from "./particle";
+import { generatePlant } from "./objects/plant";
 
 export const initializeMaxHealth = 5000;
 export const maxHealth = writable(initializeMaxHealth);
@@ -37,4 +38,13 @@ export function reset() {
   initializeBottle();
 
   settingHouseProps();
+  [
+    generatePlant(),
+    generatePlant(),
+    generatePlant(),
+    generatePlant(),
+    generatePlant(),
+  ].forEach((p) => {
+    addProps(p);
+  });
 }
