@@ -6,6 +6,8 @@
     potiondropResult,
   } from "../../data/potion";
   import { characterDir } from "../../gamevalues";
+  import { checkDropToSeed } from "../../objects/plant";
+  import { addProps } from "../../objects/prop";
 
   const render: Render = ({ context, time }) => {
     context.save();
@@ -18,7 +20,9 @@
     const newPotionDrop: PotionDrop[] = [];
     $potionDrop.forEach((p) => {
       if (time - p.time > 1000) {
-        $potiondropResult = [...$potiondropResult, p];
+        const seed = checkDropToSeed(p.potion, p.pos);
+        if (seed) addProps(seed);
+        else $potiondropResult = [...$potiondropResult, p];
         return;
       }
       if (typeof p.direction === "undefined") {

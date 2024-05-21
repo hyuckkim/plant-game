@@ -2,20 +2,13 @@ import { get } from "svelte/store";
 import { getRes } from "../../assets/image";
 import { addProps, dayEnd, dayStarted, newProp } from "./prop";
 import {
-  HealthBarExtraHeight,
   characterPos,
-  enteredEndingTime,
-  generatedEnding,
-  health,
-  initializeMaxHealth,
   lastCharacterPos,
-  maxHealth,
-  nowEnding,
   state,
   statesEnteredTime,
 } from "../gamevalues";
 import { latestT, type Coord } from "../values";
-import { generatePlant, resolvePotionDropResult } from "./plant";
+import { generatePlant } from "./plant";
 import { makePot } from "./pot";
 import { makeBucket } from "./bucket";
 import { makeBottle } from "./bottle";
@@ -23,6 +16,7 @@ import { makeBooks } from "./books";
 import { getSoundRes, playSoundSFX } from "../../assets/sound";
 import { makeSoundObjects } from "./soundObjects";
 import { endingObject, requireEnding } from "../layers/ending/ending";
+import { potiondropResult } from "../data/potion";
 
 export function settingHouseProps() {
   makeHouse();
@@ -57,6 +51,7 @@ export function changeAwakenState(time: number) {
   if (current === "awake") {
     state.set("sleep");
     statesEnteredTime.set(time);
+    potiondropResult.set([]);
     dayEnd();
     [
       generatePlant(),
@@ -64,7 +59,6 @@ export function changeAwakenState(time: number) {
       generatePlant(),
       generatePlant(),
       generatePlant(),
-      ...resolvePotionDropResult(),
     ].forEach((p) => {
       addProps(p);
     });

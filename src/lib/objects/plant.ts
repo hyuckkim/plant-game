@@ -8,7 +8,7 @@ import {
 } from "../data/potion";
 import { makeGrabbableProp } from "./equip";
 import { addGrass } from "./pot";
-import { attachedTag, type Prop } from "./prop";
+import { addProps, attachedTag, newProp, type Prop } from "./prop";
 import { playSoundSFX } from "../../assets/sound";
 
 export function generatePlant(): Prop {
@@ -22,46 +22,41 @@ export function generatePlant(): Prop {
   else return generateGrassProp(getGrass("grass"), x, y);
 }
 
-export function resolvePotionDropResult(): Prop[] {
-  const sliced: {
-    potion: Potion;
-    pos: { x: number; y: number };
-  }[][] = [];
-  drop: for (let i = 0; i < get(potiondropResult).length; i++) {
-    for (let j = 0; j < sliced.length; j++) {
-      if (sliced[j][0].potion === get(potiondropResult)[i].potion) {
-        sliced[j].push(get(potiondropResult)[i]);
-        continue drop;
-      }
+export function checkDropToSeed(potion: Potion, pos: { x: number, y: number }): Prop | undefined {
+  const arr = get(potiondropResult);
+  const result: typeof arr = [];
+  const used: typeof arr = [];
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].potion !== potion) {
+      result.push(arr[i]);
+      continue;
     }
-    sliced.push([get(potiondropResult)[i]]);
-  }
-  const props: Prop[] = [];
-  for (let i = 0; i < sliced.length; i++) {
-    const used: number[] = [];
-    for (let j = 0; j < sliced[i].length; j++) {
-      if (used.includes(j) || (sliced[i][j].pos.x < 220 && sliced[i][j].pos.y < 220)) continue;
-      const counted = [j];
-      for (let k = 0; k < sliced[i].length; k++) {
-        if (counted.length === 4) break;
-        if (j === k || used.includes(k)) continue;
-        if (attached(sliced[i][j].pos, sliced[i][j].pos)) counted.push(k);
-      }
-      if (counted.length === 4) {
-        used.push(...counted);
-        props.push(
-          generateGrassProp(
-            getRandomPotionGrass(sliced[i][j].potion),
-            sliced[i][j].pos.x,
-            sliced[i][j].pos.y
-          )
-        );
-      }
+    if (attached(pos, arr[i].pos)) {
+      used.push(arr[i]);
     }
+    if (used.length === 3) break;
   }
-  potiondropResult.set([]);
-  return props;
+  if (used.length !== 3) result.push(...used);
+  potiondropResult.set(result);
+  console.log(arr);
+  
+  if (used.length === 3) return newProp({
+    img: getRes("grass"),
+    source: [152, 111, 4, 4],
+    pos: [pos.x, pos.y, 8, 8],
+    state: {tag: "seed", potion, pos: [pos.x, pos.y]},
+    onDayEnd: (state) => {
+      addProps(newProp(generateGrassProp(
+        getRandomPotionGrass(state.potion),
+        state.pos[0],
+        state.pos[1]
+      )))
+      return false;
+    }
+  })
 }
+
 function attached(
   { x: x1, y: y1 }: { x: number; y: number },
   { x: x2, y: y2 }: { x: number; y: number },
