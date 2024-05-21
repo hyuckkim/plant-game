@@ -62,6 +62,8 @@ export function changeAwakenState(time: number) {
       generatePlant(),
       generatePlant(),
       generatePlant(),
+      generatePlant(),
+      generatePlant(),
       ...resolvePotionDropResult(),
     ].forEach((p) => {
       addProps(p);

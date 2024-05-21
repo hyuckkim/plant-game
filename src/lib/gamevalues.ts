@@ -6,7 +6,7 @@ import { initializeBottle } from "./objects/bottle";
 import { spring } from "svelte/motion";
 import { particles } from "./particle";
 
-export const initializeMaxHealth = 3000;
+export const initializeMaxHealth = 5000;
 export const maxHealth = writable(initializeMaxHealth);
 export const health = writable(initializeMaxHealth);
 export const state = writable<"awake" | "sleep">("sleep");

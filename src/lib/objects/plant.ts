@@ -17,7 +17,8 @@ export function generatePlant(): Prop {
   const x = Math.cos(angle) * length;
   const y = Math.sin(angle) * length;
 
-  if (Math.random() > 0.95) return generateGrassProp(getGrass("red"), x, y);
+  const randomGrass = ["red", "orange", "yellow", "skyblue", "blue", "purple", "white"][Math.floor(Math.random() * 7)];
+  if (Math.random() > 0.75) return generateGrassProp(getGrass(randomGrass), x, y);
   else return generateGrassProp(getGrass("grass"), x, y);
 }
 

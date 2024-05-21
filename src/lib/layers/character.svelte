@@ -82,7 +82,7 @@
 
       if ($state === "awake" && !$nowEnding)
         $health -= Math.abs(dx) + Math.abs(dy);
-      else $health = Math.min($maxHealth, $health + (time - $latestT) * 0.5);
+      else $health = Math.min($maxHealth, $health + (time - $latestT));
 
       (dx = lx - $characterPos.x), (dy = ly - $characterPos.y);
       (lx = $characterPos.x), (ly = $characterPos.y);
