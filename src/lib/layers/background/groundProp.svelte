@@ -39,16 +39,12 @@
     props
       .filter((p) => p.layer === "floor")
       .forEach((p) => {
-        if (typeof p.img === "function")
-          p.img({ context, pos: p.pos }, p.state);
-        else drawSprite(context, p.img, p.pos, p.source, p.flipped);
+        drawProp(context, p);
       });
     props
       .filter((p) => p.layer === "normal")
       .forEach((p) => {
-        if (typeof p.img === "function")
-          p.img({ context, pos: p.pos }, p.state);
-        else drawSprite(context, p.img, p.pos, p.source, p.flipped);
+        drawProp(context, p);
       });
     props
       .filter((p) => p.layer === "roof")
@@ -56,11 +52,14 @@
         if ($state === "sleep" || isAttached(p, pos.x, pos.y)) {
           context.globalAlpha = 0.2;
         }
-        if (typeof p.img === "function")
-          p.img({ context, pos: p.pos }, p.state);
-        else drawSprite(context, p.img, p.pos, p.source, p.flipped);
+        drawProp(context, p);
         context.globalAlpha = 1;
       });
+  }
+  function drawProp(c: CanvasRenderingContext2D, p: Prop) {
+    if (typeof p.img === "function")
+      p.img({ context: c, pos: p.pos }, p.state);
+    else drawSprite(c, p.img, p.pos, p.source, p.flipped);
   }
 </script>
 

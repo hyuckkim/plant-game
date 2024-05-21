@@ -22,6 +22,7 @@ import { makeBottle } from "./bottle";
 import { makeBooks } from "./books";
 import { getSoundRes, playSoundSFX } from "../../assets/sound";
 import { makeSoundObjects } from "./soundObjects";
+import { endingObject, requireEnding } from "../layers/ending/ending";
 
 export function settingHouseProps() {
   makeHouse();
@@ -65,21 +66,9 @@ export function changeAwakenState(time: number) {
     ].forEach((p) => {
       addProps(p);
     });
-    if (get(maxHealth) === initializeMaxHealth * 2 && !get(generatedEnding)) {
-      generatedEnding.set(true);
-      addProps(
-        newProp({
-          img: getRes("ui"),
-          source: [116, 140, 8, 6],
-          pos: [300, 40, 16, 12],
-          onClick: () => {
-            nowEnding.set(true);
-            enteredEndingTime.set(get(latestT));
-            HealthBarExtraHeight.set(300);
-            return false;
-          },
-        })
-      );
+    if (requireEnding()) {
+      const obj = endingObject();
+      if (obj !== undefined) addProps(obj);
     }
     getSoundRes("bgm").volume(0.5);
   } else if (current === "sleep") {

@@ -79,7 +79,7 @@ export function makePot() {
           );
           drawSprite(
             canvas.context,
-            getRes(m[1].img),
+            getRes(m[2].img),
             [285, 90 + (dt / 300) * 120, 40, 40],
             m[2].source
           );

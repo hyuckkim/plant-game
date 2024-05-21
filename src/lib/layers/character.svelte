@@ -14,6 +14,7 @@
   import { equips } from "../objects/equip";
   import { Layer } from "svelte-canvas";
   import { spring } from "svelte/motion";
+  import Equip from "./equip.svelte";
 
   const size = 60;
   const pos = spring(
@@ -47,15 +48,6 @@
   $: position = getDirectionFrame(dx, dy, $characterDir, $latestT);
   $: diedPosition = frames.die[Math.min(3, Math.floor(($latestT - ddt) / 160))];
 
-  $: equipPos =
-    $characterDir === 0
-      ? -7
-      : $characterDir === 1
-        ? 0
-        : $characterDir === 2
-          ? 0
-          : 7;
-
   function getDirectionFrame(
     dx: number,
     dy: number,
@@ -82,37 +74,7 @@
 
 {#if $health > 0}
   {#if $characterDir === 2 && $equips}
-    {#if typeof $equips.img === "function"}
-      <Layer
-        render={({ context }) => {
-          if (typeof $equips.img === "function") {
-            $equips.img(
-              {
-                context,
-                pos: addCoord($equips.pos, [
-                  $characterPos.x + equipPos,
-                  $characterPos.y,
-                  0,
-                  0,
-                ]),
-              },
-              $equips.state
-            );
-          }
-        }}
-      />
-    {:else}
-      <Sprite
-        image={$equips.img}
-        source={$equips.source}
-        render={addCoord($equips.pos, [
-          $characterPos.x + equipPos,
-          $characterPos.y,
-          0,
-          0,
-        ])}
-      />
-    {/if}
+    <Equip equip={$equips} />
   {/if}
   <Sprite
     callback={({ time }) => {
@@ -133,37 +95,7 @@
     render={[$characterPos.x, $characterPos.y, size, size]}
   />
   {#if $characterDir !== 2 && $equips}
-    {#if typeof $equips.img === "function"}
-      <Layer
-        render={({ context }) => {
-          if (typeof $equips.img === "function") {
-            $equips.img(
-              {
-                context,
-                pos: addCoord($equips.pos, [
-                  $characterPos.x + equipPos,
-                  $characterPos.y,
-                  0,
-                  0,
-                ]),
-              },
-              $equips.state
-            );
-          }
-        }}
-      />
-    {:else}
-      <Sprite
-        image={$equips.img}
-        source={$equips.source}
-        render={addCoord($equips.pos, [
-          $characterPos.x + equipPos,
-          $characterPos.y,
-          0,
-          0,
-        ])}
-      />
-    {/if}
+    <Equip equip={$equips} />
   {/if}
 {:else}
   <Sprite
