@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { addCoord, latestT, mouseX, mouseY } from "../values";
+  import { latestT, mouseX, mouseY } from "../values";
   import {
     characterDir,
     characterPos,
@@ -12,17 +12,10 @@
 
   import Sprite from "./sprite.svelte";
   import { equips } from "../objects/equip";
-  import { Layer } from "svelte-canvas";
-  import { spring } from "svelte/motion";
   import Equip from "./equip.svelte";
+  import { pos } from "../values";
 
   const size = 60;
-  const pos = spring(
-    { x: $mouseX, y: $mouseY },
-    {
-      stiffness: 0.5,
-    }
-  );
   const frames = {
     idle: [
       [4, 5, 6, 7],
@@ -56,10 +49,9 @@
   ) {
     if (dx * dx + dy * dy > 2) {
       dt = $latestT;
-      if (
-        Math.abs(dx * 2.5) < Math.abs(dy) ||
-        Math.abs(dy * 2.5) < Math.abs(dx)
-      ) {
+      const walkingEnoughDir = Math.abs(dx * 2.5) < Math.abs(dy) || Math.abs(dy * 2.5) < Math.abs(dx);
+      const running = dx * dx + dy * dy > 10;
+      if (walkingEnoughDir || running) {
         $characterDir = (dx < dy ? 2 : 0) + (dx < -dy ? 1 : 0);
       }
     }
@@ -78,7 +70,6 @@
   {/if}
   <Sprite
     callback={({ time }) => {
-      $pos = { x: $mouseX, y: $mouseY };
 
       if ($state === "awake" && !$nowEnding)
         $health -= Math.abs(dx) + Math.abs(dy);

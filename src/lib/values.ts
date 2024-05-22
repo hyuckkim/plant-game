@@ -1,7 +1,14 @@
+import { spring } from "svelte/motion";
 import { get, writable } from "svelte/store";
 
 export const mouseX = writable(0);
 export const mouseY = writable(0);
+export const pos = spring(
+  { x: 0, y: 0 },
+  {
+    stiffness: 0.5,
+  }
+);
 export const latestT = writable(0);
 
 export type Coord = [x: number, y: number, w: number, h: number];

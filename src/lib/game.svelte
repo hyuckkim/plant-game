@@ -10,7 +10,7 @@
     characterPos,
     gotEnding,
   } from "./gamevalues";
-  import { latestT, mouseX, mouseY } from "./values";
+  import { latestT, mouseX, mouseY, pos } from "./values";
 
   import Background from "./layers/background.svelte";
   import Character from "./layers/character.svelte";
@@ -32,6 +32,7 @@
   onMount(() => {
     $resources = res;
     $soundResources = soundRes;
+    $pos = { x: $mouseX, y: $mouseY };
 
     reset();
     getSoundRes("bgm").volume(0.5);
@@ -52,6 +53,8 @@
   on:mousemove={(e) => {
     $mouseX = e.x;
     $mouseY = e.y;
+    
+    $pos = { x: $mouseX, y: $mouseY };
   }}
   on:click={async (e) => {
     $mouseX = e.x;
@@ -69,6 +72,7 @@
         click($mouseX, $mouseY);
       }
     }
+    $pos = { x: $mouseX, y: $mouseY };
   }}
   on:wheel={(e) => {
     if ($nowEnding && $endingSequence === 0) {

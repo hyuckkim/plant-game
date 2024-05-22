@@ -1,13 +1,14 @@
 <script lang="ts">
   import { Canvas, Layer } from "svelte-canvas";
   import MouseButton from "./mouseButton.svelte";
-  import { mouseButtons, mouseX, mouseY } from "../values";
+  import { mouseButtons, mouseX, mouseY, pos } from "../values";
 </script>
 
 <Canvas
   on:mousemove={(e) => {
     $mouseX = e.pageX;
     $mouseY = e.pageY;
+    $pos = { x: $mouseX, y: $mouseY };
   }}
 >
   <Layer
