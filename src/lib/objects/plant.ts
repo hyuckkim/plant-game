@@ -39,7 +39,6 @@ export function checkDropToSeed(potion: Potion, pos: { x: number, y: number }): 
   }
   if (used.length !== 3) result.push(...used);
   potiondropResult.set(result);
-  console.log(arr);
   
   if (used.length === 3) return newProp({
     img: getRes("grass"),
