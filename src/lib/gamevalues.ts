@@ -15,7 +15,15 @@ export const statesEnteredTime = writable(0);
 export const characterPos = writable({ x: 0, y: 0 });
 export const characterDir = writable(0);
 export const lastCharacterPos = writable({ x: 0, y: 0 });
-export const sfx = writable(true);
+
+export const bgm = writable((localStorage.getItem("bgm") !== "false"));
+bgm.subscribe(v => {
+  localStorage.setItem("bgm", v ? "true" : "false");
+});
+export const sfx = writable((localStorage.getItem("sfx") !== "false"));
+sfx.subscribe(v => {
+  localStorage.setItem("sfx", v ? "true" : "false");
+});
 
 export const generatedEnding = writable(false);
 export const gotEnding = writable(false);
@@ -31,7 +39,6 @@ export function reset() {
   state.set("sleep");
   equips.set(undefined);
   particles.set([]);
-  sfx.set(true);
 
   gotEnding.set(false);
   nowEnding.set(false);

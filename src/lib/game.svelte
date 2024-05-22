@@ -8,8 +8,7 @@
     endingSequence,
     enteredEndingTime,
     characterDir,
-    characterPos,
-    gotEnding,
+    bgm,
   } from "./gamevalues";
   import { latestT, mouseX, mouseY, pos, rClick } from "./values";
 
@@ -23,7 +22,6 @@
   
   import { click, wheelMove } from "./objects/prop";
   import { getSoundRes } from "../assets/sound";
-  import { changeAwakenState } from "./objects/house";
   import { resources } from "../assets/image";
   import { soundResources } from "../assets/sound";
   import { endEnding, isEndEndingClick } from "./layers/ending/ending";
@@ -37,9 +35,11 @@
     $pos = { x: $mouseX, y: $mouseY };
 
     reset();
-    getSoundRes("bgm").volume(0.5);
-    getSoundRes("bgm").play();
-    getSoundRes("bgm").loop(true);
+    if ($bgm) {
+      getSoundRes("bgm").volume(0.5);
+      getSoundRes("bgm").play();
+      getSoundRes("bgm").loop(true);
+    }
 
     return () => {
       getSoundRes("bgm").pause();
