@@ -7,24 +7,21 @@ import { mouseButtons } from "../values";
 import { addProps, newProp, type Prop } from "./prop";
 
 export function makeBooks() {
-  addProps(book1(300, 50));
-  addProps(book2(400, 50));
-  addProps(book3(500, 50));
+  addProps(book_mouse(300, 50));
+  addProps(book_health(360, 50));
+  addProps(book_potion(420, 50));
+  addProps(book_license(480, 50));
 }
 
-function book1(x: number, y: number): Prop {
+function book_mouse(x: number, y: number): Prop {
   return newProp({
     img: getRes("prop/rpg"),
     source: [169, 291, 18, 10],
     display: "night",
     state: { pos: [x, y, 36, 20], page: 1 },
     ui: ({ context }, state) => {
-      context.save();
-      drawPanel(context, [x - 150, y + 30, 300, 150]);
-      context.font = "12px Verdana";
-      context.fillStyle = "white";
       if (state.page === 1) {
-        context.fillText(getText("b1_1_1"), x - 130, y + 55);
+        drawBookBackground(context, {x, y}, getText("b1_1_1"));
         drawMouseButton(
           context,
           [x - 110, y + 80, 80, 80],
@@ -32,8 +29,7 @@ function book1(x: number, y: number): Prop {
         );
       }
       if (state.page === 2) {
-        context.fillText(getText("b1_2_1"), x - 130, y + 55);
-        context.fillText(getText("b1_2_2"), x - 130, y + 68);
+        drawBookBackground(context, {x, y}, getText("b1_2_1"), getText("b1_2_2"));
         drawMouseButton(
           context,
           [x - 110, y + 80, 80, 80],
@@ -45,7 +41,6 @@ function book1(x: number, y: number): Prop {
           mouseButtons.WheelDown
         );
       }
-      context.restore();
     },
     onClick: (state) => {
       if (state.page == 1) state.page = 2;
@@ -54,21 +49,38 @@ function book1(x: number, y: number): Prop {
     },
   });
 }
-function book2(x: number, y: number): Prop {
+function book_health(x: number, y: number): Prop {
   return newProp({
     img: getRes("prop/rpg"),
     source: [169, 291, 18, 10],
     display: "night",
     state: { pos: [x, y, 36, 20], page: 1 },
     ui: ({ context }, state) => {
-      context.save();
-      drawPanel(context, [x - 150, y + 30, 300, 150]);
-      context.font = "12px Verdana";
-      context.fillStyle = "white";
-
       if (state.page === 1) {
-        context.fillText(getText("b2_1_1"), x - 130, y + 55);
-        context.fillText(getText("b2_1_2"), x - 130, y + 68);
+        drawBookBackground(context, {x, y}, getText("bh_1_1"));
+        drawSprite(context, getRes("character"), [x + 90, y + 150, 40, 40], [1032, 0, 24, 24]);
+      }
+      if (state.page === 2) {
+        drawBookBackground(context, {x, y}, getText("bh_2_1"), getText("bh_2_2"));
+        drawSprite(context, getRes("prop/rpg"), [x + 90, y + 120, 32, 64], [0, 192, 32, 64]);
+      }
+    },
+    onClick: (state) => {
+      if (state.page == 1) state.page = 2;
+      else if (state.page == 2) state.page = 1;
+      return true;
+    },
+  });
+}
+function book_potion(x: number, y: number): Prop {
+  return newProp({
+    img: getRes("prop/rpg"),
+    source: [169, 291, 18, 10],
+    display: "night",
+    state: { pos: [x, y, 36, 20], page: 1 },
+    ui: ({ context }, state) => {
+      if (state.page === 1) {
+        drawBookBackground(context, {x, y}, getText("b2_1_1"), getText("b2_1_2"));
         drawSprite(
           context,
           getRes("prop/flower"),
@@ -113,8 +125,7 @@ function book2(x: number, y: number): Prop {
         );
       }
       if (state.page === 2) {
-        context.fillText(getText("b2_2_1"), x - 130, y + 55);
-        context.fillText(getText("b2_2_2"), x - 130, y + 68);
+        drawBookBackground(context, {x, y}, getText("b2_2_1"), getText("b2_2_2"));
         drawSprite(
           context,
           getRes("prop/flower"),
@@ -183,14 +194,14 @@ function book2(x: number, y: number): Prop {
         );
       }
       if (state.page === 3) {
-        context.fillText(getText("b2_3_1"), x - 130, y + 55);
-        context.fillText(getText("b2_3_2"), x - 130, y + 68);
-
+        drawBookBackground(context, {x, y}, getText("b2_3_1"), getText("b2_3_2"));
+        context.save();
         context.fillStyle = "#21501D";
         context.fillRect(x - 62, y + 120, 6, 6);
         context.fillRect(x - 70, y + 116, 6, 6);
         context.fillRect(x - 64, y + 124, 6, 6);
         context.fillRect(x - 68, y + 126, 6, 6);
+        context.restore();
         drawSprite(
           context,
           getRes("ui"),
@@ -204,7 +215,6 @@ function book2(x: number, y: number): Prop {
           [48, 112, 16, 16]
         );
       }
-      context.restore();
     },
     onClick: (state) => {
       if (state.page == 1) state.page = 2;
@@ -214,7 +224,7 @@ function book2(x: number, y: number): Prop {
     },
   });
 }
-function book3(x: number, y: number): Prop {
+function book_license(x: number, y: number): Prop {
   return newProp({
     img: getRes("prop/rpg"),
     source: [169, 291, 18, 10],
@@ -235,4 +245,15 @@ function book3(x: number, y: number): Prop {
       return true;
     },
   });
+}
+
+function drawBookBackground(context: CanvasRenderingContext2D, {x, y}: {x: number, y: number}, text1: string, text2?: string) {
+  context.save();
+  drawPanel(context, [x - 150, y + 30, 300, 150]);
+
+  context.font = "12px Verdana";
+  context.fillStyle = "white";
+  context.fillText(text1, x - 130, y + 55);
+  if (text2) context.fillText(text2, x - 130, y + 68);
+  context.restore();
 }
