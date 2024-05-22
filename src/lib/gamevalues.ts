@@ -33,6 +33,12 @@ export function reset() {
   particles.set([]);
   sfx.set(true);
 
+  gotEnding.set(false);
+  nowEnding.set(false);
+  enteredEndingTime.set(0);
+  endingSequence.set(0);
+  savedPosition.set({ x: 0, y: 0 });
+
   initializeProps();
   initializeEquips();
   initializeBottle();
