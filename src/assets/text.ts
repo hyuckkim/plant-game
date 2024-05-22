@@ -14,9 +14,10 @@ const text: {
     b2_2_2: "Two same hurbs with green hurb; that restor",
     b2_3_1: "You can use potions, or you can sprinkle the",
     b2_3_2: "Then, each type of potion will cause specific",
-    bh_1_1: "If you reach 0 health, you lose the game.",
+    bh_1_1: "If you reach 0 HP, you lose the game.",
+    bh_1_2: "However, HP is consumed every time you move.",
     bh_2_1: "←← You can switch day and night in bed.",
-    bh_2_2: "At night, your health is restored."
+    bh_2_2: "At night, your HP is restored."
 
   },
   ko: {
@@ -30,6 +31,7 @@ const text: {
     b2_3_1: "포션은 사용할 수도 있지만 땅에 뿌릴 수도 있습니",
     b2_3_2: "땅에 뿌리면 포션별로 지정된 약초가 자라납니다.",
     bh_1_1: "체력이 0이 되면 게임에서 패배합니다.",
+    bh_1_2: "하지만 체력은 움직일 때마다 소모됩니다.",
     bh_2_1: "←← 침대에서 낮과 밤을 전환할 수 있습니다.",
     bh_2_2: "밤에는 체력이 회복됩니다."
   }

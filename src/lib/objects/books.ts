@@ -57,7 +57,12 @@ function book_health(x: number, y: number): Prop {
     state: { pos: [x, y, 36, 20], page: 1 },
     ui: ({ context }, state) => {
       if (state.page === 1) {
-        drawBookBackground(context, {x, y}, getText("bh_1_1"));
+        drawBookBackground(context, {x, y}, getText("bh_1_1"), getText("bh_1_2"));
+        drawSprite(context, getRes("ui"), [x + 90, y + 150, 40, 40], [1032, 0, 24, 24]);
+        drawSprite(context, getRes("ui"), [x + 90, y + 150, 40, 40], [1032, 0, 24, 24]);
+        context.drawImage(getRes("ui"), 259, 40, 9, 20, x - 120, y + 140, 9, 20);
+        context.drawImage(getRes("ui"), 284, 40, 23, 20, x - 111, y + 140, 20, 20);
+        context.drawImage(getRes("ui"), 323, 40, 9, 20, x - 91, y + 140, 9, 20);
         drawSprite(context, getRes("character"), [x + 90, y + 150, 40, 40], [1032, 0, 24, 24]);
       }
       if (state.page === 2) {
