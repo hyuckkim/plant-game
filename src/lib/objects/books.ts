@@ -41,10 +41,19 @@ function book_mouse(x: number, y: number): Prop {
           mouseButtons.WheelDown
         );
       }
+      if (state.page === 3) {
+        drawBookBackground(context, {x, y}, getText("b1_3_1"), getText("b1_3_2"));
+        drawMouseButton(
+          context,
+          [x + 20, y + 80, 80, 80],
+          mouseButtons.Right
+        );
+      }
     },
     onClick: (state) => {
       if (state.page == 1) state.page = 2;
-      else if (state.page == 2) state.page = 1;
+      else if (state.page == 2) state.page = 3;
+      else if (state.page == 3) state.page = 1;
       return true;
     },
   });

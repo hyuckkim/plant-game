@@ -9,6 +9,7 @@ export const pos = spring(
     stiffness: 0.5,
   }
 );
+export const rClick = writable(false);
 export const latestT = writable(0);
 
 export type Coord = [x: number, y: number, w: number, h: number];

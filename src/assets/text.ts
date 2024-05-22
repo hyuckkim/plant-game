@@ -5,9 +5,11 @@ const text: {
   }
 } = {
   en: {
-    b1_1_1: "You can interact with objects by left-clicking",
+    b1_1_1: "You can interact with objects by left-click.",
     b1_2_1: "Some objects can be picked up.",
     b1_2_2: "You can use the mouse wheel to interact wit",
+    b1_3_1: "You can right-click and hold to check the dist",
+    b1_3_2: "You move immediately when you release the",
     b2_1_1: "If you have 3 herbs and water, you can creat",
     b2_1_2: "The potions you create can be stored in bott",
     b2_2_1: "Three same hurbs; that increases your maxi",
@@ -15,7 +17,7 @@ const text: {
     b2_3_1: "You can use potions, or you can sprinkle the",
     b2_3_2: "Then, each type of potion will cause specific",
     bh_1_1: "If you reach 0 HP, you lose the game.",
-    bh_1_2: "However, HP is consumed every time you move.",
+    bh_1_2: "However, HP is consumed every time you m",
     bh_2_1: "←← You can switch day and night in bed.",
     bh_2_2: "At night, your HP is restored."
 
@@ -24,6 +26,8 @@ const text: {
     b1_1_1: "왼쪽 클릭으로 사물과 상호작용 할 수 있습니다.",
     b1_2_1: "몇몇 사물은 들어올릴 수 있습니다.",
     b1_2_2: "들어올린 사물은 마우스 휠로 사용할 수 있습니다.",
+    b1_3_1: "오른쪽 클릭을 유지해 거리를 재 볼 수 있습니다.",
+    b1_3_2: "오른쪽 마우스를 놓으면 즉시 이동합니다.",
     b2_1_1: "약초 3개와 물이 있다면 포션을 만들 수 있습니다.",
     b2_1_2: "만들어낸 포션은 병에 담을 수 있습니다.",
     b2_2_1: "같은 약초 3개로 만든 포션은 최대 체력을 증가시",

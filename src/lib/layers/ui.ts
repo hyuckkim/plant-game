@@ -4,7 +4,8 @@ import type { CanvasInfo, Coord } from "../values";
 export function drawHealthBar(
   { context }: CanvasInfo,
   [x, y, w]: Coord,
-  health: number
+  health: number,
+  tempHealth: number,
 ) {
   context.save();
   context.imageSmoothingEnabled = false;
@@ -28,6 +29,25 @@ export function drawHealthBar(
     if (health === 1) {
       context.drawImage(getRes("ui"), 365, 40, 1, 14, x + w, y + 6, 2, 28);
     }
+  }
+  if (tempHealth > 0) {
+    context.save();
+    context.globalAlpha = 0.5;
+    context.drawImage(
+      getRes("ui"),
+      350,
+      40,
+      7,
+      14,
+      x + w * health,
+      y + 6,
+      w * tempHealth - 2,
+      28
+    );
+    if (health === 1) {
+      context.drawImage(getRes("ui"), 365, 40, 1, 14, x + w, y + 6, 2, 28);
+    }
+    context.restore();
   }
   context.restore();
 }
