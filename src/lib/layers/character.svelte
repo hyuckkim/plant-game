@@ -5,7 +5,6 @@
     characterPos,
     health,
     maxHealth,
-    nowEnding,
     state,
   } from "../gamevalues";
   import { getRes } from "../../assets/image";
@@ -14,6 +13,7 @@
   import { equips } from "../objects/equip";
   import Equip from "./equip.svelte";
   import { pos } from "../values";
+  import { statistic } from "./ending/ending";
 
   const size = 60;
   const frames = {
@@ -70,11 +70,18 @@
   {/if}
   <Sprite
     callback={({ time }) => {
+      if ($state === "awake") {
+        const moved = Math.abs(dx) + Math.abs(dy);
+        $health -= moved;
+        statistic.move += moved;
+      }
+      else {
+        const afterHeal = Math.min($maxHealth, $health + (time - $latestT));
+        statistic.healing_sleep += afterHeal - $health;
+        $health = afterHeal;
+      }
 
-      if ($state === "awake" && !$nowEnding)
-        $health -= Math.abs(dx) + Math.abs(dy);
-      else $health = Math.min($maxHealth, $health + (time - $latestT));
-
+      statistic.timems += Math.max(0, (time - $latestT));
       (dx = lx - $characterPos.x), (dy = ly - $characterPos.y);
       (lx = $characterPos.x), (ly = $characterPos.y);
 

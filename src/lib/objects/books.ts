@@ -1,5 +1,6 @@
 import { getRes } from "../../assets/image";
 import { getText } from "../../assets/text";
+import { statistic } from "../layers/ending/ending";
 import { drawMouseButton } from "../layers/mouseButton";
 import { drawSprite } from "../layers/sprite";
 import { drawPanel } from "../layers/ui";
@@ -51,6 +52,7 @@ function book_mouse(x: number, y: number): Prop {
       }
     },
     onClick: (state) => {
+      statistic.book++;
       if (state.page == 1) state.page = 2;
       else if (state.page == 2) state.page = 3;
       else if (state.page == 3) state.page = 1;
@@ -80,6 +82,7 @@ function book_health(x: number, y: number): Prop {
       }
     },
     onClick: (state) => {
+      statistic.book++;
       if (state.page == 1) state.page = 2;
       else if (state.page == 2) state.page = 1;
       return true;
@@ -231,6 +234,7 @@ function book_potion(x: number, y: number): Prop {
       }
     },
     onClick: (state) => {
+      statistic.book++;
       if (state.page == 1) state.page = 2;
       else if (state.page == 2) state.page = 3;
       else if (state.page == 3) state.page = 1;

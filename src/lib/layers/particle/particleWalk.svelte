@@ -3,8 +3,6 @@
   import { particles } from "../../particle";
   import {
     characterPos,
-    endingSequence,
-    nowEnding,
     savedPosition,
   } from "../../gamevalues";
   import { attachedTag } from "../../objects/prop";
@@ -57,17 +55,8 @@
           t: time,
         },
       ];
-      if ($nowEnding) {
-        if ($endingSequence === 0) playSoundSFX("step/grass");
-        else {
-          if ($characterPos.y > $savedPosition.y - 100)
-            playSoundSFX("step/grass");
-          else playSoundSFX("step/water");
-        }
-      } else {
-        if (attachedTag("pond")) playSoundSFX("step/water");
-        else playSoundSFX("step/grass");
-      }
+      if (attachedTag("pond")) playSoundSFX("step/water");
+      else playSoundSFX("step/grass");
 
       movements %= 100;
     }

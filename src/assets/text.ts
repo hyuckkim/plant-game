@@ -19,8 +19,20 @@ const text: {
     bh_1_1: "If you reach 0 HP, you lose the game.",
     bh_1_2: "However, HP is consumed every time you m",
     bh_2_1: "←← You can switch day and night in bed.",
-    bh_2_2: "At night, your HP is restored."
+    bh_2_2: "At night, your HP is restored.",
 
+    ending: "Game Over!",
+    ending_time: "Play Time: $1",
+    ending_day: "Play Date: $1 days",
+    ending_move: "Distance Moved: $1px",
+    ending_water: "Times Water Drawn: $1",
+    ending_grass: "Inserted Herbs: $1",
+    ending_potion_drink: "Potions Drunk: $1 drops",
+    ending_potion_seed: "Potions Sprinkled: $1 drops",
+    ending_healing_sleep: "Health Recovered from Sleep: $1",
+    ending_healing_potion: "Health Recovered from Potions: $1",
+    ending_book: "Book Pages Turned: $1 pages",
+    ending_thanks: "Thank you for playing!"
   },
   ko: {
     b1_1_1: "왼쪽 클릭으로 사물과 상호작용 할 수 있습니다.",
@@ -37,20 +49,33 @@ const text: {
     bh_1_1: "체력이 0이 되면 게임에서 패배합니다.",
     bh_1_2: "하지만 체력은 움직일 때마다 소모됩니다.",
     bh_2_1: "←← 침대에서 낮과 밤을 전환할 수 있습니다.",
-    bh_2_2: "밤에는 체력이 회복됩니다."
+    bh_2_2: "밤에는 체력이 회복됩니다.",
+
+    ending: "게임 완료!",
+    ending_time: "플레이 시간: $1",
+    ending_day: "플레이 일자: $1일",
+    ending_move: "이동 거리: $1px",
+    ending_water: "물을 뜬 횟수: $1회",
+    ending_grass: "넣은 약초: $1개",
+    ending_potion_drink: "마신 포션: $1방울",
+    ending_potion_seed: "뿌린 포션: $1방울",
+    ending_healing_sleep: "잠에 들어 회복한 체력: $1",
+    ending_healing_potion: "포션으로 회복한 체력: $1",
+    ending_book: "넘긴 책 페이지: $1페이지",
+    ending_thanks: "플레이해주셔서 감사합니다!",
   }
-};
+} as const;
 
 function langSupported(lang: string): boolean {
   return Object.keys(text).includes(lang);
 }
 
-export function getText(tag: string) {
+export function getText(tag: string, ...meta: any[]) {
   let lang = navigator.language;
   if (!langSupported(lang)) lang = "en";
   let data = text[lang]?.[tag];
   if (!data) data = text["en"][tag];
   
   if (!data) throw Error(`no text with tag ${tag}`);
-  return data;
+  return data.replaceAll(/\$(\d+)/g, (match, p1) =>  meta[p1 - 1] ?? match);
 }

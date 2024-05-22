@@ -10,6 +10,7 @@ import { makeGrabbableProp } from "./equip";
 import { addGrass } from "./pot";
 import { addProps, attachedTag, newProp, type Prop } from "./prop";
 import { playSoundSFX } from "../../assets/sound";
+import { statistic } from "../layers/ending/ending";
 
 export function generatePlant(): Prop {
   const length = randn_bm(0, 1200, 1);
@@ -84,6 +85,7 @@ export function generateGrassProp(grass: Grass, x: number, y: number): Prop {
           const done = addGrass(pot, grass);
           if (!done) return true;
           
+          statistic.grass++;
           playSoundSFX("prop/plant");
           return undefined;
         }

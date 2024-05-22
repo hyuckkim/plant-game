@@ -14,6 +14,7 @@ import {
 import { drawSprite } from "../layers/sprite";
 import { playSoundSFX } from "../../assets/sound";
 import { getGrass } from "../data/grass";
+import { statistic } from "../layers/ending/ending";
 
 export const drinkedPotions = writable<{ [potion: number]: number }>({});
 
@@ -74,6 +75,7 @@ export function makeBottle() {
           }
         } else {
           addNewPotionDrop(potion);
+          statistic.potion_seed++;
           state.quantity -= 1;
           if (state.quantity === 0) state.potion = undefined;
         }
@@ -87,6 +89,7 @@ export function makeBottle() {
               ? drinkHealthPotion(state)
               : drinkHealingPotion(state)
           ) {
+            statistic.potion_drink++;
             state.quantity -= 1;
             if (state.quantity === 0) state.potion = undefined;
           }
@@ -125,8 +128,10 @@ function drinkHealthPotion(state: PropState) {
   return true;
 }
 function drinkHealingPotion(state: PropState) {
-  if (health === maxHealth) return false;
-  health.set(Math.min(get(health) + 1000, get(maxHealth)));
+  if (get(health) === get(maxHealth)) return false;
+  const afterHeal = Math.min(get(health) + 1000, get(maxHealth));
+  statistic.healing_potion += afterHeal - get(health);
+  health.set(afterHeal);
   return true;
 }
 

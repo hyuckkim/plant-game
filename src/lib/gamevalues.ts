@@ -6,6 +6,7 @@ import { initializeBottle } from "./objects/bottle";
 import { spring } from "svelte/motion";
 import { particles } from "./particle";
 import { generatePlant } from "./objects/plant";
+import { initializeStatistic } from "./layers/ending/ending";
 
 export const initializeMaxHealth = 5000;
 export const maxHealth = writable(initializeMaxHealth);
@@ -26,10 +27,6 @@ sfx.subscribe(v => {
 });
 
 export const generatedEnding = writable(false);
-export const gotEnding = writable(false);
-export const nowEnding = writable(false);
-export const enteredEndingTime = writable(0);
-export const endingSequence = writable(0);
 export const savedPosition = writable({ x: 0, y: 0 });
 
 export const HealthBarExtraHeight = spring(300);
@@ -39,12 +36,9 @@ export function reset() {
   state.set("sleep");
   equips.set(undefined);
   particles.set([]);
-
-  gotEnding.set(false);
-  nowEnding.set(false);
-  enteredEndingTime.set(0);
-  endingSequence.set(0);
+  generatedEnding.set(false);
   savedPosition.set({ x: 0, y: 0 });
+  initializeStatistic();
 
   initializeProps();
   initializeEquips();

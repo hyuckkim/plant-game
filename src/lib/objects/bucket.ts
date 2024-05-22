@@ -3,6 +3,7 @@ import { makeGrabbableEquip, makeGrabbableProp } from "./equip";
 import { addWater } from "./pot";
 import { addProps, attachedTag } from "./prop";
 import { playSoundSFX } from "../../assets/sound";
+import { statistic } from "../layers/ending/ending";
 
 export function makeBucket() {
   const justBucket = makeGrabbableEquip(
@@ -14,6 +15,7 @@ export function makeBucket() {
       onWheelUp: () => {
         if (attachedTag("pond")) {
           playSoundSFX("prop/water_up");
+          statistic.water++;
           return waterBucket;
         }
         return true;

@@ -15,7 +15,7 @@ import { makeBottle } from "./bottle";
 import { makeBooks } from "./books";
 import { getSoundRes, playSoundSFX } from "../../assets/sound";
 import { makeSoundObjects } from "./soundObjects";
-import { endingObject, requireEnding } from "../layers/ending/ending";
+import { endingObject, requireEnding, statistic } from "../layers/ending/ending";
 import { potiondropResult } from "../data/potion";
 
 export function settingHouseProps() {
@@ -72,6 +72,7 @@ export function changeAwakenState(time: number) {
     statesEnteredTime.set(time);
     dayStarted();
     getSoundRes("bgm").volume(1);
+    statistic.day++;
   }
 }
 function makeRoof() {
