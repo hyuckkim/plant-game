@@ -17,7 +17,7 @@ export const potion: Potion[] = [
   {
     id: 0,
     color: { r: 33, g: 80, b: 29 },
-    grass: ["red", "orange", "yellow", "skyblue", "blue", "purple", "white"],
+    grass: ["grass", "red", "orange", "yellow", "skyblue", "blue", "purple", "white"],
   },
   {
     id: 2,

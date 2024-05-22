@@ -8,6 +8,7 @@ import { latestT } from "../values";
 import { characterPos, health, initializeMaxHealth, maxHealth } from "../gamevalues";
 import { drawSprite } from "../layers/sprite";
 import { playSoundSFX } from "../../assets/sound";
+import { getGrass } from "../data/grass";
 
 export const drinkedPotions = writable<{ [potion: number]: number }>({});
 
@@ -15,10 +16,10 @@ export function initializeBottle() {
   drinkedPotions.set({});
 }
 
-function addNoise(pos: { x: number; y: number }) {
+function addNoise(pos: { x: number; y: number }, range: number = 6) {
   return {
-    x: pos.x + (Math.random() * 6 - 3),
-    y: pos.y + (Math.random() * 6 - 3),
+    x: pos.x + (Math.random() * range - range / 2),
+    y: pos.y + (Math.random() * range - range / 2),
   };
 }
 export function makeBottle() {
@@ -82,6 +83,27 @@ export function makeBottle() {
                 ...get(drinkedPotions),
                 [potion.id]: (get(drinkedPotions)[potion.id] ?? 0) + 1
               });
+              if (get(drinkedPotions)[potion.id] === 1) {
+                const pos = addNoise({ x: 600, y: 200}, 20);
+                addProps(makeGrabbableProp(
+                  ({ context, pos }, state) => {
+                    const grass = getGrass(state.potion.grass[0]);
+                    const count = get(drinkedPotions)[potion.id];
+                    context.save();
+                    context.beginPath();
+                    context.rect(pos[0] - pos[2] / 2, pos[1] - pos[3] / 2 + (10 - count) / 10 * pos[3], pos[2], count / 10 * pos[3]);
+                    context.clip();
+                    drawSprite(context, getRes(grass.img), pos, grass.source);
+                    context.closePath();
+                    context.restore();
+                  },
+                  getGrass(potion.grass[0]).source,
+                  [0, 0, 40, 40],
+                  { pos: [pos.x, pos.y, 40, 40], potion },
+                  {},
+                  "night"
+                ));
+              }
               maxHealth.set(
                 initializeMaxHealth +
                   (initializeMaxHealth *
