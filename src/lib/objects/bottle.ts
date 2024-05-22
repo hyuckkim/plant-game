@@ -77,28 +77,29 @@ export function makeBottle() {
         const potion = state.potion;
         if (potion !== undefined) {
           if (potion.id % 3 === 0) {
-            drinkedPotions.set({
-              ...get(drinkedPotions),
-              [potion.id]: Math.min(
-                10,
-                (get(drinkedPotions)[potion.id] ?? 0) + 1
-              ),
-            });
-            maxHealth.set(
-              initializeMaxHealth +
-                (initializeMaxHealth *
-                  Object.values(get(drinkedPotions)).reduce(
-                    (pre, curr) => pre + curr,
-                    0
-                  )) /
-                  80
-            );
-            state.quantity -= 1;
-            if (state.quantity === 0) state.potion = undefined;
+            if (get(drinkedPotions)[potion.id] !== 10) {
+              drinkedPotions.set({
+                ...get(drinkedPotions),
+                [potion.id]: (get(drinkedPotions)[potion.id] ?? 0) + 1
+              });
+              maxHealth.set(
+                initializeMaxHealth +
+                  (initializeMaxHealth *
+                    Object.values(get(drinkedPotions)).reduce(
+                      (pre, curr) => pre + curr,
+                      0
+                    )) /
+                    80
+              );
+              state.quantity -= 1;
+              if (state.quantity === 0) state.potion = undefined;
+            }
           } else {
-            health.set(Math.min(get(health) + 1000, get(maxHealth)));
-            state.quantity -= 1;
-            if (state.quantity === 0) state.potion = undefined;
+            if (health !== maxHealth) {
+              health.set(Math.min(get(health) + 1000, get(maxHealth)));
+              state.quantity -= 1;
+              if (state.quantity === 0) state.potion = undefined;
+            }
           }
         }
         return true;
