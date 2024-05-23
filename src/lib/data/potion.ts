@@ -5,6 +5,7 @@ export type Potion = {
   id: number;
   color: { r: number; g: number; b: number };
   grass: string[];
+  heal?: number,
 };
 
 export function getPotion(id: number): Potion {
@@ -15,6 +16,12 @@ export function getPotion(id: number): Potion {
 
 export const potion: Potion[] = [
   {
+    id: -1,
+    color: { r: 29, g: 139, b: 170 },
+    grass: ["grass"],
+    heal: 150,
+  },
+  {
     id: 0,
     color: { r: 33, g: 80, b: 29 },
     grass: ["grass", "red", "orange", "yellow", "skyblue", "blue", "purple", "white"],
@@ -23,6 +30,7 @@ export const potion: Potion[] = [
     id: 2,
     color: { r: 108, g: 0, b: 17 },
     grass: ["red"],
+    heal: 1000,
   },
   {
     id: 3,
@@ -33,6 +41,7 @@ export const potion: Potion[] = [
     id: 8,
     color: { r: 171, g: 94, b: 23 },
     grass: ["orange"],
+    heal: 1020,
   },
   {
     id: 12,
@@ -43,6 +52,7 @@ export const potion: Potion[] = [
     id: 32,
     color: { r: 186, g: 137, b: 0 },
     grass: ["yellow"],
+    heal: 1040,
   },
   {
     id: 48,
@@ -53,6 +63,7 @@ export const potion: Potion[] = [
     id: 128,
     color: { r: 84, g: 163, b: 163 },
     grass: ["skyblue"],
+    heal: 1060,
   },
   {
     id: 192,
@@ -63,6 +74,7 @@ export const potion: Potion[] = [
     id: 512,
     color: { r: 43, g: 18, b: 127 },
     grass: ["blue"],
+    heal: 1080,
   },
   {
     id: 768,
@@ -73,6 +85,7 @@ export const potion: Potion[] = [
     id: 2048,
     color: { r: 90, g: 16, b: 115 },
     grass: ["purple"],
+    heal: 1100,
   },
   {
     id: 3072,
@@ -83,6 +96,7 @@ export const potion: Potion[] = [
     id: 8192,
     color: { r: 179, g: 194, b: 229 },
     grass: ["white"],
+    heal: 1120,
   },
   {
     id: 12288,

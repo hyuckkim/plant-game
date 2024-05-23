@@ -2,7 +2,7 @@ import { get, writable } from "svelte/store";
 import { getRes } from "../../assets/image";
 import { makeGrabbableProp } from "./equip";
 import { addProps, attachedTag, newProp, type PropState } from "./prop";
-import { potionDrop, type Potion } from "../data/potion";
+import { getPotion, potionDrop, type Potion } from "../data/potion";
 import { getMadenPotion } from "./pot";
 import { latestT } from "../values";
 import {
@@ -29,7 +29,23 @@ function addNoise(pos: { x: number; y: number }, range: number = 6) {
   };
 }
 export function makeBottle() {
-  const bottle = makeGrabbableProp(
+  const bottle = makeBottleProp({ x: 75, y: 170 });
+  const waterBottle = makeBottleProp({ x: 820, y: 680 }, getPotion(-1));
+
+  addProps(
+    newProp({
+      img: getRes("prop/rpg"),
+      source: [0, 256, 32, 32],
+      state: { pos: [75, 180, 48, 48] },
+      layer: "floor",
+    })
+  );
+  addProps(bottle);
+  addProps(waterBottle);
+}
+
+function makeBottleProp({ x, y }: {x: number, y: number}, potion: Potion | undefined = undefined) {
+  return makeGrabbableProp(
     ({ context, pos }, state) => {
       if (state.potion) {
         context.save();
@@ -50,10 +66,10 @@ export function makeBottle() {
     [96, 0, 16, 16],
     [0, 3, 40, 40],
     {
-      pos: [75, 170, 40, 40],
-      potion: undefined,
-      quantity: 0,
-      image: undefined,
+      pos: [x, y, 40, 40],
+      potion,
+      quantity: potion ? 10 : 0,
+      image: potion ? createBottleData(potion.color) : undefined,
     },
     {
       onWheelDown: (state) => {
@@ -64,11 +80,16 @@ export function makeBottle() {
             const newPotion = getMadenPotion(pot);
             state.potion = newPotion;
             if (newPotion) {
-              state.image = createBottleData(
-                newPotion.color.r,
-                newPotion.color.g,
-                newPotion.color.b
-              );
+              state.image = createBottleData(newPotion.color);
+              state.quantity = 10;
+              playSoundSFX("prop/water_up");
+            }
+          }
+          else if (attachedTag("pond")) {
+            const newPotion = getPotion(-1);
+            state.potion = newPotion;
+            if (newPotion) {
+              state.image = createBottleData(newPotion.color);
               state.quantity = 10;
               playSoundSFX("prop/water_up");
             }
@@ -98,17 +119,7 @@ export function makeBottle() {
       },
     }
   );
-
-  addProps(
-    newProp({
-      img: getRes("prop/rpg"),
-      source: [0, 256, 32, 32],
-      state: { pos: [75, 180, 48, 48] },
-      layer: "floor",
-    })
-  );
-  addProps(bottle);
-}
+} 
 
 function drinkHealthPotion(state: PropState) {
   const potion = state.potion;
@@ -129,7 +140,7 @@ function drinkHealthPotion(state: PropState) {
 }
 function drinkHealingPotion(state: PropState) {
   if (get(health) === get(maxHealth)) return false;
-  const afterHeal = Math.min(get(health) + 1000, get(maxHealth));
+  const afterHeal = Math.min(get(health) + state.potion.heal, get(maxHealth));
   statistic.healing_potion += afterHeal - get(health);
   health.set(afterHeal);
   return true;
@@ -164,7 +175,7 @@ function makePotionToy(potion: Potion) {
   );
 }
 
-export function createBottleData(r: number, g: number, b: number) {
+export function createBottleData({ r, g, b }: { r: number, g: number, b: number }) {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
   if (!ctx) throw Error("cannot create other canvas");

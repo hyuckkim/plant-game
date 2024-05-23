@@ -1,4 +1,4 @@
-import { get, writable } from "svelte/store";
+import { get } from "svelte/store";
 import { getRes } from "../../assets/image";
 import { drawExtendBar, drawItemPanel, drawPanel } from "../layers/ui";
 import { addProps, newProp, type Prop } from "./prop";
@@ -115,11 +115,7 @@ export function makePot() {
           state.potionTag = gotPotion;
           if (gotPotion) {
             state.potionImage =
-              createBottleData(
-                gotPotion.color.r,
-                gotPotion.color.g,
-                gotPotion.color.b
-              );
+              createBottleData(gotPotion.color);
           }
           state.materials = [];
           state.oldTime = get(latestT);
