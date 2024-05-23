@@ -1,6 +1,6 @@
 import { get } from "svelte/store";
 import { getRes } from "../../assets/image";
-import { addProps, dayEnd, dayStarted, newProp } from "./prop";
+import { addProps, dayEnd, dayStarted, newProp, type Prop } from "./prop";
 import {
   characterPos,
   lastCharacterPos,
@@ -16,7 +16,7 @@ import { makeBooks } from "./books";
 import { getSoundRes, playSoundSFX } from "../../assets/sound";
 import { makeSoundObjects } from "./soundObjects";
 import { endingObject, requireEnding, statistic } from "../layers/ending/ending";
-import { potiondropResult } from "../data/potion";
+import { getPotion, potiondropResult } from "../data/potion";
 
 export function settingHouseProps() {
   makeHouse();
@@ -118,7 +118,18 @@ function makePond() {
       img: getRes("prop/pond"),
       source: [9, 70, 81, 78],
       layer: "floor",
-      state: { pos: [800, 670, 162, 156], tag: "pond" },
+      state: { pos: [800, 670, 162, 156], tag: "pond", watering: 1 },
+      onDayEnd: (state) => {
+        state.watering = 1;
+        return true;
+      }
     })
   );
+}
+export function pondWatering(p: Prop) {
+  if (p.state.watering === 1) {
+    p.state.watering = 0;
+    return getPotion(-1);
+  }
+  return undefined;
 }

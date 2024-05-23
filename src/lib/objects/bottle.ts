@@ -15,6 +15,7 @@ import { drawSprite } from "../layers/sprite";
 import { playSoundSFX } from "../../assets/sound";
 import { getGrass } from "../data/grass";
 import { statistic } from "../layers/ending/ending";
+import { pondWatering } from "./house";
 
 export const drinkedPotions = writable<{ [potion: number]: number }>({});
 
@@ -85,13 +86,16 @@ function makeBottleProp({ x, y }: {x: number, y: number}, potion: Potion | undef
               playSoundSFX("prop/water_up");
             }
           }
-          else if (attachedTag("pond")) {
-            const newPotion = getPotion(-1);
-            state.potion = newPotion;
-            if (newPotion) {
-              state.image = createBottleData(newPotion.color);
-              state.quantity = 10;
-              playSoundSFX("prop/water_up");
+          else {
+            const pond = attachedTag("pond")?.[0];
+            if (pond) {
+              const newPotion = pondWatering(pond);
+              state.potion = newPotion;
+              if (newPotion) {
+                state.image = createBottleData(newPotion.color);
+                state.quantity = 10;
+                playSoundSFX("prop/water_up");
+              }
             }
           }
         } else {
