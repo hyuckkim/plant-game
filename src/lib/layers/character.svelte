@@ -70,15 +70,17 @@
   {/if}
   <Sprite
     callback={({ time }) => {
+      const moved = Math.abs(dx) + Math.abs(dy);
+      statistic.move += moved;
       if ($state === "awake") {
-        const moved = Math.abs(dx) + Math.abs(dy);
         $health -= moved;
-        statistic.move += moved;
       }
       else {
-        const afterHeal = Math.min($maxHealth, $health + (time - $latestT));
-        statistic.healing_sleep += afterHeal - $health;
-        $health = afterHeal;
+        const healing = Math.min($maxHealth - $health, time - $latestT);
+        if (healing > 0) {
+          statistic.healing_sleep += healing;
+          $health += healing;
+        }
       }
 
       statistic.timems += Math.max(0, (time - $latestT));

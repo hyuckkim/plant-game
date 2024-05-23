@@ -144,9 +144,9 @@ function drinkHealthPotion(state: PropState) {
 }
 function drinkHealingPotion(state: PropState) {
   if (get(health) === get(maxHealth)) return false;
-  const afterHeal = Math.min(get(health) + state.potion.heal, get(maxHealth));
-  statistic.healing_potion += afterHeal - get(health);
-  health.set(afterHeal);
+  const healing = Math.min(get(maxHealth) - get(health), state.potion.heal);
+  statistic.healing_potion += healing;
+  health.set(get(health) + healing);
   return true;
 }
 
