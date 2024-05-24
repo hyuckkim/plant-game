@@ -82,6 +82,8 @@
         $resetTry++;
         if ($resetTry === 5) {
           getSoundRes("bgm").volume(0.5);
+          $seedText = generateSeed();
+          $seed = seedToNumber($seedText);
           reset();
         }
       }
