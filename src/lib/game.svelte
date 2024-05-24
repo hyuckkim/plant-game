@@ -6,8 +6,10 @@
     reset,
     bgm,
     resetTry,
+    seed,
+    seedText,
   } from "./gamevalues";
-  import { latestT, mouseX, mouseY, pos, rClick } from "./values";
+  import { mouseX, mouseY, pos, rClick } from "./values";
 
   import Background from "./layers/background.svelte";
   import Character from "./layers/character.svelte";
@@ -20,14 +22,18 @@
   import { resources } from "../assets/image";
   import { soundResources } from "../assets/sound";
   import Cursor from "./layers/cursor.svelte";
+  import { generateSeed, seedToNumber } from "./random";
 
   export let res;
   export let soundRes;
+  export let userSeed: string;
 
   onMount(() => {
     $resources = res;
     $soundResources = soundRes;
     $pos = { x: $mouseX, y: $mouseY };
+    $seedText = userSeed === "" ? generateSeed() : userSeed;
+    $seed = seedToNumber($seedText);
 
     reset();
     if ($bgm) {

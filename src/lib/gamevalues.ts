@@ -18,6 +18,9 @@ export const characterDir = writable(0);
 export const lastCharacterPos = writable({ x: 0, y: 0 });
 export const resetTry = writable(0);
 
+export const seedText = writable("");
+export const seed = writable(0);
+
 export const bgm = writable((localStorage.getItem("bgm") !== "false"));
 bgm.subscribe(v => {
   localStorage.setItem("bgm", v ? "true" : "false");

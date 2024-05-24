@@ -20,6 +20,9 @@
     }
 
     const event = (e: KeyboardEvent) => {
+      if (seedInput && /[0-9a-z]/.test(e.key) && seedText.length < 20) {
+        seedText = `${seedText}${e.key}`;
+      }
       changeKey(e.key);
     }
     addEventListener('keypress', event);
@@ -47,6 +50,10 @@
   { action: "measuring", key: "mouse_2" },
   ];
   let defaultKeyData = ["mouse_-1", "mouse_0", "wheel_0", "wheel_1", "mouse_2"];
+
+  let seedInput = false;
+  let seedText = "";
+  let w = 0, h = 0;
 </script>
 
 <Canvas
@@ -77,27 +84,50 @@
       context.fillRect(0, 0, width, height);
       context.restore();
     }}
-    on:click={() => dispatch('start')}
+    on:click={() => dispatch('start', { seed: seedText })}
   />
   <MouseButton pos={[300, 300, 200, 300]} buttons={mouseButtons.Left} on:click={() => dispatch('start')}/>
   <Layer render={({ context, width, height }) => {
+    w = width; h = height;
     try {
       if (open) {
         context.save();
         context.fillStyle = "white";
-        context.font = `${40}px Verdana`;
         drawPanel(context, [width / 2 - 200, height / 2 - 300, 400, 600]);
+        context.font = `${40}px Verdana`;
         context.fillText(getText("control_setting"), width / 2 - 190, height / 2 - 250);
         context.font = `${16}px Verdana`;
         context.fillText(getText("control_warning"), width / 2 - 190, height / 2 - 230);
+
+        context.fillStyle = "white";
+        context.font = `${40}px Verdana`;
+        context.fillText(getText("seed_setting"), width / 2 - 190, height / 2 + 150);
+        if (seedInput) {
+          drawSprite(context, getRes("ui"), [ width / 2 - 120, height / 2 + 200, 80, 52], [634, 84, 40, 26]);
+          drawSprite(context, getRes("ui"), [ width / 2, height / 2 + 200, 160, 52], [675, 84, 40, 26]);
+          drawSprite(context, getRes("ui"), [width / 2 + 120, height / 2 + 200, 80, 52], [716, 84, 40, 26]);
+        } else {
+          drawSprite(context, getRes("ui"), [ width / 2 - 120, height / 2 + 200, 80, 52], [634, 24, 40, 26]);
+          drawSprite(context, getRes("ui"), [ width / 2, height / 2 + 200, 160, 52], [675, 24, 40, 26]);
+          drawSprite(context, getRes("ui"), [width / 2 + 120, height / 2 + 200, 80, 52], [716, 24, 40, 26]);
+        }
+        context.font = `${20}px Verdana`;
+        context.fillText(seedText, width / 2 - 130, height / 2 + 200);
+        context.fillStyle = '#0000';
+        context.fillRect(width / 2 - 130, height / 2 + 180, 260, 40);
         context.restore();
       }
       drawSprite(context, getRes("ui"), [width, height, 56, 56], [721, 512, 28, 28], { x: false, y: false }, {x: 1, y: 1});
+
     }
     catch (e) {}
   }}
   on:click={e => {
     open = true;
+    if (e.detail.x > w / 2 - 160 && e.detail.x < w / 2 + 160 && e.detail.y > h / 2 + 148 && e.detail.y < h / 2 + 252) {
+      seedInput = !seedInput;
+      if (!seedInput) seedText = "";
+    }
   }}
   />
   {#if open}

@@ -11,15 +11,16 @@ import { addGrass } from "./pot";
 import { addProps, attachedTag, newProp, type Prop } from "./prop";
 import { playSoundSFX } from "../../assets/sound";
 import { statistic } from "../layers/ending/ending";
+import { random } from "../random";
 
 export function generatePlant(): Prop {
   const length = randn_bm(0, 1200, 1);
-  const angle = (Math.random() * Math.PI) / 2;
+  const angle = (random() * Math.PI) / 2;
   const x = Math.cos(angle) * length;
   const y = Math.sin(angle) * length;
 
-  const randomGrass = ["red", "orange", "yellow", "skyblue", "blue", "purple", "white"][Math.floor(Math.random() * 7)];
-  if (Math.random() > 0.75) return generateGrassProp(getGrass(randomGrass), x, y);
+  const randomGrass = ["red", "orange", "yellow", "skyblue", "blue", "purple", "white"][Math.floor(random() * 7)];
+  if (random() > 0.75) return generateGrassProp(getGrass(randomGrass), x, y);
   else return generateGrassProp(getGrass("grass"), x, y);
 }
 
@@ -98,8 +99,8 @@ export function generateGrassProp(grass: Grass, x: number, y: number): Prop {
 const randn_bm = (min: number, max: number, skew: number) => {
   var u = 0,
     v = 0;
-  while (u === 0) u = Math.random(); //Converting [0,1) to (0,1)
-  while (v === 0) v = Math.random();
+  while (u === 0) u = random(); //Converting [0,1) to (0,1)
+  while (v === 0) v = random();
   let num = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
 
   num = num / 10.0 + 0.5; // Translate to 0 -> 1

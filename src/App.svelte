@@ -10,6 +10,7 @@
 
   let hash = window.location.hash;
   let mouseMoved = false;
+  let seed: string = "";
   onMount(() => {
     mouseMoved = false;
     const changeHash = () => {
@@ -29,9 +30,12 @@
   <Loading />
 {:then [res, soundRes]}
   {#if mouseMoved}
-  <Game {res} {soundRes} />
+  <Game {res} {soundRes} userSeed={seed} />
   {:else}
-  <Skeleton on:start={() => mouseMoved = true}/>
+  <Skeleton on:start={(e) => {
+    mouseMoved = true;
+    seed = e.detail.seed;
+  }}/>
   {/if}
 {/await}
 {/if}

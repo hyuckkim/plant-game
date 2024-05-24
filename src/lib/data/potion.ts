@@ -1,5 +1,6 @@
 import { writable } from "svelte/store";
 import { getGrass, type Grass } from "./grass";
+import { random } from "../random";
 
 export type Potion = {
   id: number;
@@ -106,7 +107,7 @@ export const potion: Potion[] = [
 ];
 export function getRandomPotionGrass(p: Potion): Grass {
   const names = p.grass;
-  return getGrass(names[Math.floor(Math.random() * names.length)]);
+  return getGrass(names[Math.floor(random() * names.length)]);
 }
 
 export type PotionDrop = {

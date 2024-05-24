@@ -42,6 +42,7 @@ const text: {
     equip_interact_2: "Equip Interact 2",
     measuring: "Measure Distance",
     control_setting_check: "Press the key to use for $1",
+    seed_setting: "seed",
 
     "mouse_-1": "Mouse Move",
     "mouse_0": "Left Click",
@@ -88,6 +89,7 @@ const text: {
     equip_interact_2: "장비 상호작용 2",
     measuring: "거리 재기",
     control_setting_check: "$1으로 사용할 키를 누르세요",
+    seed_setting: "시드",
 
     "mouse_-1": "마우스 이동",
     "mouse_0": "왼쪽 클릭",

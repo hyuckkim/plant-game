@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Layer } from "svelte-canvas";
-  import { characterPos, health, initializeMaxHealth, maxHealth, resetTry, state } from "../gamevalues";
+  import { characterPos, health, initializeMaxHealth, maxHealth, resetTry, seedText, state } from "../gamevalues";
   import { HealthBarExtraHeight } from "../gamevalues";
   import { onMount } from "svelte";
   import { drawHealthBar } from "./ui";
@@ -54,6 +54,12 @@
       context.stroke();
       context.restore();
     }
+    
+    context.save();
+    context.font = `10px Verdana`;
+    context.fillStyle = "#fffa";
+    context.fillText(`seed: ${$seedText}`, width - context.measureText(`seed: ${$seedText}`).width - 5, 15);
+    context.restore();
 
     if ($resetTry) {
       context.save();
