@@ -5,7 +5,7 @@ import { seed } from "./gamevalues";
 export function generateSeed() {
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
   let seed = '';
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 10; i++) {
       seed += chars.charAt(Math.floor(Math.random() * chars.length));
   }
   return seed;

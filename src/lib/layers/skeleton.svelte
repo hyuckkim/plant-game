@@ -20,7 +20,7 @@
     }
 
     const event = (e: KeyboardEvent) => {
-      if (seedInput && /[0-9a-z]/.test(e.key) && seedText.length < 20) {
+      if (seedInput && /[0-9a-z]/.test(e.key) && seedText.length < 10) {
         seedText = `${seedText}${e.key}`;
       }
       changeKey(e.key);
