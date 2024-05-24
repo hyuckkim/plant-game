@@ -7,8 +7,11 @@ import { drawPanel } from "../layers/ui";
 import { mouseButtons } from "../values";
 import { addProps, newProp, type Prop } from "./prop";
 
+const defaultControlData = `[{"action":"move","key":"mouse_-1"},{"action":"interact","key":"mouse_0"},{"action":"equip_interact_1","key":"wheel_0"},{"action":"equip_interact_2","key":"wheel_1"},{"action":"measuring","key":"mouse_2"}]`;
 export function makeBooks() {
-  addProps(book_mouse(300, 50));
+  if (localStorage.getItem("control") === defaultControlData ||localStorage.getItem("control") === null) {
+    addProps(book_mouse(300, 50));
+  }
   addProps(book_health(360, 50));
   addProps(book_potion(420, 50));
   addProps(book_license(480, 50));

@@ -32,7 +32,23 @@ const text: {
     ending_healing_sleep: "Health Recovered from Sleep: $1",
     ending_healing_potion: "Health Recovered from Potions: $1",
     ending_book: "Book Pages Turned: $1 pages",
-    ending_thanks: "Thank you for playing!"
+    ending_thanks: "Thank you for playing!",
+
+    control_setting: "Control Settings",
+    control_warning: "(Default settings are recommended!)",
+    move: "Move",
+    interact: "Interact",
+    equip_interact_1: "Equip Interact 1",
+    equip_interact_2: "Equip Interact 2",
+    measuring: "Measure Distance",
+    control_setting_check: "Press the key to use for $1",
+
+    "mouse_-1": "Mouse Move",
+    "mouse_0": "Left Click",
+    "mouse_1": "Wheel Click",
+    "mouse_2": "Right Click",
+    "wheel_0": "Wheel Up",
+    "wheel_1": "Wheel Down"
   },
   ko: {
     b1_1_1: "왼쪽 클릭으로 사물과 상호작용 할 수 있습니다.",
@@ -63,6 +79,22 @@ const text: {
     ending_healing_potion: "포션으로 회복한 체력: $1",
     ending_book: "넘긴 책 페이지: $1페이지",
     ending_thanks: "플레이해주셔서 감사합니다!",
+
+    control_setting: "컨트롤 설정",
+    control_warning: "(기본 설정을 권장합니다!)",
+    move: "이동",
+    interact: "상호작용",
+    equip_interact_1: "장비 상호작용 1",
+    equip_interact_2: "장비 상호작용 2",
+    measuring: "거리 재기",
+    control_setting_check: "$1으로 사용할 키를 누르세요",
+
+    "mouse_-1": "마우스 이동",
+    "mouse_0": "왼쪽 클릭",
+    "mouse_1": "휠 클릭",
+    "mouse_2": "오른쪽 클릭",
+    "wheel_0": "횔 올리기",
+    "wheel_1": "휠 내리기"
   }
 } as const;
 

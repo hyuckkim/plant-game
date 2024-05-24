@@ -6,6 +6,7 @@
   import Game from "./lib/game.svelte";
   import { loadGameSounds } from "./assets/sound";
   import Skeleton from "./lib/layers/skeleton.svelte";
+  import Loading from "./lib/layers/loading.svelte";
 
   let hash = window.location.hash;
   let mouseMoved = false;
@@ -15,9 +16,6 @@
       hash = window.location.hash;
     };
     window.addEventListener("hashchange", changeHash);
-    window.addEventListener("click", () => {
-      mouseMoved = true;
-    });
     return () => {
       window.removeEventListener("hashchange", changeHash);
     };
@@ -28,12 +26,12 @@
   <License />
 {:else}
 {#await Promise.all([loadGameImages(), loadGameSounds()])}
-  <Skeleton />
+  <Loading />
 {:then [res, soundRes]}
   {#if mouseMoved}
   <Game {res} {soundRes} />
   {:else}
-  <Skeleton />
+  <Skeleton on:start={() => mouseMoved = true}/>
   {/if}
 {/await}
 {/if}

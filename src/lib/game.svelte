@@ -19,6 +19,7 @@
   import { getSoundRes } from "../assets/sound";
   import { resources } from "../assets/image";
   import { soundResources } from "../assets/sound";
+  import Cursor from "./layers/cursor.svelte";
 
   export let res;
   export let soundRes;
@@ -34,11 +35,62 @@
       getSoundRes("bgm").play();
       getSoundRes("bgm").loop(true);
     }
+    
+    const localKeyData = localStorage.getItem("control");
+    if (localKeyData) {
+      keyData = JSON.parse(localKeyData);
+    }
+    const keydownEvent = (e: KeyboardEvent) => {
+      keyDown(e.key);
+    }
+    addEventListener('keydown', keydownEvent);
+    const keyupEvent = (e: KeyboardEvent) => {
+      keyUp(e.key);
+    }
+    addEventListener('keyup', keyupEvent);
 
     return () => {
       getSoundRes("bgm").pause();
+      removeEventListener('keydown', keydownEvent);
+      removeEventListener('keyup', keyupEvent);
     };
   });
+
+  function keyDown(key: string) {
+    if (key === keyData[0].key) { }
+    if (key === keyData[1].key) { }
+    if (key === keyData[2].key) { }
+    if (key === keyData[3].key) { }
+    if (key === keyData[4].key) {
+      $rClick = true;
+    }
+  }
+  function keyUp(key: string) {
+    if (key === keyData[0].key) {
+      if (!$rClick) $pos = { x: $mouseX, y: $mouseY };
+    }
+    if (key === keyData[1].key) {
+      if ($health > 0) {
+        click($pos.x, $pos.y);
+      }
+    }
+    if (key === keyData[2].key) {
+      wheelMove(-1);
+    }
+    if (key === keyData[3].key) {
+      wheelMove(1);
+    }
+    if (key === keyData[4].key) {
+      $rClick = false;
+    }
+  }
+  let keyData = [
+  { action: "move", key: "mouse_-1" },
+  { action: "interact", key: "mouse_0" },
+  { action: "equip_interact_1", key: "wheel_0" },
+  { action: "equip_interact_2", key: "wheel_1" },
+  { action: "measuring", key: "mouse_2" },
+  ];
 </script>
 
 <Canvas
@@ -52,29 +104,20 @@
   on:mousemove={(e) => {
     $mouseX = e.x;
     $mouseY = e.y;
-    
-    if (!$rClick) $pos = { x: $mouseX, y: $mouseY };
+    keyUp("mouse_-1");
   }}
   on:mousedown={(e) => {
-    if (e.button === 2) {
-      $rClick = true;
-    }
+    keyDown("mouse_-1");
+    keyDown(`mouse_${e.button}`);
   }}
   on:mouseup={(e) => {
     $mouseX = e.x;
     $mouseY = e.y;
-    if (e.button === 0) {
-      if ($health > 0) {
-        click($mouseX, $mouseY);
-      }
-    }
-    if (e.button === 2) {
-      $rClick = false;
-    }
-    if (!$rClick) $pos = { x: $mouseX, y: $mouseY };
+    keyUp("mouse_-1");
+    keyUp(`mouse_${e.button}`);
   }}
   on:wheel={(e) => {
-    wheelMove(e.deltaY);
+    keyUp(`wheel_${e.deltaY < 0 ? 0 : 1}`);
     e.preventDefault();
   }}
 >
@@ -83,4 +126,7 @@
   <Character />
   <ParticleDrop />
   <UI />
+  {#if keyData[0].key !== "mouse_-1"}
+    <Cursor />
+  {/if}
 </Canvas>
