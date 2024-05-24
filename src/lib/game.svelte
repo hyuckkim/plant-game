@@ -4,8 +4,8 @@
   import {
     health,
     reset,
-    characterDir,
     bgm,
+    resetTry,
   } from "./gamevalues";
   import { latestT, mouseX, mouseY, pos, rClick } from "./values";
 
@@ -72,6 +72,12 @@
     if (key === keyData[1].key) {
       if ($health > 0) {
         click($pos.x, $pos.y);
+      } else {
+        $resetTry++;
+        if ($resetTry === 5) {
+          getSoundRes("bgm").volume(0.5);
+          reset();
+        }
       }
     }
     if (key === keyData[2].key) {

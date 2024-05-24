@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Layer } from "svelte-canvas";
-  import { characterPos, health, initializeMaxHealth, maxHealth, state } from "../gamevalues";
+  import { characterPos, health, initializeMaxHealth, maxHealth, resetTry, state } from "../gamevalues";
   import { HealthBarExtraHeight } from "../gamevalues";
   import { onMount } from "svelte";
   import { drawHealthBar } from "./ui";
@@ -52,6 +52,14 @@
       context.lineTo($mouseX, $mouseY + 30);
       context.fillText(`${Math.floor(Math.abs($pos.x - $mouseX))} x ${Math.floor(Math.abs($pos.y - $mouseY))}`, $mouseX + 5, $mouseY + 35);
       context.stroke();
+      context.restore();
+    }
+
+    if ($resetTry) {
+      context.save();
+      const data = ['#0000', '#0003', '#0006', '#0009', '#000b'];
+      context.fillStyle = data[$resetTry];
+      context.fillRect(0, 0, width, height);
       context.restore();
     }
   }}

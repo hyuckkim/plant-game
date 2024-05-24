@@ -16,6 +16,7 @@ export const statesEnteredTime = writable(0);
 export const characterPos = writable({ x: 0, y: 0 });
 export const characterDir = writable(0);
 export const lastCharacterPos = writable({ x: 0, y: 0 });
+export const resetTry = writable(0);
 
 export const bgm = writable((localStorage.getItem("bgm") !== "false"));
 bgm.subscribe(v => {
@@ -28,14 +29,15 @@ sfx.subscribe(v => {
 
 export const generatedEnding = writable(false);
 export const savedPosition = writable({ x: 0, y: 0 });
-
 export const HealthBarExtraHeight = spring(300);
+
 export function reset() {
   health.set(initializeMaxHealth);
   statesEnteredTime.set(0);
   state.set("sleep");
   equips.set(undefined);
   particles.set([]);
+  resetTry.set(0);
   generatedEnding.set(false);
   savedPosition.set({ x: 0, y: 0 });
   initializeStatistic();
