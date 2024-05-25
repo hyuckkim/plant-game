@@ -53,9 +53,9 @@ function makeBottleProp({ x, y }: {x: number, y: number}, potion: Potion | undef
         context.beginPath();
         context.rect(
           pos[0] - pos[2] / 2,
-          pos[1] - pos[3] / 2 + (pos[3] / 10) * (10 - state.quantity),
+          pos[1] - pos[3] * (0.0625 - (10 - state.quantity) * 0.03125),
           pos[2],
-          pos[3] * state.quantity
+          pos[3]
         );
         context.clip();
         drawSprite(context, state.image, pos, [0, 0, 16, 16]);
