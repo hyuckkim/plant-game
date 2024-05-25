@@ -1,6 +1,7 @@
 import { spring } from "svelte/motion";
 import { writable } from "svelte/store";
 
+export const loadProgress = writable(0);
 export const mouseX = writable(0);
 export const mouseY = writable(0);
 export const pos = spring(

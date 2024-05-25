@@ -11,6 +11,7 @@ import LeavesSFX from "./sfx/Footsteps_Leaves_Run_05.wav";
 import WaterUpSFX from "./sfx/Footsteps_WaterV1_Walk_01.wav";
 import WaterDownSFX from "./sfx/Footsteps_WaterV1_Walk_02.wav";
 import MachineSFX from "./sfx/Vehicle_Truck_Sliding_Door_Opening_Mono_01.wav";
+import { loadProgress } from "../lib/values";
 
 export { backgroundMusic, WaterUpSFX };
 
@@ -55,7 +56,10 @@ export async function loadGameSounds() {
               src: v.sound,
               loop: v.loop,
               volume: 0.5,
-              onload: () => resolve(sound),
+              onload: () => {
+                loadProgress.set(get(loadProgress) + 1);
+                resolve(sound);
+              },
               onloaderror: () => reject(sound),
             }),
             name: v.name,

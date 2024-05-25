@@ -11,7 +11,7 @@ import EmptyPotions from "./image/rpg_potions_16x16_overlay.png";
 import Pond from "./image/WaterAndFire.png";
 import Furniture from "./image/100 furniture sprites.png";
 import type { PropSprite } from "../lib/objects/prop";
-import type { Coord } from "../lib/values";
+import { loadProgress, type Coord } from "../lib/values";
 
 export {
   GirlSheetImage,
@@ -72,6 +72,7 @@ export async function loadGameImages() {
         return new Promise<{ img: HTMLImageElement; name: string }>(
           (resolve, reject) => {
             e.img.addEventListener("load", () => {
+              loadProgress.set(get(loadProgress) + 1);
               resolve({ img: e.img, name: e.name });
             });
             e.img.addEventListener("error", () => {

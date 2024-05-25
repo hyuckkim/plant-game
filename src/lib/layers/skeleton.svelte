@@ -1,7 +1,6 @@
 <script lang="ts">
   import { Canvas, Layer } from "svelte-canvas";
-  import MouseButton from "./mouseButton.svelte";
-  import { mouseButtons, mouseX, mouseY, pos } from "../values";
+  import { mouseX, mouseY, pos } from "../values";
   import { createEventDispatcher, onMount } from "svelte";
   import SettingButton from "./setting/settingButton.svelte";
   import { drawSprite } from "./sprite";
@@ -82,11 +81,13 @@
       context.save();
       context.fillStyle = "#171705";
       context.fillRect(0, 0, width, height);
+      context.fillStyle = "white";
+      context.font = "40px Verdana";
+      context.fillText("Click to start...", (width - context.measureText("Click to start...").width) / 2, height / 2 + 250);
       context.restore();
     }}
     on:click={() => dispatch('start', { seed: seedText })}
   />
-  <MouseButton pos={[300, 300, 200, 300]} buttons={mouseButtons.Left} on:click={() => dispatch('start')}/>
   <Layer render={({ context, width, height }) => {
     w = width; h = height;
     try {
@@ -156,6 +157,7 @@
   {#if clicked !== undefined}
     <Layer render={({ context, width, height }) => {
       context.save();
+      context.fillStyle = "white";
       context.font = '30px Verdana';
       const text = getText("control_setting_check", getText(keyData[clicked ?? 0].action));
       const length = context.measureText(text);
