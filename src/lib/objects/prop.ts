@@ -2,6 +2,7 @@ import { get, writable } from "svelte/store";
 import { characterPos, state } from "../gamevalues";
 import type { CanvasInfo, Coord } from "../values";
 import { equips, setEquip } from "./equip";
+import { drawSprite } from "../layers/sprite";
 
 export type Prop = {
   img: CanvasImageSource | PropRender;
@@ -19,10 +20,7 @@ export type Prop = {
 };
 
 export type PropRender = (
-  canvas: {
-    context: CanvasRenderingContext2D;
-    pos: Coord;
-  },
+  context: CanvasRenderingContext2D,
   state: PropState
 ) => void;
 
@@ -147,6 +145,20 @@ export function dayStarted() {
     const result = p.onDayEnd(p.state);
     if (!result) removeProps(p);
   });
+}
+export function drawPropImg(
+  context: CanvasRenderingContext2D,
+  p: {
+    img: CanvasImageSource | PropRender;
+    source: Coord;
+    flipped: { x: boolean; y: boolean };
+    state: PropState;
+  }
+) {
+  if (typeof p.img === "function") {
+    p.img(context, p.state);
+  }
+  else drawSprite(context, p.img, p.state.pos, p.source, p.flipped);
 }
 export function attachedTag(tag: string) {
   const result = getCurrentProps()

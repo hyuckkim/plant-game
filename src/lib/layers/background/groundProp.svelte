@@ -1,9 +1,8 @@
 <script lang="ts">
   import { Layer } from "svelte-canvas";
-  import { isAttached, type Prop } from "../../objects/prop";
+  import { drawPropImg, isAttached, type Prop } from "../../objects/prop";
   import type { CanvasInfo } from "../../values";
   import { characterPos, state } from "../../gamevalues";
-  import { drawSprite } from "../sprite";
 
   const roundPos = { x: 80, y: 80 };
 
@@ -39,12 +38,12 @@
     props
       .filter((p) => p.layer === "floor")
       .forEach((p) => {
-        drawProp(context, p);
+        drawPropImg(context, p);
       });
     props
       .filter((p) => p.layer === "normal")
       .forEach((p) => {
-        drawProp(context, p);
+        drawPropImg(context, p);
       });
     props
       .filter((p) => p.layer === "roof")
@@ -52,14 +51,9 @@
         if ($state === "sleep" || isAttached(p, pos.x, pos.y)) {
           context.globalAlpha = 0.2;
         }
-        drawProp(context, p);
+        drawPropImg(context, p);
         context.globalAlpha = 1;
       });
-  }
-  function drawProp(c: CanvasRenderingContext2D, p: Prop) {
-    if (typeof p.img === "function")
-      p.img({ context: c, pos: p.state.pos }, p.state);
-    else drawSprite(c, p.img, p.state.pos, p.source, p.flipped);
   }
 </script>
 
