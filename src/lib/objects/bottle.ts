@@ -7,6 +7,7 @@ import { getMadenPotion } from "./pot";
 import { latestT } from "../values";
 import {
   characterPos,
+  drinkedPotions,
   health,
   initializeMaxHealth,
   maxHealth,
@@ -16,12 +17,6 @@ import { playSoundSFX } from "../../assets/sound";
 import { getGrass } from "../data/grass";
 import { statistic } from "../layers/ending/ending";
 import { pondWatering } from "./house";
-
-export const drinkedPotions = writable<{ [potion: number]: number }>({});
-
-export function initializeBottle() {
-  drinkedPotions.set({});
-}
 
 function addNoise(pos: { x: number; y: number }, range: number = 6) {
   return {

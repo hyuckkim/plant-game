@@ -2,7 +2,6 @@ import { writable } from "svelte/store";
 import { addProps, initializeProps } from "./objects/prop";
 import { settingHouseProps } from "./objects/house";
 import { equips, initializeEquips } from "./objects/equip";
-import { initializeBottle } from "./objects/bottle";
 import { spring } from "svelte/motion";
 import { particles } from "./particle";
 import { generatePlant } from "./objects/plant";
@@ -17,6 +16,7 @@ export const characterPos = writable({ x: 0, y: 0 });
 export const characterDir = writable(0);
 export const lastCharacterPos = writable({ x: 0, y: 0 });
 export const resetTry = writable(0);
+export const drinkedPotions = writable<{ [potion: number]: number }>({});
 
 export const seedText = writable("");
 export const seed = writable(0);
@@ -43,11 +43,11 @@ export function reset() {
   resetTry.set(0);
   generatedEnding.set(false);
   savedPosition.set({ x: 0, y: 0 });
+  drinkedPotions.set({});
   initializeStatistic();
 
   initializeProps();
   initializeEquips();
-  initializeBottle();
 
   settingHouseProps();
   [
