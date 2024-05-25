@@ -20,9 +20,11 @@
     const newPotionDrop: PotionDrop[] = [];
     $potionDrop.forEach((p) => {
       if (time - p.time > 1000) {
-        const seed = checkDropToSeed(p.potion, p.pos);
-        if (seed) addProps(seed);
-        else $potiondropResult = [...$potiondropResult, p];
+        if (p.pos.x > 188 || p.pos.y > 222) {
+          const seed = checkDropToSeed(p.potion, p.pos);
+          if (seed) addProps(seed);
+          else $potiondropResult = [...$potiondropResult, p];
+        }
         return;
       }
       if (typeof p.direction === "undefined") {
