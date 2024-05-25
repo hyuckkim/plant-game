@@ -36,6 +36,7 @@ function makeHouse() {
       source: [0, 192, 32, 64],
       state: {pos: [80, 80, 48, 96]},
       display: "always",
+      click_order: -1,
       onClick: () => {
         changeAwakenState(get(latestT));
         if (get(state) === "awake") playSoundSFX("prop/house");

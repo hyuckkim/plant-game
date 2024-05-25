@@ -28,6 +28,7 @@ export function makePot() {
         oldMaterials: [],
         oldTime: 0,
       },
+      click_order: -1,
       ui: ({ context, time }, state) => {
         context.save();
         drawPanel(context, [200, 10, 120, 120]);

@@ -10,6 +10,7 @@ export type Prop = {
 
   display: "always" | "day" | "night";
   layer: "normal" | "roof" | "floor";
+  click_order: number;
 
   state: PropState;
   onClick: (state: PropState) => boolean;
@@ -38,6 +39,7 @@ export function newProp(data: Partial<Prop>): Prop {
     flipped: { x: false, y: false },
     display: "day",
     layer: "normal",
+    click_order: 0,
     state: { pos: [0, 0, 0, 0]},
     onClick: () => true,
     onDayEnd: () => true,
@@ -103,7 +105,9 @@ export function click(x: number, y: number) {
   const clickedProp = getCurrentProps()
     .filter((p) => isAttached(p, x, y))
     .filter((p) => p.layer === "normal")
-    .sort((a, b) => getDistance(a, x, y) - getDistance(b, x, y))[0];
+    .sort((a, b) => getDistance(a, x, y) - getDistance(b, x, y))
+    .sort((a, b) => b.click_order - a.click_order)
+    [0];
 
   if (!!clickedProp) {
     const result = clickedProp.onClick(clickedProp.state);
