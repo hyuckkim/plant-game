@@ -5,7 +5,7 @@ import { drawMouseButton } from "../layers/mouseButton";
 import { drawSprite } from "../layers/sprite";
 import { drawPanel } from "../layers/ui";
 import { mouseButtons } from "../values";
-import { addProps, newProp, type Prop } from "./prop";
+import { addProps, Prop } from "./prop";
 
 const defaultControlData = `[{"action":"move","key":"mouse_-1"},{"action":"interact","key":"mouse_0"},{"action":"equip_interact_1","key":"wheel_0"},{"action":"equip_interact_2","key":"wheel_1"},{"action":"measuring","key":"mouse_2"}]`;
 export function makeBooks() {
@@ -18,7 +18,7 @@ export function makeBooks() {
 }
 
 function book_mouse(x: number, y: number): Prop {
-  return newProp({
+  return new Prop({
     img: getSpriteRes("prop/rpg", [169, 291, 18, 10]),
     display: "night",
     state: { pos: [x, y, 36, 20], page: 1 },
@@ -63,7 +63,7 @@ function book_mouse(x: number, y: number): Prop {
   });
 }
 function book_health(x: number, y: number): Prop {
-  return newProp({
+  return new Prop({
     img: getSpriteRes("prop/rpg", [169, 291, 18, 10]),
     display: "night",
     state: { pos: [x, y, 36, 20], page: 1 },
@@ -91,7 +91,7 @@ function book_health(x: number, y: number): Prop {
   });
 }
 function book_potion(x: number, y: number): Prop {
-  return newProp({
+  return new Prop({
     img: getSpriteRes("prop/rpg", [169, 291, 18, 10]),
     display: "night",
     state: { pos: [x, y, 36, 20], page: 1 },
@@ -243,7 +243,7 @@ function book_potion(x: number, y: number): Prop {
   });
 }
 function book_license(x: number, y: number): Prop {
-  return newProp({
+  return new Prop({
     img: getSpriteRes("prop/rpg", [169, 291, 18, 10]),
     state: {pos: [x, y, 36, 20]},
     display: "night",

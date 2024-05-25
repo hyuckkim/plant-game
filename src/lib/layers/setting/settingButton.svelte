@@ -1,7 +1,5 @@
 <script lang="ts">
   import { Layer } from "svelte-canvas";
-  import { drawSprite } from "../sprite";
-  import { getRes } from "../../../assets/image";
   import { createEventDispatcher } from "svelte";
   import { getText } from "../../../assets/text";
   import { drawPanelHorizontal } from "../ui";

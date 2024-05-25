@@ -1,7 +1,7 @@
 import { get } from "svelte/store";
 import { maxHealth, initializeMaxHealth, generatedEnding } from "../../gamevalues";
-import { newProp, type Prop } from "../../objects/prop";
-import { getRes, getSpriteRes } from "../../../assets/image";
+import { Prop } from "../../objects/prop";
+import { getSpriteRes } from "../../../assets/image";
 import { drawPanel } from "../ui";
 import { getText } from "../../../assets/text";
 
@@ -11,7 +11,7 @@ export const requireEnding = () =>
 export function endingObject(): Prop | undefined {
   if (get(generatedEnding) === true) return undefined;
   generatedEnding.set(true);
-  return newProp({
+  return new Prop({
     img: getSpriteRes("prop/furniture", [420, 674, 30, 54]),
     state: { pos: [75, 152, 30, 54], ...statistic},
     ui: ({ context }, state) => {

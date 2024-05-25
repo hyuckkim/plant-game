@@ -1,9 +1,8 @@
 import { get, writable } from "svelte/store";
 import {
   addProps,
-  newProp,
+  Prop,
   type FPropSprite,
-  type Prop,
   type PropRender,
   type PropSprite,
   type PropState,
@@ -12,7 +11,7 @@ import type { Coord } from "../values";
 import { characterPos } from "../gamevalues";
 
 export type Equip = {
-  img: PropSprite | PropRender;
+  img: PropSprite | FPropSprite | PropRender;
   pos: Coord;
 
   state: PropState;
@@ -53,10 +52,10 @@ export function makeGrabbableProp(
   }>,
   display: "day" | "night" | "always" = "day"
 ): Prop {
-  const makeSomeProp = (pos: Coord, state: PropState) =>
-    newProp({
+  const makeSomeProp = (state: PropState) =>
+    new Prop({
       img,
-      state: {...state, pos},
+      state,
       onDayEnd: onDayEnd ?? (() => true),
       display,
     });
@@ -69,8 +68,7 @@ export function makeGrabbableProp(
       onWheelDown: onWheelDown ?? (() => true),
       onClick: (state) => {
         const propNow = makeSomeProp(
-          [get(characterPos).x, get(characterPos).y, equipPos[2], equipPos[3]],
-          state
+          {...state, pos: [get(characterPos).x, get(characterPos).y, equipPos[2], equipPos[3]]}
         );
         propNow.onClick = (state) => {
           equipSomeProp(state);
@@ -80,7 +78,7 @@ export function makeGrabbableProp(
         return undefined;
       },
     });
-  const propNow = makeSomeProp(state.pos, state);
+  const propNow = makeSomeProp(state);
   propNow.onClick = (state) => {
     equipSomeProp(state);
     return false;
@@ -102,10 +100,10 @@ export function makeGrabbableEquip(
     onDayEnd: (state: PropState) => boolean;
   }>
 ): Partial<Equip> {
-  const makeSomeProp = (pos: Coord, state: PropState) =>
-    newProp({
+  const makeSomeProp = (state: PropState) =>
+    new Prop({
       img,
-      state: {...state, pos},
+      state,
       onDayEnd: onDayEnd ?? (() => true),
     });
   const equipSomeProp = (state: PropState): Partial<Equip> => ({
@@ -116,8 +114,7 @@ export function makeGrabbableEquip(
     onWheelDown: onWheelDown ?? (() => true),
     onClick: (state) => {
       const propNow = makeSomeProp(
-        [get(characterPos).x, get(characterPos).y, equipPos[2], equipPos[3]],
-        state
+        {...state, pos: [get(characterPos).x, get(characterPos).y, equipPos[2], equipPos[3]]}
       );
       propNow.onClick = (state) => {
         setEquip(equipSomeProp(state));

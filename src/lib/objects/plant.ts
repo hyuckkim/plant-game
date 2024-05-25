@@ -1,5 +1,5 @@
 import { get } from "svelte/store";
-import { getRes, getSpriteRes } from "../../assets/image";
+import { getSpriteRes } from "../../assets/image";
 import { getGrass, type Grass } from "../data/grass";
 import {
   getRandomPotionGrass,
@@ -8,7 +8,7 @@ import {
 } from "../data/potion";
 import { makeGrabbableProp } from "./equip";
 import { addGrass } from "./pot";
-import { addProps, attachedTag, newProp, type Prop } from "./prop";
+import { addProps, attachedTag, Prop } from "./prop";
 import { playSoundSFX } from "../../assets/sound";
 import { statistic } from "../layers/ending/ending";
 import { random } from "../random";
@@ -42,11 +42,11 @@ export function checkDropToSeed(potion: Potion, pos: { x: number, y: number }): 
   if (used.length !== 3) result.push(...used);
   potiondropResult.set(result);
   
-  if (used.length === 3) return newProp({
+  if (used.length === 3) return new Prop({
     img: getSpriteRes("grass", [152, 111, 4, 4]),
     state: {tag: "seed", potion, pos: [pos.x, pos.y, 8, 8]},
     onDayEnd: (state) => {
-      addProps(newProp(generateGrassProp(
+      addProps(new Prop(generateGrassProp(
         getRandomPotionGrass(state.potion),
         state.pos[0],
         state.pos[1]

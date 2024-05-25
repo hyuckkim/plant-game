@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Layer } from "svelte-canvas";
-  import { drawPropImg, isAttached, type Prop } from "../../objects/prop";
+  import { drawPropImg, type Prop } from "../../objects/prop";
   import type { CanvasInfo } from "../../values";
   import { characterPos, state } from "../../gamevalues";
 
@@ -48,7 +48,7 @@
     props
       .filter((p) => p.layer === "roof")
       .forEach((p) => {
-        if ($state === "sleep" || isAttached(p, pos.x, pos.y)) {
+        if ($state === "sleep" || p.isAttached(pos.x, pos.y)) {
           context.globalAlpha = 0.2;
         }
         drawPropImg(context, p);

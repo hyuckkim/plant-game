@@ -1,6 +1,5 @@
 <script lang="ts">
   import { Layer, type Render } from "svelte-canvas";
-  import Sprite from "./sprite.svelte";
   import { characterDir, characterPos } from "../gamevalues";
   import { addCoord } from "../values";
   import { drawItemPanel } from "./ui";
@@ -13,9 +12,9 @@
   const render: Render = ({ context, width, height }) => {
   const propCoord: Coord = [$characterPos.x + equipPos, $characterPos.y, 0, 0];
   const itemPropCoord: Coord = [width - 34, height - 114, equip.pos[2], equip.pos[3]]
-  drawPropImg(context, {...equip, state: {...equip.state, pos: addCoord(equip.pos, propCoord)}});
+  drawPropImg(context, {img: equip.img, state: {...equip.state, pos: addCoord(equip.pos, propCoord)}});
   drawItemPanel(context, [width - 64, height - 144, 60, 60]);
-  drawPropImg(context, {...equip, state: {...equip.state, pos: itemPropCoord}});
+  drawPropImg(context, {img: equip.img, state: {...equip.state, pos: itemPropCoord}});
 }
 </script>
 

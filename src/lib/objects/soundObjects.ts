@@ -1,7 +1,6 @@
-import { getRes, getSpriteRes } from "../../assets/image";
+import { getSpriteRes } from "../../assets/image";
 import { getSoundRes } from "../../assets/sound";
 import { bgm, sfx } from "../gamevalues";
-import { drawSprite } from "../layers/sprite";
 import { makeGrabbableProp } from "./equip";
 import { addProps, type Prop, type PropState } from "./prop";
 

@@ -1,10 +1,7 @@
 <script lang="ts">
   import { Layer } from "svelte-canvas";
   import { particles } from "../../particle";
-  import {
-    characterPos,
-    savedPosition,
-  } from "../../gamevalues";
+  import { characterPos } from "../../gamevalues";
   import { attachedTag } from "../../objects/prop";
   import { playSoundSFX } from "../../../assets/sound";
 

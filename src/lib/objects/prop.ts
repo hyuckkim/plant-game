@@ -4,9 +4,8 @@ import type { CanvasInfo, Coord } from "../values";
 import { equips, setEquip } from "./equip";
 import { drawSprite } from "../layers/sprite";
 
-export type Prop = {
+export class Prop {
   img: PropSprite | FPropSprite | PropRender;
-
   display: "always" | "day" | "night";
   layer: "normal" | "roof" | "floor";
   click_order: number;
@@ -15,8 +14,54 @@ export type Prop = {
   onClick: (state: PropState) => boolean;
   onDayEnd: (state: PropState) => boolean;
   ui: (canvas: CanvasInfo, state: PropState) => void;
-};
 
+  constructor({
+    img,
+    display,
+    layer,
+    click_order,
+
+    state,
+    onClick,
+    onDayEnd,
+    ui
+  }: {
+    img?: PropSprite | FPropSprite | PropRender,
+    display?: "always" | "day" | "night",
+    layer?: "normal" | "roof" | "floor",
+    click_order?: number,
+
+    state?: PropState,
+    onClick?: (state: PropState) => boolean,
+    onDayEnd?: (state: PropState) => boolean,
+    ui?: (canvas: CanvasInfo, state: PropState) => void
+  }) {
+    this.img = img ?? {img: new Image(), coord: [0, 0, 0, 0], flipped: { x: false, y: false }};
+    this.display = display ?? "day";
+    this.layer = layer ?? "normal";
+    this.click_order = click_order ?? 0;
+    this.state = state ?? {pos: [0, 0, 0, 0]};
+    this.onClick = onClick ?? (() => true);
+    this.onDayEnd = onDayEnd ?? (() => true);
+    this.ui = ui ?? (() => {});
+  }
+
+  public isAttached(x: number, y: number) {
+    return (
+      this.state.pos[0] - this.state.pos[2] * 0.5 < x &&
+      x < this.state.pos[0] + this.state.pos[2] * 0.5 &&
+      this.state.pos[1] - this.state.pos[3] * 0.5 < y &&
+      y < this.state.pos[1] + this.state.pos[3] * 0.5
+    );
+  }
+
+  public getDistance(x: number, y: number) {
+    return (
+      (this.state.pos[0] - x) * (this.state.pos[0] - x) +
+      (this.state.pos[1] - y) * (this.state.pos[1] - y)
+    );
+  }
+}
 export type PropSprite = {
   img: CanvasImageSource,
   coord: Coord,
@@ -35,21 +80,6 @@ export type PropState = {
   tag?: string,
   [key: string]: any
 };
-
-export function newProp(data: Partial<Prop>): Prop {
-  const defaultProp: Prop = {
-    img: {img: new Image(), coord: [0, 0, 0, 0], flipped: { x: false, y: false }},
-    display: "day",
-    layer: "normal",
-    click_order: 0,
-    state: { pos: [0, 0, 0, 0]},
-    onClick: () => true,
-    onDayEnd: () => true,
-    ui: () => {},
-  };
-
-  return { ...defaultProp, ...data };
-}
 
 export const props = writable<Prop[]>([]);
 export const yesterdayProps = writable<Prop[]>([]);
@@ -105,9 +135,9 @@ export function click(x: number, y: number) {
   }
 
   const clickedProp = getCurrentProps()
-    .filter((p) => isAttached(p, x, y))
+    .filter((p) => p.isAttached(x, y))
     .filter((p) => p.layer === "normal")
-    .sort((a, b) => getDistance(a, x, y) - getDistance(b, x, y))
+    .sort((a, b) => a.getDistance(x, y) - b.getDistance(x, y))
     .sort((a, b) => b.click_order - a.click_order)
     [0];
 
@@ -167,20 +197,9 @@ export function drawPropImg(
 }
 export function attachedTag(tag: string) {
   const result = getCurrentProps()
-  .filter((p) => isAttached(p, get(characterPos).x, get(characterPos).y))
+  .filter((p) => p.isAttached(get(characterPos).x, get(characterPos).y))
   .filter(p => p.state.tag === tag);
   
   if (result.length === 0) return undefined;
   return result;
-}
-export function isAttached(p: Prop, x: number, y: number) {
-  return (
-    p.state.pos[0] - p.state.pos[2] * 0.5 < x &&
-    x < p.state.pos[0] + p.state.pos[2] * 0.5 &&
-    p.state.pos[1] - p.state.pos[3] * 0.5 < y &&
-    y < p.state.pos[1] + p.state.pos[3] * 0.5
-  );
-}
-export function getDistance(p: Prop, x: number, y: number) {
-  return p.state.pos[0] - x * p.state.pos[0] - x + p.state.pos[1] - y * p.state.pos[1] - y;
 }

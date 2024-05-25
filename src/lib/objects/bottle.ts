@@ -1,7 +1,7 @@
 import { get, writable } from "svelte/store";
 import { getRes, getSpriteRes } from "../../assets/image";
 import { makeGrabbableProp } from "./equip";
-import { addProps, attachedTag, newProp, type PropState } from "./prop";
+import { addProps, attachedTag, Prop, type PropState } from "./prop";
 import { getPotion, potionDrop, type Potion } from "../data/potion";
 import { getMadenPotion } from "./pot";
 import { latestT } from "../values";
@@ -34,7 +34,7 @@ export function makeBottle() {
   const waterBottle = makeBottleProp({ x: 820, y: 680 }, getPotion(-1));
 
   addProps(
-    newProp({
+    new Prop({
       img: getSpriteRes("prop/rpg", [0, 256, 32, 32]),
       state: { pos: [75, 180, 48, 48] },
       layer: "floor",

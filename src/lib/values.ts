@@ -1,5 +1,5 @@
 import { spring } from "svelte/motion";
-import { get, writable } from "svelte/store";
+import { writable } from "svelte/store";
 
 export const mouseX = writable(0);
 export const mouseY = writable(0);

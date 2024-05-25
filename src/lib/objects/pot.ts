@@ -1,7 +1,7 @@
 import { get } from "svelte/store";
 import { getRes, getSpriteRes } from "../../assets/image";
 import { drawExtendBar, drawItemPanel, drawPanel } from "../layers/ui";
-import { addProps, newProp, type Prop } from "./prop";
+import { addProps, Prop } from "./prop";
 import { type Grass } from "../data/grass";
 import { drawSprite } from "../layers/sprite";
 import { latestT } from "../values";
@@ -13,7 +13,7 @@ export const maxWater = 3;
 
 export function makePot() {
   addProps(
-    newProp({
+    new Prop({
       img: getSpriteRes("prop/furniture", [1036, 646, 44, 82]),
       state: {
         tag: "pot",

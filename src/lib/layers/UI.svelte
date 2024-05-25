@@ -12,9 +12,8 @@
   import { HealthBarExtraHeight } from "../gamevalues";
   import { onMount } from "svelte";
   import { drawHealthBar } from "./ui";
-  import { getCurrentProps, isAttached } from "../objects/prop";
+  import { getCurrentProps } from "../objects/prop";
   import { mouseX, mouseY, pos, rClick } from "../values";
-  import Equip from "./equip.svelte";
 
   const marginX = 20;
   const marginY = 5;
@@ -57,7 +56,7 @@
     }
 
     getCurrentProps()
-      .filter((p) => isAttached(p, $characterPos.x, $characterPos.y))
+      .filter((p) => p.isAttached($characterPos.x, $characterPos.y))
       .forEach((p) => {
         p.ui(canvas, p.state);
       });
