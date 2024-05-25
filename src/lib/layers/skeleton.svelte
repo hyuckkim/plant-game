@@ -6,7 +6,7 @@
   import SettingButton from "./setting/settingButton.svelte";
   import { drawSprite } from "./sprite";
   import { getRes } from "../../assets/image";
-  import { drawPanel } from "./ui";
+  import { drawPanel, drawPanelHorizontal } from "./ui";
   import RemoveSettingButton from "./setting/removeSettingButton.svelte";
   import { getText } from "../../assets/text";
 
@@ -103,13 +103,23 @@
         context.font = `${40}px Verdana`;
         context.fillText(getText("seed_setting"), width / 2 - 190, height / 2 + 150);
         if (seedInput) {
-          drawSprite(context, getRes("ui"), [ width / 2 - 120, height / 2 + 200, 80, 52], [634, 84, 40, 26]);
-          drawSprite(context, getRes("ui"), [ width / 2, height / 2 + 200, 160, 52], [675, 84, 40, 26]);
-          drawSprite(context, getRes("ui"), [width / 2 + 120, height / 2 + 200, 80, 52], [716, 84, 40, 26]);
+          drawPanelHorizontal(context, [width / 2 - 160, height / 2 + 170, 320, 52], {
+          slices: [
+            [634, 84, 40, 26], // left
+            [675, 84, 40, 26], // middle
+            [716, 84, 40, 26]  // right
+          ],
+          scale: 2
+        });
         } else {
-          drawSprite(context, getRes("ui"), [ width / 2 - 120, height / 2 + 200, 80, 52], [634, 24, 40, 26]);
-          drawSprite(context, getRes("ui"), [ width / 2, height / 2 + 200, 160, 52], [675, 24, 40, 26]);
-          drawSprite(context, getRes("ui"), [width / 2 + 120, height / 2 + 200, 80, 52], [716, 24, 40, 26]);
+          drawPanelHorizontal(context, [width / 2 - 160, height / 2 + 170, 320, 52], {
+          slices: [
+            [634, 24, 40, 26], // left
+            [675, 24, 40, 26], // middle
+            [716, 24, 40, 26]  // right
+          ],
+          scale: 2
+        });
         }
         context.font = `${20}px Verdana`;
         context.fillText(seedText, width / 2 - 130, height / 2 + 200);

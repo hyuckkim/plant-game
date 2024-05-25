@@ -4,6 +4,7 @@
   import { getRes } from "../../../assets/image";
   import { createEventDispatcher } from "svelte";
   import { getText } from "../../../assets/text";
+  import { drawPanelHorizontal } from "../ui";
 
   export let index: number;
   export let text: string;
@@ -25,14 +26,24 @@
   context.font = `${20}px Verdana`;
   context.fillText(actionText, width / 2 - 180, height / 2 - 190 + index * 60);
   if (pressed) {
-    drawSprite(context, getRes("ui"), [width / 2, height / 2 - 200 + index * 60, 56, 56], [634, 143, 24, 24], {x: false, y: false}, {x: 0, y: 0.5});
-    drawSprite(context, getRes("ui"), [width / 2 + 56, height / 2 - 200 + index * 60, 24, 56], [659, 143, 23, 24], {x: false, y: false}, {x: 0, y: 0.5});
-    drawSprite(context, getRes("ui"), [width / 2 + 190 - 110, height / 2 - 200 + index * 60, 110, 56], [756, 118, 47, 24], {x: false, y: false}, {x: 0, y: 0.5});
+    drawPanelHorizontal(context, [width / 2, height / 2 - 222 + index * 60, 190, 48], {
+      slices: [
+        [634, 143, 24, 24],
+        [659, 143, 23, 24],
+        [756, 118, 47, 24],
+      ],
+      scale: 2
+    });
   }
   else {
-    drawSprite(context, getRes("ui"), [width / 2, height / 2 - 200 + index * 60, 56, 56], [634, 118, 24, 24], {x: false, y: false}, {x: 0, y: 0.5});
-    drawSprite(context, getRes("ui"), [width / 2 + 56, height / 2 - 200 + index * 60, 24, 56], [659, 118, 23, 24], {x: false, y: false}, {x: 0, y: 0.5});
-    drawSprite(context, getRes("ui"), [width / 2 + 190 - 110, height / 2 - 200 + index * 60, 110, 56], [756, 143, 47, 24], {x: false, y: false}, {x: 0, y: 0.5});
+    drawPanelHorizontal(context, [width / 2, height / 2 - 222 + index * 60, 190, 48], {
+      slices: [
+        [634, 118, 24, 24],
+        [659, 118, 23, 24],
+        [756, 143, 47, 24],
+      ],
+      scale: 2
+    });
   }
   context.fillText(keyText, width / 2 + 15, height / 2 - 190 + index * 60);
   context.fillStyle = "#0000";

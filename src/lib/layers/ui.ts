@@ -9,9 +9,14 @@ export function drawHealthBar(
 ) {
   context.save();
   context.imageSmoothingEnabled = false;
-  context.drawImage(getRes("ui"), 259, 40, 9, 20, x - 18, y, 18, 40);
-  context.drawImage(getRes("ui"), 284, 40, 23, 20, x, y, w, 40);
-  context.drawImage(getRes("ui"), 323, 40, 9, 20, x + w, y, 18, 40);
+  drawPanelHorizontal(context, [x - 18, y, w + 36, 40], {
+    slices: [
+      [259, 40, 9, 20],
+      [284, 40, 23, 20],
+      [323, 40, 9, 20]
+    ],
+    scale: 2
+  });
 
   if (health > 0) {
     context.drawImage(getRes("ui"), 341, 40, 1, 14, x, y + 6, 2, 28);
@@ -30,6 +35,7 @@ export function drawHealthBar(
       context.drawImage(getRes("ui"), 365, 40, 1, 14, x + w, y + 6, 2, 28);
     }
   }
+  
   if (tempHealth > 0) {
     context.save();
     context.globalAlpha = 0.5;
@@ -106,6 +112,30 @@ export function drawItemPanel(context: CanvasRenderingContext2D, [x, y, w, h]: C
     ],
     scale: 2
   });
+}
+
+export type ThreeParameter = [Coord, Coord, Coord];
+export function drawPanelHorizontal(
+  context: CanvasRenderingContext2D,
+  [x, y, w, h]: Coord,
+  { slices, scale }: { slices: ThreeParameter, scale: number }
+) {
+  context.save();
+  context.imageSmoothingEnabled = false;
+  
+  const positions = [
+    [x, y, slices[0][2] * scale, slices[0][3] * scale],  // left
+    [x + slices[0][2] * scale, y, w - slices[0][2] * scale - slices[2][2] * scale, h],  // middle
+    [x + w - slices[2][2] * scale, y, slices[2][2] * scale, slices[2][3] * scale]  // right
+  ];
+
+  positions.forEach((pos, index) => {
+    const [dx, dy, dw, dh] = pos;
+    const [sx, sy, sw, sh] = slices[index];
+    context.drawImage(getRes("ui"), sx, sy, sw, sh, dx, dy, dw, dh);
+  });
+  
+  context.restore();
 }
 
 export function drawExtendBar(
