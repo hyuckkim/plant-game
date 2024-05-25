@@ -1,5 +1,5 @@
 import { get } from "svelte/store";
-import { getRes } from "../../assets/image";
+import { getRes, getSpriteRes } from "../../assets/image";
 import { addProps, dayEnd, dayStarted, newProp, type Prop } from "./prop";
 import {
   characterPos,
@@ -32,10 +32,9 @@ export function settingHouseProps() {
 function makeHouse() {
   addProps(
     newProp({
-      img: getRes("prop/rpg"),
-      source: [0, 192, 32, 64],
-      state: {pos: [80, 80, 48, 96]},
+      img: getSpriteRes("prop/rpg", [0, 192, 32, 64]),
       display: "always",
+      state: {pos: [80, 80, 48, 96]},
       click_order: -1,
       onClick: () => {
         changeAwakenState(get(latestT));
@@ -79,8 +78,7 @@ export function changeAwakenState(time: number) {
 function makeRoof() {
   addProps(
     newProp({
-      img: getRes("prop/house"),
-      source: [89, 49, 205, 289],
+      img: getSpriteRes("prop/house", [89, 49, 205, 289]),
       state: { pos: [110, 110, 180, 260]},
       layer: "roof",
     })
@@ -104,8 +102,7 @@ function makeFloor() {
   posDatas.forEach((p) => {
     addProps(
       newProp({
-        img: getRes("prop/rpgtile"),
-        source: [192, 0, 32, 32],
+        img: getSpriteRes("prop/rpgtile", [192, 0, 32, 32]),
         state: { pos: p },
         layer: "floor",
       })
@@ -116,8 +113,7 @@ function makeFloor() {
 function makePond() {
   addProps(
     newProp({
-      img: getRes("prop/pond"),
-      source: [9, 70, 81, 78],
+      img: getSpriteRes("prop/pond", [9, 70, 81, 78]),
       layer: "floor",
       state: { pos: [800, 670, 162, 156], tag: "pond", watering: 1 },
       onDayEnd: (state) => {

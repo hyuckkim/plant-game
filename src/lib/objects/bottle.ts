@@ -1,5 +1,5 @@
 import { get, writable } from "svelte/store";
-import { getRes } from "../../assets/image";
+import { getRes, getSpriteRes } from "../../assets/image";
 import { makeGrabbableProp } from "./equip";
 import { addProps, attachedTag, newProp, type PropState } from "./prop";
 import { getPotion, potionDrop, type Potion } from "../data/potion";
@@ -35,8 +35,7 @@ export function makeBottle() {
 
   addProps(
     newProp({
-      img: getRes("prop/rpg"),
-      source: [0, 256, 32, 32],
+      img: getSpriteRes("prop/rpg", [0, 256, 32, 32]),
       state: { pos: [75, 180, 48, 48] },
       layer: "floor",
     })
@@ -65,7 +64,6 @@ function makeBottleProp({ x, y }: {x: number, y: number}, potion: Potion | undef
       }
       drawSprite(context, getRes("prop/potion"), pos, [96, 0, 16, 16]);
     },
-    [96, 0, 16, 16],
     [0, 3, 40, 40],
     {
       pos: [x, y, 40, 40],
@@ -172,7 +170,6 @@ function makePotionToy(potion: Potion) {
         context.closePath();
         context.restore();
       },
-      getGrass(potion.grass[0]).source,
       [0, 0, 40, 40],
       { pos: [pos.x, pos.y, 40, 40], potion },
       {},

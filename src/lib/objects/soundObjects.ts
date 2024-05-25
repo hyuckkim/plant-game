@@ -3,7 +3,7 @@ import { getSoundRes } from "../../assets/sound";
 import { bgm, sfx } from "../gamevalues";
 import { drawSprite } from "../layers/sprite";
 import { makeGrabbableProp } from "./equip";
-import { addProps, type Prop } from "./prop";
+import { addProps, type Prop, type PropState } from "./prop";
 
 export function makeSoundObjects() {
   addProps(addBGMProp());
@@ -18,7 +18,6 @@ function addBGMProp(): Prop {
         y: state.reversed,
       });
     },
-    [1000, 528, 114, 96],
     [0, -20, 114, 96],
     { pos: [50, 600, 114, 96], reversed: (localStorage.getItem("bgm") === "false") },
     {
@@ -51,7 +50,6 @@ function addSFXProp(): Prop {
         y: state.reversed,
       });
     },
-    [1152, 910, 56, 26],
     [0, 0, 56, 26],
     { pos: [150, 650, 56, 26], reversed: (localStorage.getItem("sfx") === "false") },
     {

@@ -10,6 +10,8 @@ import FlowerTile from "./image/flower.png";
 import EmptyPotions from "./image/rpg_potions_16x16_overlay.png";
 import Pond from "./image/WaterAndFire.png";
 import Furniture from "./image/100 furniture sprites.png";
+import type { PropSprite } from "../lib/objects/prop";
+import type { Coord } from "../lib/values";
 
 export {
   GirlSheetImage,
@@ -26,6 +28,13 @@ export {
 export type Resources = Awaited<ReturnType<typeof loadGameImages>>;
 export const resources = writable<Resources>();
 
+export function getSpriteRes(name: keyof Resources, coord: Coord, flipped: {x: boolean, y: boolean} = {x: false, y: false}): PropSprite {
+  return {
+    img: getRes(name),
+    coord,
+    flipped 
+  };
+}
 export function getRes(name: keyof Resources): HTMLImageElement {
   const resource = get(resources);
   if (!resource) throw new Error("Resources is not loaded");

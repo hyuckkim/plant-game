@@ -1,5 +1,5 @@
 import { get } from "svelte/store";
-import { getRes } from "../../assets/image";
+import { getRes, getSpriteRes } from "../../assets/image";
 import { getGrass, type Grass } from "../data/grass";
 import {
   getRandomPotionGrass,
@@ -43,8 +43,7 @@ export function checkDropToSeed(potion: Potion, pos: { x: number, y: number }): 
   potiondropResult.set(result);
   
   if (used.length === 3) return newProp({
-    img: getRes("grass"),
-    source: [152, 111, 4, 4],
+    img: getSpriteRes("grass", [152, 111, 4, 4]),
     state: {tag: "seed", potion, pos: [pos.x, pos.y, 8, 8]},
     onDayEnd: (state) => {
       addProps(newProp(generateGrassProp(
@@ -69,8 +68,7 @@ function attached(
 
 export function generateGrassProp(grass: Grass, x: number, y: number): Prop {
   return makeGrabbableProp(
-    getRes(grass.img),
-    grass.source,
+    getSpriteRes(grass.img, grass.source),
     [0, 0, 40, 40],
     { pos: [x, y, 40, 40], amountTime: 3 },
     {

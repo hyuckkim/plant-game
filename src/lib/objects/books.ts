@@ -1,4 +1,4 @@
-import { getRes } from "../../assets/image";
+import { getRes, getSpriteRes } from "../../assets/image";
 import { getText } from "../../assets/text";
 import { statistic } from "../layers/ending/ending";
 import { drawMouseButton } from "../layers/mouseButton";
@@ -19,8 +19,7 @@ export function makeBooks() {
 
 function book_mouse(x: number, y: number): Prop {
   return newProp({
-    img: getRes("prop/rpg"),
-    source: [169, 291, 18, 10],
+    img: getSpriteRes("prop/rpg", [169, 291, 18, 10]),
     display: "night",
     state: { pos: [x, y, 36, 20], page: 1 },
     ui: ({ context }, state) => {
@@ -65,8 +64,7 @@ function book_mouse(x: number, y: number): Prop {
 }
 function book_health(x: number, y: number): Prop {
   return newProp({
-    img: getRes("prop/rpg"),
-    source: [169, 291, 18, 10],
+    img: getSpriteRes("prop/rpg", [169, 291, 18, 10]),
     display: "night",
     state: { pos: [x, y, 36, 20], page: 1 },
     ui: ({ context }, state) => {
@@ -94,8 +92,7 @@ function book_health(x: number, y: number): Prop {
 }
 function book_potion(x: number, y: number): Prop {
   return newProp({
-    img: getRes("prop/rpg"),
-    source: [169, 291, 18, 10],
+    img: getSpriteRes("prop/rpg", [169, 291, 18, 10]),
     display: "night",
     state: { pos: [x, y, 36, 20], page: 1 },
     ui: ({ context }, state) => {
@@ -247,8 +244,7 @@ function book_potion(x: number, y: number): Prop {
 }
 function book_license(x: number, y: number): Prop {
   return newProp({
-    img: getRes("prop/rpg"),
-    source: [169, 291, 18, 10],
+    img: getSpriteRes("prop/rpg", [169, 291, 18, 10]),
     state: {pos: [x, y, 36, 20]},
     display: "night",
     ui: ({ context }) => {

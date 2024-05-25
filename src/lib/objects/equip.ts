@@ -4,16 +4,15 @@ import {
   newProp,
   type Prop,
   type PropRender,
+  type PropSprite,
   type PropState,
 } from "./prop";
 import type { Coord } from "../values";
 import { characterPos } from "../gamevalues";
 
 export type Equip = {
-  img: CanvasImageSource | PropRender;
-  source: Coord;
+  img: PropSprite | PropRender;
   pos: Coord;
-  flipped: { x: boolean; y: boolean };
 
   state: PropState;
   onClick: (state: PropState) => true | Partial<Equip> | undefined;
@@ -28,11 +27,8 @@ export function initializeEquips() {
 
 export function setEquip(data: Partial<Equip>) {
   const defaultEquip: Equip = {
-    img: new Image(),
-    source: [0, 0, 0, 0],
+    img: {img: new Image(), coord: [0, 0, 0, 0], flipped: { x: false, y: false }},
     pos: [0, 0, 0, 0],
-    flipped: { x: false, y: false },
-
     state: { pos: [0, 0, 0, 0] },
     onClick: () => true,
     onWheelUp: () => true,
@@ -42,8 +38,7 @@ export function setEquip(data: Partial<Equip>) {
 }
 
 export function makeGrabbableProp(
-  img: HTMLImageElement | PropRender,
-  source: Coord,
+  img: PropSprite | PropRender,
   equipPos: Coord,
   state: PropState,
   {
@@ -60,7 +55,6 @@ export function makeGrabbableProp(
   const makeSomeProp = (pos: Coord, state: PropState) =>
     newProp({
       img,
-      source,
       state: {...state, pos},
       onDayEnd: onDayEnd ?? (() => true),
       display,
@@ -68,7 +62,6 @@ export function makeGrabbableProp(
   const equipSomeProp = (state: PropState) =>
     setEquip({
       img,
-      source,
       pos: equipPos,
       state,
       onWheelUp: onWheelUp ?? (() => true),
@@ -95,8 +88,7 @@ export function makeGrabbableProp(
   return propNow;
 }
 export function makeGrabbableEquip(
-  img: HTMLImageElement | PropRender,
-  source: Coord,
+  img: PropSprite | PropRender,
   equipPos: Coord,
   state: PropState,
   {
@@ -112,13 +104,11 @@ export function makeGrabbableEquip(
   const makeSomeProp = (pos: Coord, state: PropState) =>
     newProp({
       img,
-      source,
       state: {...state, pos},
       onDayEnd: onDayEnd ?? (() => true),
     });
   const equipSomeProp = (state: PropState): Partial<Equip> => ({
     img,
-    source,
     pos: equipPos,
     state,
     onWheelUp: onWheelUp ?? (() => true),

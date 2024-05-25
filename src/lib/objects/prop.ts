@@ -5,9 +5,7 @@ import { equips, setEquip } from "./equip";
 import { drawSprite } from "../layers/sprite";
 
 export type Prop = {
-  img: CanvasImageSource | PropRender;
-  source: Coord;
-  flipped: { x: boolean; y: boolean };
+  img: PropSprite | PropRender;
 
   display: "always" | "day" | "night";
   layer: "normal" | "roof" | "floor";
@@ -19,6 +17,11 @@ export type Prop = {
   ui: (canvas: CanvasInfo, state: PropState) => void;
 };
 
+export type PropSprite = {
+  img: CanvasImageSource,
+  coord: Coord,
+  flipped: { x: boolean, y: boolean }
+}
 export type PropRender = (
   context: CanvasRenderingContext2D,
   state: PropState
@@ -32,9 +35,7 @@ export type PropState = {
 
 export function newProp(data: Partial<Prop>): Prop {
   const defaultProp: Prop = {
-    img: new Image(),
-    source: [0, 0, 0, 0],
-    flipped: { x: false, y: false },
+    img: {img: new Image(), coord: [0, 0, 0, 0], flipped: { x: false, y: false }},
     display: "day",
     layer: "normal",
     click_order: 0,
@@ -149,16 +150,14 @@ export function dayStarted() {
 export function drawPropImg(
   context: CanvasRenderingContext2D,
   p: {
-    img: CanvasImageSource | PropRender;
-    source: Coord;
-    flipped: { x: boolean; y: boolean };
+    img: PropSprite | PropRender;
     state: PropState;
   }
 ) {
   if (typeof p.img === "function") {
     p.img(context, p.state);
   }
-  else drawSprite(context, p.img, p.state.pos, p.source, p.flipped);
+  else drawSprite(context, p.img.img, p.state.pos, p.img.coord, p.img.flipped);
 }
 export function attachedTag(tag: string) {
   const result = getCurrentProps()
