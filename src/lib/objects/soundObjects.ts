@@ -12,7 +12,7 @@ export function makeSoundObjects() {
 
 function addBGMProp(): Prop {
   return makeGrabbableProp(
-    (context, state) => {
+    (state, context) => {
       drawSprite(context, getRes("prop/furniture"), state.pos, [1000, 528, 114, 96], {
         x: state.reversed,
         y: state.reversed,
@@ -44,7 +44,7 @@ function addBGMProp(): Prop {
 
 function addSFXProp(): Prop {
   return makeGrabbableProp(
-    (context, state) => {
+    (state, context) => {
       drawSprite(context, getRes("prop/furniture"), state.pos, [1152, 910, 56, 26], {
         x: state.reversed,
         y: state.reversed,

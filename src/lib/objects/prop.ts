@@ -5,7 +5,7 @@ import { equips, setEquip } from "./equip";
 import { drawSprite } from "../layers/sprite";
 
 export type Prop = {
-  img: PropSprite | PropRender;
+  img: PropSprite | FPropSprite | PropRender;
 
   display: "always" | "day" | "night";
   layer: "normal" | "roof" | "floor";
@@ -22,9 +22,12 @@ export type PropSprite = {
   coord: Coord,
   flipped: { x: boolean, y: boolean }
 }
-export type PropRender = (
-  context: CanvasRenderingContext2D,
+export type FPropSprite = (
   state: PropState
+) => PropSprite;
+export type PropRender = (
+  state: PropState,
+  context: CanvasRenderingContext2D
 ) => void;
 
 export type PropState = {
@@ -150,12 +153,15 @@ export function dayStarted() {
 export function drawPropImg(
   context: CanvasRenderingContext2D,
   p: {
-    img: PropSprite | PropRender;
+    img: PropSprite | FPropSprite | PropRender;
     state: PropState;
   }
 ) {
   if (typeof p.img === "function") {
-    p.img(context, p.state);
+    const r = p.img(p.state, context);
+    if (r) {
+      drawSprite(context, r.img, p.state.pos, r.coord, r.flipped);
+    }
   }
   else drawSprite(context, p.img.img, p.state.pos, p.img.coord, p.img.flipped);
 }

@@ -46,7 +46,7 @@ export function makeBottle() {
 
 function makeBottleProp({ x, y }: {x: number, y: number}, potion: Potion | undefined = undefined) {
   return makeGrabbableProp(
-    (context, state) => {
+    (state, context) => {
       const pos = state.pos;
       if (state.potion) {
         context.save();
@@ -153,7 +153,7 @@ function makePotionToy(potion: Potion) {
   const pos = addNoise({ x: 600, y: 200 }, 20);
   addProps(
     makeGrabbableProp(
-      (context, state) => {
+      (state, context) => {
         const pos = state.pos;
         const grass = getGrass(state.potion.grass[0]);
         const count = get(drinkedPotions)[potion.id];
