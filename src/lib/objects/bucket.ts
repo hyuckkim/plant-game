@@ -1,12 +1,12 @@
 import { getSpriteRes } from "../../assets/image";
 import { makeGrabbableProp } from "./equip";
 import { addWater } from "./pot";
-import { addProps, attachedTag } from "./prop";
+import { addProps, attachedTag, type PropState } from "./prop";
 import { playSoundSFX } from "../../assets/sound";
 
 export function makeBucket() {
   const bucketProp = makeGrabbableProp(
-    (state) => {
+    (state: PropState) => {
       if (state.water) return getSpriteRes("prop/rpg", [294, 454, 20, 21]);
       else return getSpriteRes("prop/rpg", [326, 454, 20, 21]);
     },

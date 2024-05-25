@@ -2,6 +2,7 @@ import { get, writable } from "svelte/store";
 import {
   addProps,
   newProp,
+  type FPropSprite,
   type Prop,
   type PropRender,
   type PropSprite,
@@ -38,7 +39,7 @@ export function setEquip(data: Partial<Equip>) {
 }
 
 export function makeGrabbableProp(
-  img: PropSprite | PropRender,
+  img: PropSprite | FPropSprite | PropRender,
   equipPos: Coord,
   state: PropState,
   {

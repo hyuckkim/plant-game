@@ -1,4 +1,4 @@
-import { getRes } from "../../assets/image";
+import { getRes, getSpriteRes } from "../../assets/image";
 import { getSoundRes } from "../../assets/sound";
 import { bgm, sfx } from "../gamevalues";
 import { drawSprite } from "../layers/sprite";
@@ -9,15 +9,9 @@ export function makeSoundObjects() {
   addProps(addBGMProp());
   addProps(addSFXProp());
 }
-
 function addBGMProp(): Prop {
   return makeGrabbableProp(
-    (state, context) => {
-      drawSprite(context, getRes("prop/furniture"), state.pos, [1000, 528, 114, 96], {
-        x: state.reversed,
-        y: state.reversed,
-      });
-    },
+    (state: PropState) => getSpriteRes("prop/furniture", [1000, 528, 114, 96], { x: state.reversed, y: state.reversed }),
     [0, -20, 114, 96],
     { pos: [50, 600, 114, 96], reversed: (localStorage.getItem("bgm") === "false") },
     {
@@ -44,12 +38,7 @@ function addBGMProp(): Prop {
 
 function addSFXProp(): Prop {
   return makeGrabbableProp(
-    (state, context) => {
-      drawSprite(context, getRes("prop/furniture"), state.pos, [1152, 910, 56, 26], {
-        x: state.reversed,
-        y: state.reversed,
-      });
-    },
+    (state: PropState) => getSpriteRes("prop/furniture", [1152, 910, 56, 26], { x: state.reversed, y: state.reversed }),
     [0, 0, 56, 26],
     { pos: [150, 650, 56, 26], reversed: (localStorage.getItem("sfx") === "false") },
     {
