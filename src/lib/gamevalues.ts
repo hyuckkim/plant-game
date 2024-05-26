@@ -36,6 +36,7 @@ export const savedPosition = writable({ x: 0, y: 0 });
 export const HealthBarExtraHeight = spring(300);
 
 export function reset() {
+  maxHealth.set(initializeMaxHealth);
   health.set(initializeMaxHealth);
   statesEnteredTime.set(0);
   state.set("sleep");
