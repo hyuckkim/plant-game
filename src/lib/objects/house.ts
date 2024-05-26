@@ -1,5 +1,5 @@
 import { get } from "svelte/store";
-import { getSpriteRes } from "../../assets/image";
+import { getRes, getSpriteRes } from "../../assets/image";
 import { addProps, dayEnd, dayStarted, Prop } from "./prop";
 import {
   characterPos,
@@ -102,6 +102,22 @@ function makeFloor() {
     [108, 194, 48, 48],
     [156, 194, 48, 48],
   ];
+  addProps(
+    new Prop({
+      img: (_, context) => {
+      for (let i = 0; i < 3; i++) {
+        context.drawImage(getRes("grass"), 0, 127 + i * 16, 16, 64, -5 + i * 64, -5, 32, 128);
+        context.drawImage(getRes("grass"), 16, 127 + i * 16, 16, 64, 27 + i * 64, -21, 32, 128);
+        context.drawImage(getRes("grass"), 32, 127 + i * 16, 16, 64, -5 + i * 64, 123, 32, 128);
+        context.drawImage(getRes("grass"), 48, 127 + i * 16, 16, 64, 27 + i * 64, 107, 32, 128);
+      }
+        context.drawImage(getRes("grass"), 32, 159, 16, 64, 27 + 3 * 64, 43, 32, 128);
+        context.drawImage(getRes("grass"), 16, 127, 16, 64, -5 + 3 * 64, -37, 32, 128);
+        context.drawImage(getRes("grass"), 0, 127, 16, 64, -5 + 3 * 64, 95, 32, 128);
+      },
+      layer: "floor",
+    })
+  )
   posDatas.forEach((p) => {
     addProps(
       new Prop({
