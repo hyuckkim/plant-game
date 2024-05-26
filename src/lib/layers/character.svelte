@@ -47,10 +47,10 @@
     direction: number,
     time: number
   ) {
-    if (dx * dx + dy * dy > 2) {
+    if (dx * dx + dy * dy > 0.8) {
       dt = $latestT;
       const walkingEnoughDir = Math.abs(dx * 2.5) < Math.abs(dy) || Math.abs(dy * 2.5) < Math.abs(dx);
-      const running = dx * dx + dy * dy > 10;
+      const running = dx * dx + dy * dy > 5;
       if (walkingEnoughDir || running) {
         $characterDir = (dx < dy ? 2 : 0) + (dx < -dy ? 1 : 0);
       }
