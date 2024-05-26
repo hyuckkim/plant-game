@@ -113,6 +113,51 @@ export function drawItemPanel(context: CanvasRenderingContext2D, [x, y, w, h]: C
     scale: 2
   });
 }
+export function drawThreeItemPanel(context: CanvasRenderingContext2D, [x, y, w, h]: Coord) {const left: NineParameter = [
+  [574, 329, 6, 6],    // top-left
+  [580, 329, 26, 6],   // top-middle
+  [606, 329, 6, 6],    // top-right
+  [574, 335, 6, 28],   // middle-left
+  [580, 335, 26, 28],  // center
+  [606, 335, 6, 28],   // middle-right
+  [574, 363, 6, 6],    // bottom-left
+  [580, 363, 26, 6],   // bottom-middle
+  [606, 363, 6, 6]     // bottom-right
+];
+
+const middle: NineParameter = [
+  [613, 329, 6, 6],    // top-left
+  [619, 329, 24, 6],   // top-middle
+  [643, 329, 6, 6],    // top-right
+  [613, 335, 6, 28],   // middle-left
+  [619, 335, 24, 28],  // center
+  [643, 335, 6, 28],   // middle-right
+  [613, 363, 6, 6],    // bottom-left
+  [619, 363, 24, 6],   // bottom-middle
+  [643, 363, 6, 6]     // bottom-right
+];
+
+const right: NineParameter = [
+  [650, 329, 6, 6],    // top-left
+  [656, 329, 26, 6],   // top-middle
+  [682, 329, 6, 6],    // top-right
+  [650, 335, 6, 28],   // middle-left
+  [656, 335, 26, 28],  // center
+  [682, 335, 6, 28],   // middle-right
+  [650, 363, 6, 6],    // bottom-left
+  [656, 363, 26, 6],   // bottom-middle
+  [682, 363, 6, 6]     // bottom-right
+];
+
+  const totalWidth = w - 4;
+  const sidePanelWidth = totalWidth / 3;
+  const middlePanelWidth = totalWidth / 3 - 4;
+
+  drawPanel(context, [x, y, sidePanelWidth, h], { slices: left, scale: 2 });
+  drawPanel(context, [x + sidePanelWidth, y, middlePanelWidth, h], { slices: middle, scale: 2 });
+  drawPanel(context, [x + sidePanelWidth + middlePanelWidth, y, sidePanelWidth, h], { slices: right, scale: 2 });
+
+}
 
 export type ThreeParameter = [Coord, Coord, Coord];
 export function drawPanelHorizontal(

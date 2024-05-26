@@ -19,9 +19,12 @@ export function generatePlant(): Prop {
   const x = Math.cos(angle) * length;
   const y = Math.sin(angle) * length;
 
-  const randomGrass = ["red", "orange", "yellow", "skyblue", "blue", "purple", "white"][Math.floor(random() * 7)];
-  if (random() > 0.75) return generateGrassProp(getGrass(randomGrass), x, y);
+  if (random() > 0.75) return generateGrassProp(getGrass(getRandomPlantId()), x, y);
   else return generateGrassProp(getGrass("grass"), x, y);
+}
+
+export function getRandomPlantId() {
+  return ["red", "orange", "yellow", "skyblue", "blue", "purple", "white"][Math.floor(random() * 7)];
 }
 
 export function checkDropToSeed(potion: Potion, pos: { x: number, y: number }): Prop | undefined {

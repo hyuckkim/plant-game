@@ -23,7 +23,7 @@ const text: {
 
     ending: "Game Over!",
     ending_time: "Play Time: $1",
-    ending_day: "Play Date: $1 days",
+    ending_day: "Days Played: $1 days",
     ending_move: "Distance Moved: $1px",
     ending_water: "Times Water Drawn: $1",
     ending_grass: "Inserted Herbs: $1",
@@ -33,6 +33,11 @@ const text: {
     ending_healing_potion: "Health Recovered from Potions: $1",
     ending_book: "Book Pages Turned: $1 pages",
     ending_thanks: "Thank you for playing!",
+    ending_more: "Extra Orders: $1",
+
+    endless_title: "Extra Orders",
+    endless_text_1: "Make a potion with",
+    endless_text_2: "ingredients below!",
 
     control_setting: "Control Settings",
     control_warning: "(Default settings are recommended!)",
@@ -80,6 +85,11 @@ const text: {
     ending_healing_potion: "포션으로 회복한 체력: $1",
     ending_book: "넘긴 책 페이지: $1페이지",
     ending_thanks: "플레이해주셔서 감사합니다!",
+    ending_more: "추가 주문 횟수: $1회",
+
+    endless_title: "추가 주문",
+    endless_text_1: "아래 재료들로",
+    endless_text_2: "포션을 만들어주세요!",
 
     control_setting: "컨트롤 설정",
     control_warning: "(기본 설정을 권장합니다!)",

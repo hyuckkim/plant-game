@@ -2,12 +2,15 @@ import { get } from "svelte/store";
 import { getRes, getSpriteRes } from "../../assets/image";
 import { drawExtendBar, drawItemPanel, drawPanel } from "../layers/ui";
 import { addProps, Prop } from "./prop";
-import { type Grass } from "../data/grass";
+import { getGrass, type Grass } from "../data/grass";
 import { drawSprite } from "../layers/sprite";
 import { latestT } from "../values";
 import { getPotion, type Potion } from "../data/potion";
 import { createBottleData } from "./bottle";
 import { playSoundSFX } from "../../assets/sound";
+import { generatedEnding, initializeMaxHealth, maxHealth, request } from "../gamevalues";
+import { getRandomPlantId } from "./plant";
+import { statistic } from "../layers/ending/ending";
 
 export const maxWater = 3;
 
@@ -109,19 +112,34 @@ export function makePot() {
         const material = state.materials;
         if (material.length === 3) {
           state.oldMaterials = material;
-          const gotPotion = getPotion(
-            material[0].dataNum + material[1].dataNum + material[2].dataNum
-          );
-          state.potionTag = gotPotion;
-          if (gotPotion) {
-            state.potionImage =
-              createBottleData(gotPotion.color);
+          const potPotionId = material[0].dataNum + material[1].dataNum + material[2].dataNum;
+          const requestPotionId = getGrass(get(request)[0]).dataNum + getGrass(get(request)[1]).dataNum + getGrass(get(request)[2]).dataNum;
+          if (get(generatedEnding) && potPotionId === requestPotionId && state.water > 0) {
+            maxHealth.set(get(maxHealth) + initializeMaxHealth / 50 * state.water);
+            request.set([
+              getRandomPlantId(),
+              getRandomPlantId(),
+              getRandomPlantId()
+            ]);
+            state.materials = [];
+            state.oldTime = get(latestT);
+            statistic.more += state.water;
+            state.potion = 0;
+            state.water = 0;
+            state.potionTag = undefined;
+          } else {
+            const gotPotion = getPotion(potPotionId);
+            state.potionTag = gotPotion;
+            if (gotPotion) {
+              state.potionImage =
+                createBottleData(gotPotion.color);
+            }
+            state.materials = [];
+            state.oldTime = get(latestT);
+            state.potion = state.water;
+            state.water = 0;
+            if (state.potion === 0) state.potionTag = undefined;
           }
-          state.materials = [];
-          state.oldTime = get(latestT);
-          state.potion = state.water;
-          state.water = 0;
-          if (state.potion === 0) state.potionTag = undefined;
           playSoundSFX("prop/machine");
         }
         return true;

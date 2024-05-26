@@ -64,7 +64,10 @@ export function changeAwakenState(time: number) {
     });
     if (requireEnding()) {
       const obj = endingObject();
-      if (obj !== undefined) addProps(obj);
+      if (obj !== undefined) {
+        addProps(obj[0]);
+        addProps(obj[1]);
+      }
     }
     getSoundRes("bgm").volume(0.5);
   } else if (current === "sleep") {
